@@ -19,9 +19,9 @@ import config
 
 CSS = """
 :root{
-  --bg:#f6f5f1; --paper:#ffffff; --ink:#161616; --mut:#6b6b6b;
-  --line:#e2e1db; --accent:#b3341f; --accent-soft:#fbeeeb; --star:#c8901a;
-  --tag:#efeee9; --tagink:#454037;
+  --bg:#f3f4f6; --paper:#ffffff; --ink:#17181c; --mut:#6b7280;
+  --line:#e7e8ec; --accent:#4f46e5; --accent-soft:#eef0ff; --star:#e0a80d;
+  --tag:#eef1f6; --tagink:#3f4657;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -63,27 +63,27 @@ a:hover{text-decoration:underline}
 .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 
 /* 총평 */
-.overview{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--ink);
-  border-radius:4px;padding:20px 24px;margin:22px 0 6px}
-.overview h2{margin:0 0 8px;font-family:Georgia,serif;font-size:17px;font-weight:700}
+.overview{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:14px;padding:20px 24px;margin:22px 0 6px}
+.overview h2{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--accent);font-weight:700}
 .overview p{margin:0;color:#2c2c2c;font-size:15.5px}
 .count{color:var(--mut);font-size:13px;margin:16px 2px 8px}
 
 /* 매거진 2열 그리드 */
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;
-  padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .15s,transform .1s}
-.card:hover{box-shadow:0 6px 20px rgba(30,25,20,.08)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
 .card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
 .tag{background:var(--tag);color:var(--tagink);font-size:11px;font-weight:700;
   padding:3px 9px;border-radius:4px;letter-spacing:.3px;text-transform:uppercase}
 .stars{color:var(--star);font-size:13px;letter-spacing:1px}
 .stars .off{color:#dcd9d0}
-.card h3{margin:2px 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:20px;
-  line-height:1.35;font-weight:700}
+.card h3{margin:2px 0 10px;font-size:19px;line-height:1.4;font-weight:800;letter-spacing:-.01em}
 .summary{margin:0 0 14px;color:#3a3a3a;font-size:14.5px;flex:1}
-.why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;
-  padding:11px 14px;font-size:13.5px;color:#4a2b25}
+.why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:11px 14px;font-size:13.5px;color:#33385a}
 .why b{color:var(--accent)}
 .meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;
   padding-top:12px;border-top:1px solid var(--line)}
@@ -238,6 +238,8 @@ def _render_page(briefing: dict, all_dates: list[str], *, is_index: bool) -> str
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daily AI/AX Briefing — {_esc(date)}</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>{CSS}</style>
 </head><body><div class="wrap">
 
