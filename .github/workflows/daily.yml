@@ -1,0 +1,41 @@
+name: Daily AI/AX Briefing
+
+# 매일 자동 실행 + 수동 실행 버튼
+on:
+  schedule:
+    - cron: "0 23 * * *"   # 23:00 UTC = 08:00 KST (한국시간 아침 8시)
+  workflow_dispatch: {}
+
+# 결과(data/, docs/)를 저장소에 커밋하려면 쓰기 권한이 필요합니다.
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 브리핑 생성
+        env:
+          # GitHub 저장소 Settings > Secrets and variables > Actions 에
+          # GEMINI_API_KEY 를 등록하세요. (없으면 추출식 폴백으로 동작)
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python agent.py
+
+      - name: 결과 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data docs
+          git diff --staged --quiet || git commit -m "브리핑 업데이트 $(date -u +%Y-%m-%d)"
+          git push

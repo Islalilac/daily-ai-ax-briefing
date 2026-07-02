@@ -1,0 +1,165 @@
+"""
+렌더링 모듈 — 브리핑 데이터(JSON)를 자체 완결형 HTML 웹페이지로 생성.
+
+output/index.html          : 최신 브리핑
+output/archive/<date>.html : 날짜별 보관본
+"""
+
+from __future__ import annotations
+
+import html
+import json
+from pathlib import Path
+
+import config
+
+CSS = """
+:root{--bg:#0f1220;--card:#1a1f35;--card2:#232a45;--txt:#e8ebf5;--mut:#9aa4c4;
+--accent:#6c8cff;--line:#2d3555;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+font-family:"Segoe UI","Malgun Gothic",system-ui,sans-serif;line-height:1.65}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+header h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:14px}
+.overview{background:linear-gradient(135deg,#232a45,#1a1f35);border:1px solid var(--line);
+border-radius:14px;padding:20px 22px;margin:22px 0}
+.overview h2{margin:0 0 8px;font-size:16px;color:var(--accent)}
+.overview p{margin:0;color:#d4dbf0}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px}
+.chip{background:var(--card2);border:1px solid var(--line);color:var(--mut);
+border-radius:999px;padding:5px 12px;font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:18px 20px;margin:14px 0;transition:border-color .15s}
+.card:hover{border-color:var(--accent)}
+.card h3{margin:0 0 8px;font-size:17px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;
+color:var(--mut);margin-bottom:10px}
+.badge{border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600}
+.cat{background:#2b3556;color:#aab6e6}
+.imp{font-weight:700}
+.imp5{background:#5a1e2b;color:#ff9db0}.imp4{background:#553318;color:#ffc98a}
+.imp3{background:#2f4a2f;color:#a7e0a7}.imp2{background:#2b3556;color:#aab6e6}
+.imp1{background:#333;color:#bbb}
+.summary{margin:6px 0 12px;color:#d4dbf0}
+.why{background:#141a30;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+padding:10px 14px;color:#cdd6f4;font-size:14px}
+.why b{color:var(--accent)}
+.readmore{font-size:13px;margin-top:10px;display:inline-block}
+.archive{margin-top:40px;border-top:1px solid var(--line);padding-top:20px}
+.archive h2{font-size:15px;color:var(--mut)}
+.archive a{display:inline-block;margin:4px 10px 4px 0;font-size:13px}
+footer{margin-top:40px;color:var(--mut);font-size:12px;text-align:center}
+.empty{color:var(--mut);padding:40px 0;text-align:center}
+"""
+
+
+def _esc(s: str) -> str:
+    return html.escape(s or "")
+
+
+def _imp_label(n: int) -> str:
+    return {5: "★★★★★", 4: "★★★★", 3: "★★★", 2: "★★", 1: "★"}.get(n, "★")
+
+
+def _render_card(art: dict) -> str:
+    imp = int(art.get("importance") or 1)
+    date_str = (art.get("published") or "")[:10]
+    why = _esc(art.get("why_it_matters", ""))
+    return f"""
+    <article class="card">
+      <div class="meta">
+        <span class="badge cat">{_esc(art.get('category') or art.get('topic') or '기타')}</span>
+        <span class="badge imp imp{imp}">{_imp_label(imp)} 중요도 {imp}</span>
+        <span>{_esc(art.get('source',''))}</span>
+        <span>{_esc(date_str)}</span>
+      </div>
+      <h3>{_esc(art.get('title',''))}</h3>
+      <p class="summary">{_esc(art.get('summary',''))}</p>
+      <div class="why"><b>AX전략팀 관점:</b> {why}</div>
+      <a class="readmore" href="{_esc(art.get('link','#'))}" target="_blank" rel="noopener">원문 보기 →</a>
+    </article>"""
+
+
+def _render_page(briefing: dict, all_dates: list[str], *, is_index: bool) -> str:
+    articles = briefing.get("articles", [])
+    prefix = "" if is_index else "../"
+
+    cards = "\n".join(_render_card(a) for a in articles) or (
+        '<div class="empty">표시할 기사가 없습니다.</div>'
+    )
+
+    archive_links = "\n".join(
+        f'<a href="{prefix}archive/{d}.html">{d}</a>' for d in all_dates
+    )
+
+    cat_counts: dict[str, int] = {}
+    for a in articles:
+        c = a.get("category") or a.get("topic") or "기타"
+        cat_counts[c] = cat_counts.get(c, 0) + 1
+    chips = "".join(
+        f'<span class="chip">{_esc(c)} {n}</span>' for c, n in sorted(
+            cat_counts.items(), key=lambda x: -x[1]
+        )
+    )
+
+    home_link = "" if is_index else f'<a href="{prefix}index.html">← 최신 브리핑</a>'
+
+    return f"""<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily AI/AX Briefing — {_esc(briefing.get('date',''))}</title>
+<style>{CSS}</style>
+</head><body><div class="wrap">
+<header>
+  <h1>📊 Daily AI/AX Briefing</h1>
+  <div class="sub">{_esc(briefing.get('date',''))} · 생성 {_esc(briefing.get('generated_at','')[:16])}
+  · 기사 {len(articles)}건 {home_link}</div>
+</header>
+
+<section class="overview">
+  <h2>오늘의 총평</h2>
+  <p>{_esc(briefing.get('overview',''))}</p>
+</section>
+
+<div class="toolbar">{chips}</div>
+
+{cards}
+
+<div class="archive">
+  <h2>지난 브리핑</h2>
+  {archive_links or '<span class="sub">아직 보관된 브리핑이 없습니다.</span>'}
+</div>
+
+<footer>Generated by Daily AI/AX Briefing Agent · powered by Claude</footer>
+</div></body></html>"""
+
+
+def render_all(data_dir: Path = config.DATA_DIR, output_dir: Path = config.OUTPUT_DIR) -> None:
+    """data_dir의 모든 브리핑 JSON을 읽어 index.html과 archive 페이지를 생성."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "archive").mkdir(parents=True, exist_ok=True)
+
+    files = sorted(data_dir.glob("*.json"), reverse=True)
+    if not files:
+        print("  [경고] 렌더링할 데이터가 없습니다.")
+        return
+
+    all_dates = [f.stem for f in files]
+    briefings = {f.stem: json.loads(f.read_text(encoding="utf-8")) for f in files}
+
+    # 최신 → index.html
+    latest = briefings[all_dates[0]]
+    (output_dir / "index.html").write_text(
+        _render_page(latest, all_dates, is_index=True), encoding="utf-8"
+    )
+
+    # 각 날짜 → archive/<date>.html
+    for date, briefing in briefings.items():
+        (output_dir / "archive" / f"{date}.html").write_text(
+            _render_page(briefing, all_dates, is_index=False), encoding="utf-8"
+        )
+
+    print(f"  웹페이지 생성 완료 → {output_dir / 'index.html'}")
