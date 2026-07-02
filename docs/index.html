@@ -18,56 +18,76 @@ body{margin:0;background:var(--bg);color:var(--ink);
   line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-.wrap{max-width:1060px;margin:0 auto;padding:0 22px 80px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 90px}
 
 /* 신문 제호 */
-.masthead{text-align:center;padding:40px 0 18px;border-bottom:3px double var(--ink)}
+.masthead{text-align:center;padding:46px 0 20px;border-bottom:3px double var(--ink)}
 .masthead .kicker{font-size:12px;letter-spacing:4px;color:var(--mut);
-  text-transform:uppercase;margin-bottom:12px}
-.masthead h1{font-family:Georgia,"Times New Roman",serif;font-size:44px;font-weight:700;
+  text-transform:uppercase;margin-bottom:13px}
+.masthead h1{font-family:Georgia,"Times New Roman",serif;font-size:46px;font-weight:700;
   margin:0;letter-spacing:-1px}
-.masthead .date{margin-top:12px;color:#333;font-size:14px;font-family:Georgia,serif;
-  font-style:italic}
+.masthead .date{margin-top:13px;color:#333;font-size:14px;font-family:Georgia,serif;font-style:italic}
 .masthead .date b{font-style:normal;font-weight:600}
 
-/* 상단 툴바 */
+/* 툴바 */
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}
+  flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
 .tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.toolbar input[type=date],.search{font-family:inherit;font-size:13px;padding:7px 11px;
-  border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
-.search{min-width:210px}
-.tools a{font-size:13px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;
+.toolbar input[type=date],.search{font-family:inherit;font-size:13px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.search{min-width:220px}
+.tools a{font-size:13px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;
   background:var(--paper);color:var(--ink)}
 .tools a:hover{border-color:var(--accent);text-decoration:none}
 .tools a.disabled{opacity:.35;pointer-events:none}
 .tools a.latest{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-/* 카테고리 필터 */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 4px}
-.filter-btn{cursor:pointer;font-size:13px;padding:6px 13px;border:1px solid var(--line);
-  border-radius:999px;background:var(--paper);color:var(--tagink);font-family:inherit;transition:.12s}
-.filter-btn:hover{border-color:var(--accent)}
-.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* 섹션 라벨 */
+.section-label{display:flex;align-items:center;gap:14px;margin:34px 0 14px;
+  font-size:13px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800}
+.section-label .accent{color:var(--accent)}
+.section-label:after{content:"";flex:1;height:1px;background:var(--line)}
 
 /* 총평 */
 .overview{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);
-  border-radius:14px;padding:20px 24px;margin:22px 0 6px}
+  border-radius:14px;padding:20px 24px;margin:24px 0 0}
 .overview h2{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;
   color:var(--accent);font-weight:700}
 .overview p{margin:0;color:#2c2c2c;font-size:15.5px}
-.count{color:var(--mut);font-size:13px;margin:16px 2px 8px}
 
-/* 매거진 2열 그리드 */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;
-  padding:20px 22px;display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
-.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
-.card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+/* TOP 5 MUST READ */
+.top5{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:6px 26px;
+  box-shadow:0 4px 20px rgba(30,30,70,.05)}
+.t5{display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.t5:last-child{border-bottom:none}
+.t5 .rank{font-family:Georgia,serif;font-size:36px;font-weight:700;line-height:1;
+  color:var(--accent);min-width:50px;text-align:center}
+.t5 .rbody{flex:1;min-width:0}
+.t5 .m5{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.t5 h4{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.4}
+.t5 h4 a{color:var(--ink)}.t5 h4 a:hover{color:var(--accent)}
+.t5 .why5{font-size:13.5px;color:#4a5064;line-height:1.6}
+.t5 .why5 b{color:var(--accent)}
+
+/* 태그 · 별점 */
 .tag{background:var(--tag);color:var(--tagink);font-size:11px;font-weight:700;
-  padding:3px 9px;border-radius:4px;letter-spacing:.3px;text-transform:uppercase}
+  padding:3px 9px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
 .stars{color:var(--star);font-size:13px;letter-spacing:1px}
 .stars .off{color:#dcd9d0}
+.src{color:var(--mut);font-size:12px}
+
+/* 매거진 그리드 */
+.gridhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.filter-btn{cursor:pointer;font-size:12.5px;padding:6px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--paper);color:var(--tagink);font-family:inherit;transition:.12s}
+.filter-btn:hover{border-color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+  display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
+.card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
 .card h3{margin:2px 0 10px;font-size:19px;line-height:1.4;font-weight:800;letter-spacing:-.01em}
 .summary{margin:0 0 14px;color:#3a3a3a;font-size:14.5px;flex:1}
 .why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
@@ -75,23 +95,22 @@ a:hover{text-decoration:underline}
 .why b{color:var(--accent)}
 .meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;
   padding-top:12px;border-top:1px solid var(--line)}
-.src{color:var(--mut);font-size:12px}
-.readmore{font-size:12.5px;font-weight:700}
-.readmore:after{content:" \2192"}
+.readmore{font-size:12.5px;font-weight:700}.readmore:after{content:" \2192"}
 #noresult{display:none;color:var(--mut);text-align:center;padding:40px 0}
 
-footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
-  color:var(--mut);font-size:12px;text-align:center}
+footer{margin-top:50px;padding-top:22px;border-top:3px double var(--ink);
+  color:var(--mut);font-size:12px;text-align:center;line-height:1.8}
 
 @media (max-width:760px){
   .masthead h1{font-size:32px}
   .grid{grid-template-columns:1fr}
-  .search{min-width:140px;flex:1}
+  .search{min-width:130px;flex:1}
+  .filters{margin-left:0;width:100%}
+  .t5 .rank{font-size:28px;min-width:38px}
 }
 @media print{
   .toolbar,.filters,.readmore{display:none}
-  .grid{grid-template-columns:1fr 1fr}
-  .card{break-inside:avoid;box-shadow:none}
+  .card{break-inside:avoid;box-shadow:none}.top5{box-shadow:none}
 }
 </style>
 </head><body><div class="wrap">
@@ -106,8 +125,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
     <div class="toolbar">
       <div class="tools">
         <input type="date" value="2026-07-02" min="2026-07-01" max="2026-07-02" onchange="goDate(this.value)">
-        <a href="archive/2026-07-01.html">◀ 이전</a>
-        <a class="disabled">다음 ▶</a>
+        <a href="archive/2026-07-01.html">◀ 이전</a><a class="disabled">다음 ▶</a>
         <a class="latest" href="index.html">최신</a>
       </div>
       <div class="tools">
@@ -123,20 +141,71 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
         else { alert("해당 날짜의 브리핑이 없습니다."); }
       }
     </script>
-<div class="filters"><button class="filter-btn active" data-cat="all">전체 30</button><button class="filter-btn" data-cat="AI Agent">AI Agent 16</button><button class="filter-btn" data-cat="금융 AI">금융 AI 5</button><button class="filter-btn" data-cat="AX">AX 5</button><button class="filter-btn" data-cat="규제·정책">규제·정책 3</button><button class="filter-btn" data-cat="보험 AI">보험 AI 1</button></div>
 
 <section class="overview">
   <h2>오늘의 총평</h2>
   <p>오늘의 동향은 AI 에이전트의 광범위한 확산과 금융권의 AI 도입 가속화로 요약됩니다. 영국 중앙은행과 금융위원회는 AI 에이전트 및 생성형 AI 활용에 대한 규제 및 면책 조치를 통해 혁신과 위험 관리를 동시에 추진하고 있습니다. 다양한 산업에서 AI 에이전트가 실제 업무에 적용되며 효율성을 높이고 있으며, AX(AI Transformation)를 통한 인재 양성 및 사업 전환 노력도 활발히 이루어지고 있습니다. 특히 금융 및 보험 분야에서는 AI를 활용한 서비스 혁신과 자산 관리 자동화에 대한 관심이 높습니다.</p>
 </section>
 
-<div class="count">기사 30건</div>
+<div id="top5wrap">
+  <div class="section-label"><span class="accent">TOP 5</span> · MUST READ</div>
+  <div class="top5">
+        <div class="t5">
+          <div class="rank">01</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">디지털데일리</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiZEFVX3lxTFAyQmRZMENDRVJWZ0xiekRMeHRoTHpuNERsbldjTnR5WFN1aGpiRXV1a1BTa2I3cUU2MnpTbTZTdXl5a1pZSkp1VV9YVXF6ZDZJQnJ0WXJEVWdFT2xUalRqRTYwUmU?oc=5" target="_blank" rel="noopener">은행·카드도 외부 생성형 AI 쓴다…금융위, 혁신금융서비스 31건 지정</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 금융권의 생성형 AI 활용 확대는 우리 회사도 외부 AI 솔루션 도입을 적극적으로 검토하고, 이를 통해 업무 효율성 및 고객 서비스 혁신 기회를 발굴해야 함을 시사합니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">02</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">연합뉴스</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE1ncko2eFd0QjRMYWM5clBjNUtLSkNvVmZfNlJRVjljWFZvQ0JBZFRnUXUyYlZUM0pGYmxLandnZmF0ZDJYZmNnU2RFNUFJSUpiQXlJakloS2lCc2fSAWBBVV95cUxQYW96X0ZyUWZ1YXlPSWpKRVVuSXFFRDZudGRJTFBDMW5QektINEhlb2dRYk8zb3pqb2p3eVV3LVVOeDNSb1FSQXdNOXVJc1Qxb1lGMllGcEprRkN4RGNKYnY?oc=5" target="_blank" rel="noopener">네이버 쇼핑 &#x27;AI 에이전트&#x27; 정식 출시…대화하며 구매까지 제안</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 고객 서비스 및 상품 판매 과정에 AI 에이전트를 도입하여 고객 경험을 혁신하고, 개인화된 서비스 제공을 통해 경쟁력을 강화할 수 있는 방안을 모색해야 합니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">03</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">BeInCrypto</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMibEFVX3lxTE1xTDJlbW9rdks2RW9qak9UU2NHT3ZOOWRiMWkzMWlyRUZVN1ZmX1ZTVjRVNmdVSG9jZjlVZk41Ync5Nnk3WGVJbFJKRC14VFljZzQ2MEREYldXSE9hVS0wUUVTbXBaalhyRjV5Yg?oc=5" target="_blank" rel="noopener">AI 에이전트, 자금 관리 시작…이 블록체인, 은행 구축 추진</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트가 자산 관리 및 금융 서비스의 핵심 기능을 수행하는 미래를 대비하여, 관련 기술 동향을 면밀히 분석하고 우리 회사의 금융 상품 및 서비스에 AI 에이전트를 통합하는 전략을 모색해야 합니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">04</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">네이트</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiU0FVX3lxTE5fT0FWajhCVmlpRFRaYXNLd053X0pneDY2MTZ6OFRTMEtQMVYtQkdpaVhGa3ZPYkpUWTZ6WlhuMkZSdVFuS2ZsTVo4UkdqRm9DZklB?oc=5" target="_blank" rel="noopener">보험대리점 판매규제 풀고 AI 활용 넓힌다…혁신금융 31건 지정</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 보험 분야의 AI 활용 규제 완화는 우리 회사가 AI 기반의 새로운 보험 상품 개발, 판매 채널 혁신, 고객 맞춤형 서비스 제공 등 다양한 AI 도입 전략을 적극적으로 추진할 수 있는 기회를 제공합니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">05</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">테크데일리</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMickFVX3lxTE5wUXlUaWhuQ1VpOC1rRHBaNWpEeFNpNFB3MW54RmZJck9PWUkyaFd5anlVUzFTTU85YlFtSElxX0pvbG0ySW9vZ1U2NjlOa3hrWmNqNzFwSWJXMi1GS0RfZEdHeERyNmRaNk5LYVU2OEFSUQ?oc=5" target="_blank" rel="noopener">AI 에이전트 시대 본격화... MIT &quot;생성형 AI 넘어 스스로 행동하는 인공지능 온다&quot; |</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트의 발전 방향을 이해하고, 우리 회사의 장기적인 AI 전략 수립 시 스스로 목표를 설정하고 실행하는 AI 에이전트의 잠재력을 고려하여 미래 성장 동력을 확보해야 합니다.</div>
+          </div>
+        </div></div>
+</div>
+
+<div class="section-label gridhead">
+  전체 브리핑
+  <div class="filters"><button class="filter-btn active" data-cat="all">전체 30</button><button class="filter-btn" data-cat="AI Agent">AI Agent 16</button><button class="filter-btn" data-cat="금융 AI">금융 AI 5</button><button class="filter-btn" data-cat="AX">AX 5</button><button class="filter-btn" data-cat="규제·정책">규제·정책 3</button><button class="filter-btn" data-cat="보험 AI">보험 AI 1</button></div>
+</div>
 <div class="grid">
 
-    <article class="card" data-category="금융 AI" data-text="은행·카드도 외부 생성형 ai 쓴다…금융위, 혁신금융서비스 31건 지정 금융위원회가 은행, 카드사 등 금융권의 외부 생성형 ai 활용을 허용하는 혁신금융서비스 31건을 지정했습니다. 이를 통해 금융사들은 다양한 외부 ai 기술을 업무에 접목할 수 있게 되었습니다. 금융권의 생성형 ai 활용 확대는 우리 회사도 외부 ai 솔루션 도입을 적극적으로 검토하고, 이를 통해 업무 효율성 및 고객 서비스 혁신 기회를 발굴해야 함을 시사합니다. 금융 ai 디지털데일리">
+    <article class="card is-top5" data-category="금융 AI" data-text="은행·카드도 외부 생성형 ai 쓴다…금융위, 혁신금융서비스 31건 지정 금융위원회가 은행, 카드사 등 금융권의 외부 생성형 ai 활용을 허용하는 혁신금융서비스 31건을 지정했습니다. 이를 통해 금융사들은 다양한 외부 ai 기술을 업무에 접목할 수 있게 되었습니다. 금융권의 생성형 ai 활용 확대는 우리 회사도 외부 ai 솔루션 도입을 적극적으로 검토하고, 이를 통해 업무 효율성 및 고객 서비스 혁신 기회를 발굴해야 함을 시사합니다. 금융 ai 디지털데일리">
       <div class="top">
-        <span class="tag">금융 AI</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>은행·카드도 외부 생성형 AI 쓴다…금융위, 혁신금융서비스 31건 지정</h3>
       <p class="summary">금융위원회가 은행, 카드사 등 금융권의 외부 생성형 AI 활용을 허용하는 혁신금융서비스 31건을 지정했습니다. 이를 통해 금융사들은 다양한 외부 AI 기술을 업무에 접목할 수 있게 되었습니다.</p>
@@ -147,10 +216,9 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
       </div>
     </article>
 
-    <article class="card" data-category="AI Agent" data-text="네이버 쇼핑 &#x27;ai 에이전트&#x27; 정식 출시…대화하며 구매까지 제안 네이버 쇼핑이 대화형 ai 에이전트를 정식 출시하여 고객에게 상품 추천부터 구매까지 제안하는 서비스를 제공합니다. 이는 ai 에이전트가 실제 상업 서비스에 성공적으로 적용된 사례입니다. 고객 서비스 및 상품 판매 과정에 ai 에이전트를 도입하여 고객 경험을 혁신하고, 개인화된 서비스 제공을 통해 경쟁력을 강화할 수 있는 방안을 모색해야 합니다. ai agent 연합뉴스">
+    <article class="card is-top5" data-category="AI Agent" data-text="네이버 쇼핑 &#x27;ai 에이전트&#x27; 정식 출시…대화하며 구매까지 제안 네이버 쇼핑이 대화형 ai 에이전트를 정식 출시하여 고객에게 상품 추천부터 구매까지 제안하는 서비스를 제공합니다. 이는 ai 에이전트가 실제 상업 서비스에 성공적으로 적용된 사례입니다. 고객 서비스 및 상품 판매 과정에 ai 에이전트를 도입하여 고객 경험을 혁신하고, 개인화된 서비스 제공을 통해 경쟁력을 강화할 수 있는 방안을 모색해야 합니다. ai agent 연합뉴스">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>네이버 쇼핑 &#x27;AI 에이전트&#x27; 정식 출시…대화하며 구매까지 제안</h3>
       <p class="summary">네이버 쇼핑이 대화형 AI 에이전트를 정식 출시하여 고객에게 상품 추천부터 구매까지 제안하는 서비스를 제공합니다. 이는 AI 에이전트가 실제 상업 서비스에 성공적으로 적용된 사례입니다.</p>
@@ -161,10 +229,9 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
       </div>
     </article>
 
-    <article class="card" data-category="금융 AI" data-text="ai 에이전트, 자금 관리 시작…이 블록체인, 은행 구축 추진 ai 에이전트가 자금 관리에 활용되기 시작했으며, 특정 블록체인 기반 프로젝트는 ai 에이전트를 통해 은행 구축을 추진하고 있습니다. 이는 ai 에이전트가 금융 서비스의 핵심 영역으로 확장되고 있음을 보여줍니다. ai 에이전트가 자산 관리 및 금융 서비스의 핵심 기능을 수행하는 미래를 대비하여, 관련 기술 동향을 면밀히 분석하고 우리 회사의 금융 상품 및 서비스에 ai 에이전트를 통합하는 전략을 모색해야 합니다. 금융 ai beincrypto">
+    <article class="card is-top5" data-category="금융 AI" data-text="ai 에이전트, 자금 관리 시작…이 블록체인, 은행 구축 추진 ai 에이전트가 자금 관리에 활용되기 시작했으며, 특정 블록체인 기반 프로젝트는 ai 에이전트를 통해 은행 구축을 추진하고 있습니다. 이는 ai 에이전트가 금융 서비스의 핵심 영역으로 확장되고 있음을 보여줍니다. ai 에이전트가 자산 관리 및 금융 서비스의 핵심 기능을 수행하는 미래를 대비하여, 관련 기술 동향을 면밀히 분석하고 우리 회사의 금융 상품 및 서비스에 ai 에이전트를 통합하는 전략을 모색해야 합니다. 금융 ai beincrypto">
       <div class="top">
-        <span class="tag">금융 AI</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>AI 에이전트, 자금 관리 시작…이 블록체인, 은행 구축 추진</h3>
       <p class="summary">AI 에이전트가 자금 관리에 활용되기 시작했으며, 특정 블록체인 기반 프로젝트는 AI 에이전트를 통해 은행 구축을 추진하고 있습니다. 이는 AI 에이전트가 금융 서비스의 핵심 영역으로 확장되고 있음을 보여줍니다.</p>
@@ -175,10 +242,9 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
       </div>
     </article>
 
-    <article class="card" data-category="보험 AI" data-text="보험대리점 판매규제 풀고 ai 활용 넓힌다…혁신금융 31건 지정 금융위원회가 보험대리점의 판매 규제를 완화하고 ai 활용을 확대하는 내용의 혁신금융서비스 31건을 지정했습니다. 이는 보험 산업의 ai 도입을 장려하고 새로운 서비스 모델을 가능하게 합니다. 보험 분야의 ai 활용 규제 완화는 우리 회사가 ai 기반의 새로운 보험 상품 개발, 판매 채널 혁신, 고객 맞춤형 서비스 제공 등 다양한 ai 도입 전략을 적극적으로 추진할 수 있는 기회를 제공합니다. 보험 ai 네이트">
+    <article class="card is-top5" data-category="보험 AI" data-text="보험대리점 판매규제 풀고 ai 활용 넓힌다…혁신금융 31건 지정 금융위원회가 보험대리점의 판매 규제를 완화하고 ai 활용을 확대하는 내용의 혁신금융서비스 31건을 지정했습니다. 이는 보험 산업의 ai 도입을 장려하고 새로운 서비스 모델을 가능하게 합니다. 보험 분야의 ai 활용 규제 완화는 우리 회사가 ai 기반의 새로운 보험 상품 개발, 판매 채널 혁신, 고객 맞춤형 서비스 제공 등 다양한 ai 도입 전략을 적극적으로 추진할 수 있는 기회를 제공합니다. 보험 ai 네이트">
       <div class="top">
-        <span class="tag">보험 AI</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>보험대리점 판매규제 풀고 AI 활용 넓힌다…혁신금융 31건 지정</h3>
       <p class="summary">금융위원회가 보험대리점의 판매 규제를 완화하고 AI 활용을 확대하는 내용의 혁신금융서비스 31건을 지정했습니다. 이는 보험 산업의 AI 도입을 장려하고 새로운 서비스 모델을 가능하게 합니다.</p>
@@ -189,10 +255,9 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
       </div>
     </article>
 
-    <article class="card" data-category="AI Agent" data-text="ai 에이전트 시대 본격화... mit &quot;생성형 ai 넘어 스스로 행동하는 인공지능 온다&quot; | mit는 생성형 ai를 넘어 스스로 행동하는 ai 에이전트 시대가 본격화될 것이라고 전망했습니다. 이는 ai가 단순 콘텐츠 생성을 넘어 능동적으로 목표를 달성하는 방향으로 발전하고 있음을 나타냅니다. ai 에이전트의 발전 방향을 이해하고, 우리 회사의 장기적인 ai 전략 수립 시 스스로 목표를 설정하고 실행하는 ai 에이전트의 잠재력을 고려하여 미래 성장 동력을 확보해야 합니다. ai agent 테크데일리">
+    <article class="card is-top5" data-category="AI Agent" data-text="ai 에이전트 시대 본격화... mit &quot;생성형 ai 넘어 스스로 행동하는 인공지능 온다&quot; | mit는 생성형 ai를 넘어 스스로 행동하는 ai 에이전트 시대가 본격화될 것이라고 전망했습니다. 이는 ai가 단순 콘텐츠 생성을 넘어 능동적으로 목표를 달성하는 방향으로 발전하고 있음을 나타냅니다. ai 에이전트의 발전 방향을 이해하고, 우리 회사의 장기적인 ai 전략 수립 시 스스로 목표를 설정하고 실행하는 ai 에이전트의 잠재력을 고려하여 미래 성장 동력을 확보해야 합니다. ai agent 테크데일리">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>AI 에이전트 시대 본격화... MIT &quot;생성형 AI 넘어 스스로 행동하는 인공지능 온다&quot; |</h3>
       <p class="summary">MIT는 생성형 AI를 넘어 스스로 행동하는 AI 에이전트 시대가 본격화될 것이라고 전망했습니다. 이는 AI가 단순 콘텐츠 생성을 넘어 능동적으로 목표를 달성하는 방향으로 발전하고 있음을 나타냅니다.</p>
@@ -205,8 +270,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="규제·정책" data-text="영란은행 &quot;ai 폭주 막는다&quot;…금융시장 &#x27;킬 스위치&#x27; 도입 검토 영란은행이 ai의 금융시장 폭주를 막기 위해 &#x27;킬 스위치&#x27; 도입을 검토하고 있습니다. 이는 ai 시스템의 오작동이나 통제 불능 상황에 대비한 강력한 규제 방안 마련의 필요성을 보여줍니다. ai 도입 시 발생할 수 있는 시스템 오류 및 통제 불능 상황에 대한 규제 당국의 우려를 인지하고, 우리 회사의 ai 시스템에 대한 안전장치 및 비상 대응 계획을 철저히 수립해야 합니다. 규제·정책 뉴스1">
       <div class="top">
-        <span class="tag">규제·정책</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">규제·정책</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>영란은행 &quot;AI 폭주 막는다&quot;…금융시장 &#x27;킬 스위치&#x27; 도입 검토</h3>
       <p class="summary">영란은행이 AI의 금융시장 폭주를 막기 위해 &#x27;킬 스위치&#x27; 도입을 검토하고 있습니다. 이는 AI 시스템의 오작동이나 통제 불능 상황에 대비한 강력한 규제 방안 마련의 필요성을 보여줍니다.</p>
@@ -219,8 +283,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="규제·정책" data-text="금융위원회, ‘프런티어 ai’ 보안조치 중 전산장애 면책 금융위원회가 &#x27;프런티어 ai&#x27; 보안조치 중 발생하는 전산장애에 대해 면책을 적용합니다. 이는 금융사의 혁신적인 ai 도입을 장려하기 위한 규제 유연화 조치입니다. ai 도입 과정에서 발생할 수 있는 기술적 리스크에 대한 규제 당국의 면책 조치는 우리 회사가 새로운 ai 기술을 보다 적극적으로 시도하고 혁신을 추진할 수 있는 환경을 조성합니다. 규제·정책 한국보험신문">
       <div class="top">
-        <span class="tag">규제·정책</span>
-        <span class="stars">★★★★★<span class="off"></span></span>
+        <span class="tag">규제·정책</span><span class="stars">★★★★★<span class="off"></span></span>
       </div>
       <h3>금융위원회, ‘프런티어 AI’ 보안조치 중 전산장애 면책</h3>
       <p class="summary">금융위원회가 &#x27;프런티어 AI&#x27; 보안조치 중 발생하는 전산장애에 대해 면책을 적용합니다. 이는 금융사의 혁신적인 AI 도입을 장려하기 위한 규제 유연화 조치입니다.</p>
@@ -233,8 +296,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="규제·정책" data-text="영국 중앙은행, ai 에이전트 대응 새 규제 시사 영국 중앙은행이 ai 에이전트의 확산에 대응하기 위한 새로운 규제 도입을 시사했습니다. 이는 ai 에이전트가 금융 시장에 미칠 잠재적 영향과 위험을 관리하기 위한 선제적 조치로 풀이됩니다. ai 에이전트 도입 시 발생할 수 있는 잠재적 위험에 대한 규제 동향을 파악하고, 선제적으로 내부 가이드라인 및 통제 방안을 마련하는 데 참고해야 합니다. 규제·정책 매일경제 마켓">
       <div class="top">
-        <span class="tag">규제·정책</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">규제·정책</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>영국 중앙은행, AI 에이전트 대응 새 규제 시사</h3>
       <p class="summary">영국 중앙은행이 AI 에이전트의 확산에 대응하기 위한 새로운 규제 도입을 시사했습니다. 이는 AI 에이전트가 금융 시장에 미칠 잠재적 영향과 위험을 관리하기 위한 선제적 조치로 풀이됩니다.</p>
@@ -247,8 +309,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="오픈클로, ios·안드로이드 앱 출시…&#x27;주머니 속 ai 에이전트&#x27; 시대 오픈클로가 ios 및 안드로이드 앱을 출시하며 모바일 기반 ai 에이전트 시대를 열었습니다. 이를 통해 사용자는 스마트폰으로 언제 어디서든 ai 에이전트 기능을 활용할 수 있게 되었습니다. 모바일 환경에서의 ai 에이전트 확장은 고객 접점 및 내부 업무 프로세스에 모바일 ai 에이전트를 통합하는 전략을 고려해야 함을 보여줍니다. ai agent 지디넷코리아">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>오픈클로, iOS·안드로이드 앱 출시…&#x27;주머니 속 AI 에이전트&#x27; 시대</h3>
       <p class="summary">오픈클로가 iOS 및 안드로이드 앱을 출시하며 모바일 기반 AI 에이전트 시대를 열었습니다. 이를 통해 사용자는 스마트폰으로 언제 어디서든 AI 에이전트 기능을 활용할 수 있게 되었습니다.</p>
@@ -261,8 +322,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="생성형 ai 넘어 ai 에이전트 시대… 뉴스투데이, &#x27;2026 ai혁신전략포럼&#x27; 개최 뉴스투데이가 &#x27;2026 ai혁신전략포럼&#x27;을 개최하며 생성형 ai를 넘어 ai 에이전트 시대로의 전환을 논의합니다. 이는 ai 기술 발전의 다음 단계에 대한 업계의 관심을 반영합니다. ai 에이전트가 미래 ai 전략의 핵심임을 인지하고, 장기적인 관점에서 ai 에이전트 도입 로드맵을 수립하고 관련 기술 동향을 지속적으로 모니터링해야 합니다. ai agent 시큐리티팩트">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>생성형 AI 넘어 AI 에이전트 시대… 뉴스투데이, &#x27;2026 AI혁신전략포럼&#x27; 개최</h3>
       <p class="summary">뉴스투데이가 &#x27;2026 AI혁신전략포럼&#x27;을 개최하며 생성형 AI를 넘어 AI 에이전트 시대로의 전환을 논의합니다. 이는 AI 기술 발전의 다음 단계에 대한 업계의 관심을 반영합니다.</p>
@@ -275,8 +335,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="ax 열풍에 보안 점검 수요 급증…ai 에이전트가 모의해킹 수행 ax 열풍과 함께 보안 점검 수요가 급증하는 가운데, ai 에이전트가 모의해킹을 수행하는 등 보안 분야에서도 활용되고 있습니다. 이는 ai 에이전트가 보안 취약점 분석 및 대응에 효과적임을 시사합니다. ai 에이전트의 보안 분야 활용은 우리 회사의 정보 보안 강화 전략에 중요한 시사점을 제공하며, ai 기반의 자동화된 보안 점검 시스템 도입을 검토할 필요가 있습니다. ai agent 산업일보">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>AX 열풍에 보안 점검 수요 급증…AI 에이전트가 모의해킹 수행</h3>
       <p class="summary">AX 열풍과 함께 보안 점검 수요가 급증하는 가운데, AI 에이전트가 모의해킹을 수행하는 등 보안 분야에서도 활용되고 있습니다. 이는 AI 에이전트가 보안 취약점 분석 및 대응에 효과적임을 시사합니다.</p>
@@ -289,8 +348,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="하나투어, ‘인센티브 견적 자동화’ ai 에이전트 도입 하나투어가 인센티브 견적 자동화를 위해 ai 에이전트를 도입했습니다. 이를 통해 복잡하고 반복적인 견적 업무의 효율성을 크게 향상시킬 것으로 기대됩니다. ai 에이전트가 반복적이고 규칙적인 업무를 자동화하여 생산성을 높이는 사례로, 우리 회사의 백오피스 업무나 고객 응대 프로세스 중 자동화 가능한 영역에 ai 에이전트 도입을 검토해야 합니다. ai agent 트래블데일리">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>하나투어, ‘인센티브 견적 자동화’ AI 에이전트 도입</h3>
       <p class="summary">하나투어가 인센티브 견적 자동화를 위해 AI 에이전트를 도입했습니다. 이를 통해 복잡하고 반복적인 견적 업무의 효율성을 크게 향상시킬 것으로 기대됩니다.</p>
@@ -303,8 +361,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="금융 AI" data-text="금융권 생성형 ai 활용 확대…혁신금융 24건 지정 금융권의 생성형 ai 활용이 확대되면서 금융위원회가 24건의 혁신금융서비스를 추가 지정했습니다. 이는 금융 산업 내 생성형 ai 기술 도입이 가속화되고 있음을 나타냅니다. 금융권의 생성형 ai 활용 확대는 우리 회사가 생성형 ai를 활용한 신규 서비스 개발 및 기존 업무 혁신 기회를 적극적으로 발굴해야 함을 시사합니다. 금융 ai 전자신문">
       <div class="top">
-        <span class="tag">금융 AI</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">금융 AI</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>금융권 생성형 AI 활용 확대…혁신금융 24건 지정</h3>
       <p class="summary">금융권의 생성형 AI 활용이 확대되면서 금융위원회가 24건의 혁신금융서비스를 추가 지정했습니다. 이는 금융 산업 내 생성형 AI 기술 도입이 가속화되고 있음을 나타냅니다.</p>
@@ -317,8 +374,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="中 산업인터넷, ai 에이전트 단계로…&quot;공장도 자율 운영&quot; 중국 산업인터넷이 ai 에이전트 단계로 진화하며 공장의 자율 운영을 목표로 하고 있습니다. 이는 ai 에이전트가 복잡한 산업 환경에서 의사결정과 제어를 수행하는 수준에 도달했음을 보여줍니다. ai 에이전트의 자율 운영 능력은 우리 회사의 운영 효율성 개선 및 자동화 수준을 높이는 데 중요한 시사점을 주며, 복잡한 의사결정 프로세스에 ai 에이전트 도입을 고려할 수 있습니다. ai agent 연합뉴스tv">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>中 산업인터넷, AI 에이전트 단계로…&quot;공장도 자율 운영&quot;</h3>
       <p class="summary">중국 산업인터넷이 AI 에이전트 단계로 진화하며 공장의 자율 운영을 목표로 하고 있습니다. 이는 AI 에이전트가 복잡한 산업 환경에서 의사결정과 제어를 수행하는 수준에 도달했음을 보여줍니다.</p>
@@ -331,8 +387,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="‘미토스’ 충격은 이제 시작···aws “ai 에이전트 기반 보안 전략 전환 시급” aws가 &#x27;미토스&#x27;와 같은 새로운 위협에 대응하기 위해 ai 에이전트 기반의 보안 전략 전환이 시급하다고 강조했습니다. 이는 ai 에이전트가 보안 공격 및 방어 모두에 핵심적인 역할을 할 것임을 의미합니다. ai 에이전트가 보안 위협에 대응하는 핵심 기술로 부상함에 따라, 우리 회사의 정보 보안 전략에 ai 에이전트 기반의 솔루션을 통합하고 관련 기술 역량을 강화해야 합니다. ai agent 데이터넷">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>‘미토스’ 충격은 이제 시작···AWS “AI 에이전트 기반 보안 전략 전환 시급”</h3>
       <p class="summary">AWS가 &#x27;미토스&#x27;와 같은 새로운 위협에 대응하기 위해 AI 에이전트 기반의 보안 전략 전환이 시급하다고 강조했습니다. 이는 AI 에이전트가 보안 공격 및 방어 모두에 핵심적인 역할을 할 것임을 의미합니다.</p>
@@ -345,8 +400,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="금융 AI" data-text="bc카드, 금융 특화 생성형 ai 경쟁력 강화..자체 임베딩 모델 공개 bc카드가 금융 특화 생성형 ai 경쟁력 강화를 위해 자체 임베딩 모델을 공개했습니다. 이는 금융 데이터에 최적화된 ai 모델 개발을 통해 서비스 품질을 높이려는 노력입니다. 금융 특화 ai 모델 개발은 우리 회사도 자체 데이터를 활용한 맞춤형 ai 모델 구축을 통해 경쟁력을 확보하고, 특정 금융 서비스 분야에서 차별화된 가치를 제공할 수 있음을 시사합니다. 금융 ai 한국정경신문">
       <div class="top">
-        <span class="tag">금융 AI</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">금융 AI</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>BC카드, 금융 특화 생성형 AI 경쟁력 강화..자체 임베딩 모델 공개</h3>
       <p class="summary">BC카드가 금융 특화 생성형 AI 경쟁력 강화를 위해 자체 임베딩 모델을 공개했습니다. 이는 금융 데이터에 최적화된 AI 모델 개발을 통해 서비스 품질을 높이려는 노력입니다.</p>
@@ -359,8 +413,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AX" data-text="[보험 pick] 생보업계, 고령화·ax 전환 속 전략 다변화 생명보험업계가 고령화와 ax(ai 전환) 시대에 맞춰 전략 다변화를 모색하고 있습니다. 이는 ai 기술을 활용하여 변화하는 시장 환경에 대응하려는 업계의 노력을 보여줍니다. 고령화 사회와 ai 전환이라는 거대한 흐름 속에서 우리 회사의 ax 전략이 시장 변화에 효과적으로 대응하고 있는지 점검하고, 새로운 성장 동력을 발굴하는 데 참고해야 합니다. ax 라이센스뉴스">
       <div class="top">
-        <span class="tag">AX</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>[보험 Pick] 생보업계, 고령화·AX 전환 속 전략 다변화</h3>
       <p class="summary">생명보험업계가 고령화와 AX(AI 전환) 시대에 맞춰 전략 다변화를 모색하고 있습니다. 이는 AI 기술을 활용하여 변화하는 시장 환경에 대응하려는 업계의 노력을 보여줍니다.</p>
@@ -373,8 +426,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AX" data-text="김정관 &quot;ai전환 못하면 제조업 미래 없다&quot;…산업·금융 손잡고 m.ax 투자 본격화 김정관 전 산업부 차관은 ai 전환 없이는 제조업의 미래가 없다고 강조하며, 산업과 금융이 협력하여 m.ax(제조업 ai 전환) 투자를 본격화해야 한다고 밝혔습니다. 이는 산업 전반의 ai 전환 필요성을 역설합니다. 산업 전반의 ax 중요성이 강조되는 만큼, 우리 회사는 금융 산업 내 ax 추진을 가속화하고, 타 산업과의 협력을 통해 ai 전환의 시너지를 창출할 기회를 모색해야 합니다. ax 네이트">
       <div class="top">
-        <span class="tag">AX</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>김정관 &quot;AI전환 못하면 제조업 미래 없다&quot;…산업·금융 손잡고 M.AX 투자 본격화</h3>
       <p class="summary">김정관 전 산업부 차관은 AI 전환 없이는 제조업의 미래가 없다고 강조하며, 산업과 금융이 협력하여 M.AX(제조업 AI 전환) 투자를 본격화해야 한다고 밝혔습니다. 이는 산업 전반의 AI 전환 필요성을 역설합니다.</p>
@@ -387,8 +439,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="&quot;명확한 지시 목표&quot;…일레븐랩스, ai 에이전트 업무 통제한다 일레븐랩스가 ai 에이전트의 업무를 명확한 지시 목표를 통해 통제하는 기술을 개발하고 있습니다. 이는 ai 에이전트의 자율성을 유지하면서도 예측 불가능한 행동을 방지하기 위한 노력입니다. ai 에이전트 도입 시 발생할 수 있는 통제 문제에 대한 해결책을 모색하고, ai 에이전트의 안전하고 책임감 있는 활용을 위한 내부 통제 시스템 구축에 참고해야 합니다. ai agent v.daum.net">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>&quot;명확한 지시 목표&quot;…일레븐랩스, AI 에이전트 업무 통제한다</h3>
       <p class="summary">일레븐랩스가 AI 에이전트의 업무를 명확한 지시 목표를 통해 통제하는 기술을 개발하고 있습니다. 이는 AI 에이전트의 자율성을 유지하면서도 예측 불가능한 행동을 방지하기 위한 노력입니다.</p>
@@ -401,8 +452,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="디지털인증협, ai 에이전트 신원관리 국제표준 개발 추진 디지털인증협회가 ai 에이전트의 신원 관리 국제표준 개발을 추진합니다. 이는 ai 에이전트가 사회 전반에 확산됨에 따라 신뢰성과 보안을 확보하기 위한 중요한 단계입니다. ai 에이전트의 신원 관리 표준화 동향은 우리 회사가 ai 에이전트를 활용한 서비스 개발 시 신뢰성 및 보안 문제를 해결하고, 미래 규제 환경에 선제적으로 대응하는 데 필수적입니다. ai agent 뉴시스">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>디지털인증협, AI 에이전트 신원관리 국제표준 개발 추진</h3>
       <p class="summary">디지털인증협회가 AI 에이전트의 신원 관리 국제표준 개발을 추진합니다. 이는 AI 에이전트가 사회 전반에 확산됨에 따라 신뢰성과 보안을 확보하기 위한 중요한 단계입니다.</p>
@@ -415,8 +465,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="금융 AI" data-text="캠코, 국유재산 관리 전면 ai 전환한다…ax 사업 본격화 캠코가 국유재산 관리를 전면 ai로 전환하는 ax 사업을 본격화합니다. 이는 공공 부문에서도 ai를 활용한 자산 관리 효율화가 추진되고 있음을 보여줍니다. 공공 부문의 ai 전환 사례는 우리 회사의 자산 관리, 리스크 평가 등 핵심 업무에 ai를 도입하여 효율성을 극대화하고, ax 사업을 가속화하는 데 벤치마킹할 수 있습니다. 금융 ai 연합인포맥스">
       <div class="top">
-        <span class="tag">금융 AI</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">금융 AI</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>캠코, 국유재산 관리 전면 AI 전환한다…AX 사업 본격화</h3>
       <p class="summary">캠코가 국유재산 관리를 전면 AI로 전환하는 AX 사업을 본격화합니다. 이는 공공 부문에서도 AI를 활용한 자산 관리 효율화가 추진되고 있음을 보여줍니다.</p>
@@ -429,8 +478,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="오픈클로, ios·안드로이드 앱 출시…모바일 기반 ai 에이전트 확장 본격화 오픈클로가 ios 및 안드로이드 앱을 출시하며 모바일 기반 ai 에이전트의 확장을 본격화했습니다. 이는 ai 에이전트가 사용자 접근성을 높여 일상생활 속으로 더욱 깊이 파고들 것임을 의미합니다. 모바일 환경에서의 ai 에이전트 확장은 고객 접점 및 내부 업무 프로세스에 모바일 ai 에이전트를 통합하는 전략을 고려해야 하며, 개인화된 서비스 제공 기회를 탐색할 수 있습니다. ai agent v.daum.net">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>오픈클로, iOS·안드로이드 앱 출시…모바일 기반 AI 에이전트 확장 본격화</h3>
       <p class="summary">오픈클로가 iOS 및 안드로이드 앱을 출시하며 모바일 기반 AI 에이전트의 확장을 본격화했습니다. 이는 AI 에이전트가 사용자 접근성을 높여 일상생활 속으로 더욱 깊이 파고들 것임을 의미합니다.</p>
@@ -443,8 +491,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="ai 에이전트 거래도 사람 확인부터...실시간 신원·연령 검증 기술 부상 ai 에이전트를 통한 거래에서도 사람 확인이 중요해지면서 실시간 신원 및 연령 검증 기술이 부상하고 있습니다. 이는 ai 에이전트의 책임 있는 활용을 위한 필수적인 기술입니다. ai 에이전트가 금융 거래 등 중요 업무에 활용될 경우, 신원 확인 및 연령 검증 기술은 법적, 윤리적 문제를 해결하고 서비스의 신뢰성을 확보하는 데 핵심적인 요소이므로 관련 기술 도입을 검토해야 합니다. ai agent 지티티코리아">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>AI 에이전트 거래도 사람 확인부터...실시간 신원·연령 검증 기술 부상</h3>
       <p class="summary">AI 에이전트를 통한 거래에서도 사람 확인이 중요해지면서 실시간 신원 및 연령 검증 기술이 부상하고 있습니다. 이는 AI 에이전트의 책임 있는 활용을 위한 필수적인 기술입니다.</p>
@@ -457,8 +504,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="ai 에이전트 사고 막는 정책 코드화 기술, 실행 단계 통제 강화 ai 에이전트의 사고를 방지하기 위해 정책 코드화 기술을 통해 실행 단계 통제를 강화하는 방안이 논의되고 있습니다. 이는 ai 에이전트의 안전하고 예측 가능한 운영을 위한 기술적 접근입니다. ai 에이전트의 안전한 활용을 위한 기술적 통제 방안은 우리 회사의 ai 시스템 개발 및 운영 시 필수적으로 고려해야 할 사항이며, 윤리적 ai 가이드라인과 연계하여 적용할 수 있습니다. ai agent 지티티코리아">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★★<span class="off">★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
       </div>
       <h3>AI 에이전트 사고 막는 정책 코드화 기술, 실행 단계 통제 강화</h3>
       <p class="summary">AI 에이전트의 사고를 방지하기 위해 정책 코드화 기술을 통해 실행 단계 통제를 강화하는 방안이 논의되고 있습니다. 이는 AI 에이전트의 안전하고 예측 가능한 운영을 위한 기술적 접근입니다.</p>
@@ -471,8 +517,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AX" data-text="스마트인재개발원, 이달 말 &#x27;피지컬ai·ai 에이전트·데이터분석 과정&#x27; 개강…ax·dx 인재 양성 스마트인재개발원이 이달 말 &#x27;피지컬ai·ai 에이전트·데이터분석 과정&#x27;을 개강하여 ax 및 dx 인재 양성에 나섭니다. 이는 산업 전반의 ai 전환 가속화에 필요한 전문 인력 수요에 대응하기 위함입니다. ax전략팀은 ai 인재 양성 프로그램을 모니터링하여 내부 인력의 ai 역량 강화 방안을 수립하고, 외부 교육기관과의 협력 기회를 모색할 수 있습니다. ax 전자신문">
       <div class="top">
-        <span class="tag">AX</span>
-        <span class="stars">★★★<span class="off">★★</span></span>
+        <span class="tag">AX</span><span class="stars">★★★<span class="off">★★</span></span>
       </div>
       <h3>스마트인재개발원, 이달 말 &#x27;피지컬AI·AI 에이전트·데이터분석 과정&#x27; 개강…AX·DX 인재 양성</h3>
       <p class="summary">스마트인재개발원이 이달 말 &#x27;피지컬AI·AI 에이전트·데이터분석 과정&#x27;을 개강하여 AX 및 DX 인재 양성에 나섭니다. 이는 산업 전반의 AI 전환 가속화에 필요한 전문 인력 수요에 대응하기 위함입니다.</p>
@@ -485,8 +530,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="[올쇼tv] 엠클라우드브리지, &#x27;copilot + ai agent 활용 전략&#x27; 주제로 7월 8일 생방송 웨비나 공개 엠클라우드브리지가 &#x27;copilot + ai agent 활용 전략&#x27;을 주제로 7월 8일 생방송 웨비나를 개최합니다. 이는 기업들이 코파일럿과 ai 에이전트를 실제 업무에 효과적으로 적용하는 방안을 제시할 것으로 예상됩니다. ai 에이전트 도입을 위한 구체적인 전략과 활용 사례를 벤치마킹하고, 내부 업무 적용 가능성을 탐색하는 데 유용한 정보를 얻을 수 있습니다. ai agent 전자신문">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★<span class="off">★★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
       </div>
       <h3>[올쇼TV] 엠클라우드브리지, &#x27;Copilot + AI Agent 활용 전략&#x27; 주제로 7월 8일 생방송 웨비나 공개</h3>
       <p class="summary">엠클라우드브리지가 &#x27;Copilot + AI Agent 활용 전략&#x27;을 주제로 7월 8일 생방송 웨비나를 개최합니다. 이는 기업들이 코파일럿과 AI 에이전트를 실제 업무에 효과적으로 적용하는 방안을 제시할 것으로 예상됩니다.</p>
@@ -499,8 +543,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="반도체 연구현장 ai 에이전트 활용 혁신사례·노하우 공개 반도체 연구 현장에서 ai 에이전트를 활용한 혁신 사례와 노하우가 공개되었습니다. 이는 복잡한 연구 개발 과정에서 ai 에이전트가 효율성을 높이는 데 기여할 수 있음을 보여줍니다. 타 산업의 ai 에이전트 활용 사례를 벤치마킹하여 우리 회사의 연구 개발, 상품 개발, 리스크 분석 등 복잡한 업무 프로세스에 ai 에이전트를 적용할 기회를 발굴해야 합니다. ai agent 지디넷코리아">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★<span class="off">★★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
       </div>
       <h3>반도체 연구현장 AI 에이전트 활용 혁신사례·노하우 공개</h3>
       <p class="summary">반도체 연구 현장에서 AI 에이전트를 활용한 혁신 사례와 노하우가 공개되었습니다. 이는 복잡한 연구 개발 과정에서 AI 에이전트가 효율성을 높이는 데 기여할 수 있음을 보여줍니다.</p>
@@ -513,8 +556,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AX" data-text="게임 개발에 ai 도입하면 최대 5000만원 지원···&#x27;게임제작환경 인공지능 전환(ax) 지원사업&#x27; 참여기업 모집 게임 개발 환경의 ai 전환(ax)을 지원하기 위해 최대 5000만원을 지원하는 사업이 시작되었습니다. 이는 산업 전반의 ax 가속화를 위한 정부 및 기관의 노력을 보여줍니다. 정부 및 공공기관의 ax 지원사업 동향을 파악하여 우리 회사의 ai 도입 및 전환 프로젝트에 활용할 수 있는 외부 자원이나 협력 기회를 탐색해야 합니다. ax 전자신문">
       <div class="top">
-        <span class="tag">AX</span>
-        <span class="stars">★★★<span class="off">★★</span></span>
+        <span class="tag">AX</span><span class="stars">★★★<span class="off">★★</span></span>
       </div>
       <h3>게임 개발에 AI 도입하면 최대 5000만원 지원···&#x27;게임제작환경 인공지능 전환(AX) 지원사업&#x27; 참여기업 모집</h3>
       <p class="summary">게임 개발 환경의 AI 전환(AX)을 지원하기 위해 최대 5000만원을 지원하는 사업이 시작되었습니다. 이는 산업 전반의 AX 가속화를 위한 정부 및 기관의 노력을 보여줍니다.</p>
@@ -527,8 +569,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AX" data-text="딥파인, 은평성모병원과 비임상시험 연구환경 디지털 전환…스마트글래스 기반 ai 에이전트 개발 딥파인이 은평성모병원과 협력하여 비임상시험 연구 환경의 디지털 전환을 추진하며 스마트글래스 기반 ai 에이전트를 개발합니다. 이는 의료 분야의 ax 및 ai 에이전트 활용 가능성을 보여줍니다. 의료 분야의 ax 및 ai 에이전트 활용 사례는 우리 회사의 특정 업무 환경(예: 현장 실사, 자산 평가)에 스마트글래스 등 웨어러블 기기와 연동된 ai 에이전트 도입 가능성을 탐색하는 데 영감을 줄 수 있습니다. ax 퍼블릭타임스">
       <div class="top">
-        <span class="tag">AX</span>
-        <span class="stars">★★★<span class="off">★★</span></span>
+        <span class="tag">AX</span><span class="stars">★★★<span class="off">★★</span></span>
       </div>
       <h3>딥파인, 은평성모병원과 비임상시험 연구환경 디지털 전환…스마트글래스 기반 AI 에이전트 개발</h3>
       <p class="summary">딥파인이 은평성모병원과 협력하여 비임상시험 연구 환경의 디지털 전환을 추진하며 스마트글래스 기반 AI 에이전트를 개발합니다. 이는 의료 분야의 AX 및 AI 에이전트 활용 가능성을 보여줍니다.</p>
@@ -541,8 +582,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
 
     <article class="card" data-category="AI Agent" data-text="kaist 테라랩, ‘openclaw ai 에이전트’ 활용 hbm 설계 자동화 워크숍 개최 kaist 테라랩이 &#x27;openclaw ai 에이전트&#x27;를 활용한 hbm 설계 자동화 워크숍을 개최했습니다. 이는 ai 에이전트가 복잡한 엔지니어링 및 설계 분야에서도 자동화를 구현할 수 있음을 보여줍니다. ai 에이전트의 전문 분야 자동화 사례를 통해 우리 회사의 상품 설계, 리스크 모델링 등 고도의 전문성이 요구되는 업무에 ai 에이전트를 적용하여 효율성을 높일 방안을 탐색할 수 있습니다. ai agent 이데일리">
       <div class="top">
-        <span class="tag">AI Agent</span>
-        <span class="stars">★★★<span class="off">★★</span></span>
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
       </div>
       <h3>KAIST 테라랩, ‘OpenClaw AI 에이전트’ 활용 HBM 설계 자동화 워크숍 개최</h3>
       <p class="summary">KAIST 테라랩이 &#x27;OpenClaw AI 에이전트&#x27;를 활용한 HBM 설계 자동화 워크숍을 개최했습니다. 이는 AI 에이전트가 복잡한 엔지니어링 및 설계 분야에서도 자동화를 구현할 수 있음을 보여줍니다.</p>
@@ -565,15 +605,20 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
   let curCat = 'all';
   function applyFilters(){
     const q = (document.getElementById('q').value || '').toLowerCase().trim();
+    const filtering = (curCat !== 'all') || (q !== '');
+    const t5 = document.getElementById('top5wrap');
+    if(t5) t5.style.display = filtering ? 'none' : '';
     let shown = 0;
     document.querySelectorAll('.card').forEach(function(c){
       const okCat = curCat === 'all' || c.dataset.category === curCat;
       const okQ = !q || (c.dataset.text || '').includes(q);
-      const show = okCat && okQ;
+      let show = okCat && okQ;
+      // 기본 화면에서는 TOP5 기사는 그리드에서 숨겨 중복 방지 (필터 시엔 함께 검색)
+      if(!filtering && c.classList.contains('is-top5')) show = false;
       c.style.display = show ? '' : 'none';
       if(show) shown++;
     });
-    document.getElementById('noresult').style.display = shown ? 'none' : 'block';
+    document.getElementById('noresult').style.display = (filtering && shown===0) ? 'block' : 'none';
   }
   document.querySelectorAll('.filter-btn').forEach(function(b){
     b.addEventListener('click', function(){
@@ -583,6 +628,7 @@ footer{margin-top:44px;padding-top:20px;border-top:3px double var(--ink);
       applyFilters();
     });
   });
+  document.addEventListener('DOMContentLoaded', applyFilters);
 </script>
 
 </div></body></html>
