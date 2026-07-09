@@ -87,6 +87,11 @@ PROVIDER = "gemini"
 # Gemini (무료 티어) — 키 발급: https://aistudio.google.com/apikey (신용카드 불필요)
 GEMINI_MODEL = "gemini-2.5-flash"
 
+# Gemini 일시적 오류(503 과부하/429 레이트리밋) 재시도 설정
+#   총 시도 횟수 = GEMINI_MAX_RETRIES, 대기시간은 지수 백오프(base * 2^n)
+GEMINI_MAX_RETRIES = 4
+GEMINI_RETRY_BASE_DELAY = 5   # 초 (5 → 10 → 20초 순으로 대기)
+
 # Claude (유료) — 비용을 낮추려면 "claude-sonnet-4-6" 또는 "claude-haiku-4-5"
 CLAUDE_MODEL = "claude-opus-4-8"
 

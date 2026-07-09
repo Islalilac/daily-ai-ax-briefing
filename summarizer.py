@@ -57,21 +57,40 @@ def _summarize_with_gemini(articles: list[Article]) -> BriefingResult | None:
         print("  [경고] google-genai 패키지가 없습니다. (pip install google-genai)")
         return None
 
-    try:
-        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-        response = client.models.generate_content(
-            model=config.GEMINI_MODEL,
-            contents=_build_prompt(articles),
-            config={
-                "system_instruction": config.AX_TEAM_CONTEXT,
-                "response_mime_type": "application/json",
-                "response_schema": BriefingResult,
-                "temperature": 0.4,
-            },
-        )
-    except Exception as exc:
-        print(f"  [경고] Gemini 호출 실패: {exc}\n         폴백을 사용합니다.")
-        return None
+    import time
+
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    response = None
+    # 503(과부하)·429(레이트리밋) 등 일시적 오류는 백오프 후 재시도
+    for attempt in range(1, config.GEMINI_MAX_RETRIES + 1):
+        try:
+            response = client.models.generate_content(
+                model=config.GEMINI_MODEL,
+                contents=_build_prompt(articles),
+                config={
+                    "system_instruction": config.AX_TEAM_CONTEXT,
+                    "response_mime_type": "application/json",
+                    "response_schema": BriefingResult,
+                    "temperature": 0.4,
+                },
+            )
+            break
+        except Exception as exc:
+            msg = str(exc)
+            transient = any(
+                sig in msg
+                for sig in ("503", "UNAVAILABLE", "overloaded", "high demand", "429", "RESOURCE_EXHAUSTED")
+            )
+            if transient and attempt < config.GEMINI_MAX_RETRIES:
+                wait = config.GEMINI_RETRY_BASE_DELAY * (2 ** (attempt - 1))
+                print(
+                    f"  [경고] Gemini 호출 실패({attempt}/{config.GEMINI_MAX_RETRIES}): {exc}\n"
+                    f"         {wait}초 후 재시도합니다."
+                )
+                time.sleep(wait)
+                continue
+            print(f"  [경고] Gemini 호출 실패: {exc}\n         폴백을 사용합니다.")
+            return None
 
     result = getattr(response, "parsed", None)
     if isinstance(result, BriefingResult):
