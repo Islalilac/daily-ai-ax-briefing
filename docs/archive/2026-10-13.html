@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily AI/AX Briefing — 2026-10-13</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f4f6; --paper:#ffffff; --ink:#17181c; --mut:#6b7280;
+  --line:#e7e8ec; --accent:#4f46e5; --accent-soft:#eef0ff; --star:#e0a80d;
+  --tag:#eef1f6; --tagink:#3f4657;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+  line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 90px}
+
+/* 신문 제호 */
+.masthead{text-align:center;padding:46px 0 20px;border-bottom:3px double var(--ink)}
+.masthead .kicker{font-size:12px;letter-spacing:4px;color:var(--mut);
+  text-transform:uppercase;margin-bottom:13px}
+.masthead h1{font-family:Georgia,"Times New Roman",serif;font-size:46px;font-weight:700;
+  margin:0;letter-spacing:-1px}
+.masthead .date{margin-top:13px;color:#333;font-size:14px;font-family:Georgia,serif;font-style:italic}
+.masthead .date b{font-style:normal;font-weight:600}
+
+/* 툴바 */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
+.tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.toolbar input[type=date],.search{font-family:inherit;font-size:13px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.search{min-width:220px}
+.tools a{font-size:13px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);color:var(--ink)}
+.tools a:hover{border-color:var(--accent);text-decoration:none}
+.tools a.disabled{opacity:.35;pointer-events:none}
+.tools a.latest{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 섹션 라벨 */
+.section-label{display:flex;align-items:center;gap:14px;margin:34px 0 14px;
+  font-size:13px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800}
+.section-label .accent{color:var(--accent)}
+.section-label:after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 총평 */
+.overview{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:14px;padding:20px 24px;margin:24px 0 0}
+.overview h2{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--accent);font-weight:700}
+.overview p{margin:0;color:#2c2c2c;font-size:15.5px}
+
+/* TOP 5 MUST READ */
+.top5{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:6px 26px;
+  box-shadow:0 4px 20px rgba(30,30,70,.05)}
+.t5{display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.t5:last-child{border-bottom:none}
+.t5 .rank{font-family:Georgia,serif;font-size:36px;font-weight:700;line-height:1;
+  color:var(--accent);min-width:50px;text-align:center}
+.t5 .rbody{flex:1;min-width:0}
+.t5 .m5{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.t5 h4{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.4}
+.t5 h4 a{color:var(--ink)}.t5 h4 a:hover{color:var(--accent)}
+.t5 .why5{font-size:13.5px;color:#4a5064;line-height:1.6}
+.t5 .why5 b{color:var(--accent)}
+
+/* 태그 · 별점 */
+.tag{background:var(--tag);color:var(--tagink);font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
+.stars{color:var(--star);font-size:13px;letter-spacing:1px}
+.stars .off{color:#dcd9d0}
+.src{color:var(--mut);font-size:12px}
+
+/* 매거진 그리드 */
+.gridhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.filter-btn{cursor:pointer;font-size:12.5px;padding:6px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--paper);color:var(--tagink);font-family:inherit;transition:.12s}
+.filter-btn:hover{border-color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+  display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
+.card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.card h3{margin:2px 0 10px;font-size:19px;line-height:1.4;font-weight:800;letter-spacing:-.01em}
+.summary{margin:0 0 14px;color:#3a3a3a;font-size:14.5px;flex:1}
+.why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:11px 14px;font-size:13.5px;color:#33385a}
+.why b{color:var(--accent)}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;
+  padding-top:12px;border-top:1px solid var(--line)}
+.readmore{font-size:12.5px;font-weight:700}.readmore:after{content:" \2192"}
+#noresult{display:none;color:var(--mut);text-align:center;padding:40px 0}
+
+footer{margin-top:50px;padding-top:22px;border-top:3px double var(--ink);
+  color:var(--mut);font-size:12px;text-align:center;line-height:1.8}
+
+@media (max-width:760px){
+  .masthead h1{font-size:32px}
+  .grid{grid-template-columns:1fr}
+  .search{min-width:130px;flex:1}
+  .filters{margin-left:0;width:100%}
+  .t5 .rank{font-size:28px;min-width:38px}
+}
+@media print{
+  .toolbar,.filters,.readmore{display:none}
+  .card{break-inside:avoid;box-shadow:none}.top5{box-shadow:none}
+}
+</style>
+</head><body><div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">AX Strategy · Daily Intelligence</div>
+  <h1>The AI · AX Briefing</h1>
+  <div class="date"><b>2026년 10월 13일 화요일</b> · 총 30건 · 중요도순</div>
+</header>
+
+
+    <div class="toolbar">
+      <div class="tools">
+        <input type="date" value="2026-10-13" min="2026-07-01" max="2026-10-13" onchange="goDate(this.value)">
+        <a href="2026-10-12.html">◀ 이전</a><a class="disabled">다음 ▶</a>
+        <a class="latest" href="../index.html">최신</a>
+      </div>
+      <div class="tools">
+        <input type="text" class="search" id="q" placeholder="🔍 키워드 검색..." oninput="applyFilters()">
+      </div>
+    </div>
+    <script>
+      const DATES = ["2026-10-13", "2026-10-12", "2026-10-11", "2026-10-10", "2026-10-09", "2026-10-08", "2026-10-07", "2026-10-06", "2026-10-05", "2026-10-04", "2026-10-03", "2026-10-02", "2026-10-01", "2026-09-30", "2026-09-29", "2026-09-28", "2026-09-27", "2026-09-26", "2026-09-25", "2026-09-24", "2026-09-23", "2026-09-22", "2026-09-21", "2026-09-20", "2026-09-19", "2026-09-18", "2026-09-17", "2026-09-16", "2026-09-15", "2026-09-14", "2026-09-13", "2026-09-12", "2026-09-11", "2026-09-10", "2026-09-09", "2026-09-08", "2026-09-07", "2026-09-06", "2026-09-05", "2026-09-04", "2026-09-03", "2026-09-02", "2026-09-01", "2026-08-31", "2026-08-30", "2026-08-29", "2026-08-28", "2026-08-27", "2026-08-26", "2026-08-25", "2026-08-24", "2026-08-23", "2026-08-22", "2026-08-21", "2026-08-20", "2026-08-19", "2026-08-18", "2026-08-17", "2026-08-16", "2026-08-15", "2026-08-14", "2026-08-13", "2026-08-12", "2026-08-11", "2026-08-10", "2026-08-09", "2026-08-08", "2026-08-07", "2026-08-06", "2026-08-05", "2026-08-04", "2026-08-03", "2026-08-02", "2026-08-01", "2026-07-31", "2026-07-30", "2026-07-29", "2026-07-28", "2026-07-27", "2026-07-26", "2026-07-25", "2026-07-24", "2026-07-23", "2026-07-22", "2026-07-21", "2026-07-20", "2026-07-19", "2026-07-18", "2026-07-17", "2026-07-16", "2026-07-15", "2026-07-14", "2026-07-13", "2026-07-12", "2026-07-11", "2026-07-10", "2026-07-09", "2026-07-08", "2026-07-07", "2026-07-06", "2026-07-05", "2026-07-04", "2026-07-03", "2026-07-02", "2026-07-01"];
+      const BASE = "";
+      function goDate(d){
+        if(!d) return;
+        if(DATES.includes(d)){ location.href = BASE + d + ".html"; }
+        else { alert("해당 날짜의 브리핑이 없습니다."); }
+      }
+    </script>
+
+<section class="overview">
+  <h2>오늘의 총평</h2>
+  <p>오늘 AI 관련 기사들은 AI 에이전트의 금융 및 일반 서비스 분야 확산에 주목합니다. KB국민카드, 삼성자산운용 등 금융권은 AI 에이전트 연계 및 관련 투자 상품을 출시하며 미래 금융 인프라 구축에 박차를 가하고 있습니다. 카카오, LGU+ 등 빅테크 및 통신사도 AI 에이전트를 핵심 서비스에 도입하여 고객 경험 혁신을 시도하고 있습니다. 또한, 우리은행의 생성형 AI 기반 금융사기 방지 시스템 도입과 코스콤의 금융 AI 공개 등 금융권의 AI 활용이 구체화되고 있으며, 전사적 AX 전략 수립 및 실행에 대한 논의도 활발하게 이루어지고 있습니다.</p>
+</section>
+
+<div id="top5wrap">
+  <div class="section-label"><span class="accent">TOP 5</span> · MUST READ</div>
+  <div class="top5">
+        <div class="t5">
+          <div class="rank">01</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">연합뉴스</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFB4a1BBMElkVUxxcWRaSmk4cVV6bm5Sd0RjUFBMZWtxSE1fU0tKRkJoYTBJaUFXMUJjdHVXbG93UHhoRzdJTUR1YTE0RjZtdHM5TzRISG1oelNGTi1ZSkhLedIBYEFVX3lxTFB4a1BBMElkVUxxcWRaSmk4cVV6bm5Sd0RjUFBMZWtxSE1fU0tKRkJoYTBJaUFXMUJjdHVXbG93UHhoRzdJTUR1YTE0RjZtdHM5TzRISG1oelNGTi1ZSkhLeQ?oc=5" target="_blank" rel="noopener">&#x27;삼성 협업&#x27; 수이 &quot;AI 에이전트 결제에 맞는 미래 금융 인프라&quot;</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트가 단순 정보 제공을 넘어 실제 금융 거래 및 결제에 직접 관여할 미래에 대비하여, 우리 회사의 금융 서비스 인프라 및 결제 시스템의 AI 에이전트 연동 전략을 수립하는 데 중요한 참고가 된다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">02</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">동아일보</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMib0FVX3lxTFByZWJpWGNob2FIdWFJNE53QmZtRld6NHEyWGZ2cGhqWjRxOEhtN2htX1JURkVPTEFaS3VMNnZiSkZfV0ZBMTk3emQ4aHZFLS1yS3N6anhoQkpzVUhMeTJiU2U5Q0lpUjUyWVoyUHVjY9IBZkFVX3lxTE1JQzVNalRHN2hCMW5TeVRtN2pyNEZOUGVEZkJONHliMFBzd2R4TUF2NjEteUV3VG12ckhPS0gwbDdZalZ4QVRaNmxNYkFZQkhJQ2RkdEp3b2lWMlZjZGpNNjgxZWRldw?oc=5" target="_blank" rel="noopener">수이, AI 에이전트 금융 대응 전략 공개···구글 클라우드·삼성전자와 협업</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 주요 기술 기업과의 협력을 통해 AI 에이전트 기반 금융 인프라를 구축하는 사례로, 우리 회사도 AI 에이전트 도입 시 외부 기술 파트너십을 적극적으로 고려하여 기술 역량을 확보해야 한다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">03</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">경향게임스</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5qdkluZXQyTjl1NzRUUGw4ZUw0bFhFbkN6ZEp2Qm1VNGhOWm9xcE5oTGtQV0E5VXdvdHhDUk9TX3E1cVRtLUJGZTdVclhUODNnRURUOW5zekM3MHhYRHZlMWVZcnh6WEdEbDYxSw?oc=5" target="_blank" rel="noopener">수이, 온체인 금융상품 통합 추진 및 AI 에이전트 자율 거래 인프라 구축</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트가 자율적으로 금융 상품을 거래하는 미래 금융 환경에 대한 비전 제시로, 우리 회사는 AI 에이전트의 자율성 증대에 따른 리스크 관리 및 새로운 금융 상품 개발 기회를 선제적으로 검토해야 한다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">04</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">뉴스웨이</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBZVXplSDVQNEc2OUREcjNRRHhENGlLMVlUNHhLOXNILU5LLVlTTHN2OC1SbUpSS1JIMTVXcFhNS3dIem1HQlRRUUdQUE1ocUkwRlJlTklxbE83dEc1cWFfUjJJQVZLR3liWVE?oc=5" target="_blank" rel="noopener">카카오, 카톡에 AI 에이전트 심는다···통합 에이전틱 AI 전략 공개</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 국내 최대 플랫폼 기업의 AI 에이전트 통합 전략은 AI 에이전트가 미래 서비스의 핵심이 될 것임을 명확히 보여준다. 우리 회사도 전사적인 AI 에이전트 도입 로드맵을 수립하고, 다양한 업무 및 고객 접점에 적용할 방안을 모색해야 한다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">05</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">코리아포스트 한글판</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMibkFVX3lxTE9GUjlaODM2Nl9lWlJsUU9rVkdkbTdXQ1hmbWZFLXNTc1dnbEVPaC1fVHFGRUh4djUybDFlSzRxb005MGpZcGpkN2dpMWRuNzJfWHpfdFNEMUswc3pzdnpDdERjbE9NZGhiNk5aRmhn?oc=5" target="_blank" rel="noopener">수이, 기관 금융·AI 에이전트 인프라 공개…비트코인 담보 대출 &#x27;하시&#x27; 가동-</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트가 블록체인 기반의 기관 금융 서비스에 직접 적용되는 사례로, 우리 회사도 분산원장기술(DLT) 및 가상자산 관련 서비스 개발 시 AI 에이전트의 역할과 연동 방안을 심층적으로 검토해야 한다.</div>
+          </div>
+        </div></div>
+</div>
+
+<div class="section-label gridhead">
+  전체 브리핑
+  <div class="filters"><button class="filter-btn active" data-cat="all">전체 30</button><button class="filter-btn" data-cat="AI Agent">AI Agent 17</button><button class="filter-btn" data-cat="금융 AI">금융 AI 5</button><button class="filter-btn" data-cat="AX">AX 4</button><button class="filter-btn" data-cat="AI">AI 3</button><button class="filter-btn" data-cat="보험 AI">보험 AI 1</button></div>
+</div>
+<div class="grid">
+
+    <article class="card is-top5" data-category="AI Agent" data-text="&#x27;삼성 협업&#x27; 수이 &quot;ai 에이전트 결제에 맞는 미래 금융 인프라&quot; 블록체인 기업 수이가 삼성과 협력하여 ai 에이전트 결제에 최적화된 미래 금융 인프라 구축을 목표로 한다고 밝혔다. 이는 ai 에이전트가 금융 거래의 핵심 주체가 될 미래를 대비하는 움직임이다. ai 에이전트가 단순 정보 제공을 넘어 실제 금융 거래 및 결제에 직접 관여할 미래에 대비하여, 우리 회사의 금융 서비스 인프라 및 결제 시스템의 ai 에이전트 연동 전략을 수립하는 데 중요한 참고가 된다. ai agent 연합뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>&#x27;삼성 협업&#x27; 수이 &quot;AI 에이전트 결제에 맞는 미래 금융 인프라&quot;</h3>
+      <p class="summary">블록체인 기업 수이가 삼성과 협력하여 AI 에이전트 결제에 최적화된 미래 금융 인프라 구축을 목표로 한다고 밝혔다. 이는 AI 에이전트가 금융 거래의 핵심 주체가 될 미래를 대비하는 움직임이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 단순 정보 제공을 넘어 실제 금융 거래 및 결제에 직접 관여할 미래에 대비하여, 우리 회사의 금융 서비스 인프라 및 결제 시스템의 AI 에이전트 연동 전략을 수립하는 데 중요한 참고가 된다.</div>
+      <div class="meta">
+        <span class="src">연합뉴스 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFB4a1BBMElkVUxxcWRaSmk4cVV6bm5Sd0RjUFBMZWtxSE1fU0tKRkJoYTBJaUFXMUJjdHVXbG93UHhoRzdJTUR1YTE0RjZtdHM5TzRISG1oelNGTi1ZSkhLedIBYEFVX3lxTFB4a1BBMElkVUxxcWRaSmk4cVV6bm5Sd0RjUFBMZWtxSE1fU0tKRkJoYTBJaUFXMUJjdHVXbG93UHhoRzdJTUR1YTE0RjZtdHM5TzRISG1oelNGTi1ZSkhLeQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="수이, ai 에이전트 금융 대응 전략 공개···구글 클라우드·삼성전자와 협업 블록체인 기업 수이가 구글 클라우드, 삼성전자와의 협업을 통해 ai 에이전트 금융 대응 전략을 공개했다. 이는 ai 에이전트 시대에 필요한 금융 인프라와 서비스 모델을 선제적으로 구축하려는 시도이다. 주요 기술 기업과의 협력을 통해 ai 에이전트 기반 금융 인프라를 구축하는 사례로, 우리 회사도 ai 에이전트 도입 시 외부 기술 파트너십을 적극적으로 고려하여 기술 역량을 확보해야 한다. ai agent 동아일보">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>수이, AI 에이전트 금융 대응 전략 공개···구글 클라우드·삼성전자와 협업</h3>
+      <p class="summary">블록체인 기업 수이가 구글 클라우드, 삼성전자와의 협업을 통해 AI 에이전트 금융 대응 전략을 공개했다. 이는 AI 에이전트 시대에 필요한 금융 인프라와 서비스 모델을 선제적으로 구축하려는 시도이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 주요 기술 기업과의 협력을 통해 AI 에이전트 기반 금융 인프라를 구축하는 사례로, 우리 회사도 AI 에이전트 도입 시 외부 기술 파트너십을 적극적으로 고려하여 기술 역량을 확보해야 한다.</div>
+      <div class="meta">
+        <span class="src">동아일보 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMib0FVX3lxTFByZWJpWGNob2FIdWFJNE53QmZtRld6NHEyWGZ2cGhqWjRxOEhtN2htX1JURkVPTEFaS3VMNnZiSkZfV0ZBMTk3emQ4aHZFLS1yS3N6anhoQkpzVUhMeTJiU2U5Q0lpUjUyWVoyUHVjY9IBZkFVX3lxTE1JQzVNalRHN2hCMW5TeVRtN2pyNEZOUGVEZkJONHliMFBzd2R4TUF2NjEteUV3VG12ckhPS0gwbDdZalZ4QVRaNmxNYkFZQkhJQ2RkdEp3b2lWMlZjZGpNNjgxZWRldw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="수이, 온체인 금융상품 통합 추진 및 ai 에이전트 자율 거래 인프라 구축 수이가 온체인 금융상품 통합을 추진하고 ai 에이전트의 자율 거래 인프라를 구축하겠다고 밝혔다. 이는 블록체인 기반 금융 환경에서 ai 에이전트가 주도하는 자율적인 금융 거래 시대를 예고한다. ai 에이전트가 자율적으로 금융 상품을 거래하는 미래 금융 환경에 대한 비전 제시로, 우리 회사는 ai 에이전트의 자율성 증대에 따른 리스크 관리 및 새로운 금융 상품 개발 기회를 선제적으로 검토해야 한다. ai agent 경향게임스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>수이, 온체인 금융상품 통합 추진 및 AI 에이전트 자율 거래 인프라 구축</h3>
+      <p class="summary">수이가 온체인 금융상품 통합을 추진하고 AI 에이전트의 자율 거래 인프라를 구축하겠다고 밝혔다. 이는 블록체인 기반 금융 환경에서 AI 에이전트가 주도하는 자율적인 금융 거래 시대를 예고한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 자율적으로 금융 상품을 거래하는 미래 금융 환경에 대한 비전 제시로, 우리 회사는 AI 에이전트의 자율성 증대에 따른 리스크 관리 및 새로운 금융 상품 개발 기회를 선제적으로 검토해야 한다.</div>
+      <div class="meta">
+        <span class="src">경향게임스 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5qdkluZXQyTjl1NzRUUGw4ZUw0bFhFbkN6ZEp2Qm1VNGhOWm9xcE5oTGtQV0E5VXdvdHhDUk9TX3E1cVRtLUJGZTdVclhUODNnRURUOW5zekM3MHhYRHZlMWVZcnh6WEdEbDYxSw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="카카오, 카톡에 ai 에이전트 심는다···통합 에이전틱 ai 전략 공개 카카오가 카카오톡에 ai 에이전트를 통합하고 &#x27;통합 에이전틱 ai 전략&#x27;을 공개했다. 이는 카카오의 모든 서비스에 ai 에이전트를 연동하여 사용자 경험을 혁신하겠다는 의지를 보여준다. 국내 최대 플랫폼 기업의 ai 에이전트 통합 전략은 ai 에이전트가 미래 서비스의 핵심이 될 것임을 명확히 보여준다. 우리 회사도 전사적인 ai 에이전트 도입 로드맵을 수립하고, 다양한 업무 및 고객 접점에 적용할 방안을 모색해야 한다. ai agent 뉴스웨이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>카카오, 카톡에 AI 에이전트 심는다···통합 에이전틱 AI 전략 공개</h3>
+      <p class="summary">카카오가 카카오톡에 AI 에이전트를 통합하고 &#x27;통합 에이전틱 AI 전략&#x27;을 공개했다. 이는 카카오의 모든 서비스에 AI 에이전트를 연동하여 사용자 경험을 혁신하겠다는 의지를 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 국내 최대 플랫폼 기업의 AI 에이전트 통합 전략은 AI 에이전트가 미래 서비스의 핵심이 될 것임을 명확히 보여준다. 우리 회사도 전사적인 AI 에이전트 도입 로드맵을 수립하고, 다양한 업무 및 고객 접점에 적용할 방안을 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">뉴스웨이 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBZVXplSDVQNEc2OUREcjNRRHhENGlLMVlUNHhLOXNILU5LLVlTTHN2OC1SbUpSS1JIMTVXcFhNS3dIem1HQlRRUUdQUE1ocUkwRlJlTklxbE83dEc1cWFfUjJJQVZLR3liWVE?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="금융 AI" data-text="수이, 기관 금융·ai 에이전트 인프라 공개…비트코인 담보 대출 &#x27;하시&#x27; 가동- 수이가 기관 금융 및 ai 에이전트 인프라를 공개하고, 비트코인 담보 대출 서비스 &#x27;하시&#x27;를 가동한다. 이는 블록체인 기반의 새로운 금융 서비스에 ai 에이전트가 결합되는 사례이다. ai 에이전트가 블록체인 기반의 기관 금융 서비스에 직접 적용되는 사례로, 우리 회사도 분산원장기술(dlt) 및 가상자산 관련 서비스 개발 시 ai 에이전트의 역할과 연동 방안을 심층적으로 검토해야 한다. 금융 ai 코리아포스트 한글판">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>수이, 기관 금융·AI 에이전트 인프라 공개…비트코인 담보 대출 &#x27;하시&#x27; 가동-</h3>
+      <p class="summary">수이가 기관 금융 및 AI 에이전트 인프라를 공개하고, 비트코인 담보 대출 서비스 &#x27;하시&#x27;를 가동한다. 이는 블록체인 기반의 새로운 금융 서비스에 AI 에이전트가 결합되는 사례이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 블록체인 기반의 기관 금융 서비스에 직접 적용되는 사례로, 우리 회사도 분산원장기술(DLT) 및 가상자산 관련 서비스 개발 시 AI 에이전트의 역할과 연동 방안을 심층적으로 검토해야 한다.</div>
+      <div class="meta">
+        <span class="src">코리아포스트 한글판 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibkFVX3lxTE9GUjlaODM2Nl9lWlJsUU9rVkdkbTdXQ1hmbWZFLXNTc1dnbEVPaC1fVHFGRUh4djUybDFlSzRxb005MGpZcGpkN2dpMWRuNzJfWHpfdFNEMUswc3pzdnpDdERjbE9NZGhiNk5aRmhn?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="보험 AI" data-text="보험약관 &#x27;표 안의 표&#x27; 읽는다…금융·공공 폐쇄망 파고든 ax 기업 한 ax 기업이 보험약관 내 복잡한 &#x27;표 안의 표&#x27;까지 정확하게 읽어내는 ai 기술을 개발하여 금융 및 공공기관의 폐쇄망에 적용하고 있다. 이는 보험 분야에서 ai의 문서 분석 및 이해 능력이 고도화되고 있음을 보여준다. 보험 업무의 핵심인 약관 분석에 ai가 적용되는 구체적인 사례로, 우리 회사의 보험 상품 개발, 심사, 보상 등 다양한 업무에서 ai 기반 문서 분석 및 이해 기술 도입을 검토하여 효율성을 높일 수 있다. 보험 ai 머니투데이">
+      <div class="top">
+        <span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>보험약관 &#x27;표 안의 표&#x27; 읽는다…금융·공공 폐쇄망 파고든 AX 기업</h3>
+      <p class="summary">한 AX 기업이 보험약관 내 복잡한 &#x27;표 안의 표&#x27;까지 정확하게 읽어내는 AI 기술을 개발하여 금융 및 공공기관의 폐쇄망에 적용하고 있다. 이는 보험 분야에서 AI의 문서 분석 및 이해 능력이 고도화되고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 보험 업무의 핵심인 약관 분석에 AI가 적용되는 구체적인 사례로, 우리 회사의 보험 상품 개발, 심사, 보상 등 다양한 업무에서 AI 기반 문서 분석 및 이해 기술 도입을 검토하여 효율성을 높일 수 있다.</div>
+      <div class="meta">
+        <span class="src">머니투데이 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiakFVX3lxTFA3UDhiXzdYOFRyeXF3cVVPbXZpUVRvNUlTLUJPc1VDVkxaX3NhNGtkMm43SVNVSVphRjUxQ3JGT0Yzc3ktVkRMR0VBN0l0czROYUEyODBaMjBXUUt2b05jM2ZOeGpWTGRacFHSAW9BVV95cUxPMFNSY2wtdmdXa0hlaFRDTGJHRlNQR2ZaNGs5ZVg1TndxcmZQclZnVE5iLWQtV29fVEpBQ0lPS3d1SFJvZ3RjdEk1RE9GVWw5SEN6Y1NHSnFrb2FhTDd6MDJzV0NNVTZpcGpnb3hRbEE?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="kb국민카드, 일본 금융사와 디지털 협력…ai 에이전트 연계 추진 kb국민카드가 일본 금융사와 디지털 협력을 통해 ai 에이전트 연계를 추진한다. 이는 해외 시장에서 ai 기술을 활용한 새로운 비즈니스 모델을 모색하는 움직임으로 보인다. 금융권의 ai 에이전트 해외 협력 사례로, 우리 회사도 글로벌 파트너십을 통해 ai 에이전트 기반 서비스 확장을 고려할 수 있다. 해외 시장에서의 ai 에이전트 도입 전략 수립에 참고할 만하다. ai agent 뉴스퀘스트">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>KB국민카드, 일본 금융사와 디지털 협력…AI 에이전트 연계 추진</h3>
+      <p class="summary">KB국민카드가 일본 금융사와 디지털 협력을 통해 AI 에이전트 연계를 추진한다. 이는 해외 시장에서 AI 기술을 활용한 새로운 비즈니스 모델을 모색하는 움직임으로 보인다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융권의 AI 에이전트 해외 협력 사례로, 우리 회사도 글로벌 파트너십을 통해 AI 에이전트 기반 서비스 확장을 고려할 수 있다. 해외 시장에서의 AI 에이전트 도입 전략 수립에 참고할 만하다.</div>
+      <div class="meta">
+        <span class="src">뉴스퀘스트 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMib0FVX3lxTE9tbERkbzlYN09rOHNJVjVOWWVlZmtlMXVEdEc1a290Nk0xdkw3MWM0VHR1Sm9ZcjkwcjZZNU9abTV1TWo5MWIzTnRJU0pab1hWZ1Y3WC1HdEdxUzJTbF83OWQyT3FqellqNzBlRC1ESQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="고려대학교 미래성장연구원·기술경영전문대학원, ‘ax 전략 공개 세미나’ 개최...금융·국방 분야 ai 전환 현황과 과제 논의 고려대학교에서 &#x27;ax 전략 공개 세미나&#x27;를 개최하여 금융 및 국방 분야의 ai 전환 현황과 과제를 논의했다. 이는 다양한 산업 분야에서 ai 전환의 중요성과 구체적인 전략 수립의 필요성을 강조하는 자리였다. ax 전략팀으로서 금융 분야의 ai 전환 현황과 과제에 대한 외부 전문가 및 학계의 시각을 파악하고, 우리 회사의 ax 전략 수립 및 고도화에 필요한 인사이트를 얻을 수 있다. ax 한국강사신문">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>고려대학교 미래성장연구원·기술경영전문대학원, ‘AX 전략 공개 세미나’ 개최...금융·국방 분야 AI 전환 현황과 과제 논의</h3>
+      <p class="summary">고려대학교에서 &#x27;AX 전략 공개 세미나&#x27;를 개최하여 금융 및 국방 분야의 AI 전환 현황과 과제를 논의했다. 이는 다양한 산업 분야에서 AI 전환의 중요성과 구체적인 전략 수립의 필요성을 강조하는 자리였다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AX 전략팀으로서 금융 분야의 AI 전환 현황과 과제에 대한 외부 전문가 및 학계의 시각을 파악하고, 우리 회사의 AX 전략 수립 및 고도화에 필요한 인사이트를 얻을 수 있다.</div>
+      <div class="meta">
+        <span class="src">한국강사신문 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5nbzlURUNBeHhmdnJDOFpWN2RkNXZRc201MWowdkE1d2tTV2JrZWtEeXhxV21yZnFsbzY0OWFRRUNHMk5WTkpPRG1pU2RrQWlMQ0ZIOWJ3ZHFjSXdhLURkV0diT21GLWhYeHpSanE1ZWM?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="카톡에 한국형 ai 에이전트 도입…말로 주문·예약까지 카카오가 카카오톡에 한국형 ai 에이전트를 도입하여 음성 명령으로 주문 및 예약까지 가능하게 할 예정이다. 이는 일상생활 속에서 ai 에이전트의 활용 범위가 크게 확장될 것임을 시사한다. 국민 메신저 카카오톡의 ai 에이전트 도입은 고객 접점에서의 ai 에이전트 활용 트렌드를 보여준다. 우리 회사도 고객 서비스 채널에 ai 에이전트를 연동하여 고객 경험을 혁신할 기회를 모색해야 한다. ai agent 매일경제 마켓">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>카톡에 한국형 AI 에이전트 도입…말로 주문·예약까지</h3>
+      <p class="summary">카카오가 카카오톡에 한국형 AI 에이전트를 도입하여 음성 명령으로 주문 및 예약까지 가능하게 할 예정이다. 이는 일상생활 속에서 AI 에이전트의 활용 범위가 크게 확장될 것임을 시사한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 국민 메신저 카카오톡의 AI 에이전트 도입은 고객 접점에서의 AI 에이전트 활용 트렌드를 보여준다. 우리 회사도 고객 서비스 채널에 AI 에이전트를 연동하여 고객 경험을 혁신할 기회를 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">매일경제 마켓 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE51Uk5xcFFmY1NRRWFyQ0wyLUVHWDBYekJHOFFUb3dwWUptTXBXS1BQamN2cE95MWtpVmFxY1J5ZmY1WHVHTlpmMEFEVENGZFM4Q1E?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI" data-text="우리은행, 생성형 ai로 금융사기 막는다 우리은행이 생성형 ai를 활용하여 금융사기 방지 시스템을 고도화할 계획이다. 이는 ai 기술이 금융 범죄 예방 및 고객 자산 보호에 중요한 역할을 할 수 있음을 보여준다. 생성형 ai의 실제 금융 서비스 적용 사례로, 특히 사기 탐지 및 예방 분야는 우리 회사의 리스크 관리 및 고객 보호 전략에 직접적인 시사점을 제공한다. 생성형 ai의 다양한 업무 적용 기회를 발굴하는 데 참고해야 한다. ai 한국경제">
+      <div class="top">
+        <span class="tag">AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>우리은행, 생성형 AI로 금융사기 막는다</h3>
+      <p class="summary">우리은행이 생성형 AI를 활용하여 금융사기 방지 시스템을 고도화할 계획이다. 이는 AI 기술이 금융 범죄 예방 및 고객 자산 보호에 중요한 역할을 할 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 생성형 AI의 실제 금융 서비스 적용 사례로, 특히 사기 탐지 및 예방 분야는 우리 회사의 리스크 관리 및 고객 보호 전략에 직접적인 시사점을 제공한다. 생성형 AI의 다양한 업무 적용 기회를 발굴하는 데 참고해야 한다.</div>
+      <div class="meta">
+        <span class="src">한국경제 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE1JdXNGRkJDV3NoeWRLRll2WVJhTjRJZ21FWjEwaExhUkY5Vnd0UllVQ2VOdmZkdU5pQTNhWGg1aHlQMkZOaDZvSkY5djNMdVJ5VndNRHV2WWhPQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="삼성자산운용, ai 에이전트 etf 출시…메타·팔란티어 담는다 삼성자산운용이 ai 에이전트 관련 기업에 투자하는 etf를 출시하며, 메타, 팔란티어 등 주요 ai 기업들을 포함한다. 이는 ai 에이전트 기술의 성장 가능성을 높이 평가하고 투자 상품으로 연결하는 움직임이다. ai 에이전트 관련 기술 및 기업에 대한 시장의 높은 관심과 투자 트렌드를 보여준다. 우리 회사도 ai 에이전트 관련 기술 투자 및 파트너십 전략 수립 시, 시장의 주요 플레이어들을 파악하는 데 참고할 수 있다. ai agent 이지경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>삼성자산운용, AI 에이전트 ETF 출시…메타·팔란티어 담는다</h3>
+      <p class="summary">삼성자산운용이 AI 에이전트 관련 기업에 투자하는 ETF를 출시하며, 메타, 팔란티어 등 주요 AI 기업들을 포함한다. 이는 AI 에이전트 기술의 성장 가능성을 높이 평가하고 투자 상품으로 연결하는 움직임이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 관련 기술 및 기업에 대한 시장의 높은 관심과 투자 트렌드를 보여준다. 우리 회사도 AI 에이전트 관련 기술 투자 및 파트너십 전략 수립 시, 시장의 주요 플레이어들을 파악하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">이지경제 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibkFVX3lxTFBUaWtpM2QwN3IyTjJuSjFsUFhZTlVlZWdHanFNU0FaNUMtNGNBcUlHdDZOdGQ2TXFMbmFpd2ppV1ZxRGFjQU1KMUQ5aDhGWVlmYTd1QzU3Tjg0RFYwZ3FPNEx5b0tCV0NnYzlfU3ln?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="우리은행, 금융사기 차단에 생성형 ai 도입···11월 새 시스템 가동 우리은행이 11월부터 생성형 ai 기반의 새로운 시스템을 가동하여 금융사기 차단을 고도화할 예정이다. 이는 생성형 ai가 실제 금융 업무에 적용되어 가시적인 성과를 낼 수 있음을 보여준다. 생성형 ai의 금융사기 차단 적용은 우리 회사의 리스크 관리 및 보안 시스템 강화에 중요한 벤치마킹 사례가 된다. 생성형 ai의 업무 적용 기회 발굴 시, 구체적인 도입 시기와 기대 효과를 참고할 수 있다. 금융 ai 현대경제신문">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>우리은행, 금융사기 차단에 생성형 AI 도입···11월 새 시스템 가동</h3>
+      <p class="summary">우리은행이 11월부터 생성형 AI 기반의 새로운 시스템을 가동하여 금융사기 차단을 고도화할 예정이다. 이는 생성형 AI가 실제 금융 업무에 적용되어 가시적인 성과를 낼 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 생성형 AI의 금융사기 차단 적용은 우리 회사의 리스크 관리 및 보안 시스템 강화에 중요한 벤치마킹 사례가 된다. 생성형 AI의 업무 적용 기회 발굴 시, 구체적인 도입 시기와 기대 효과를 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">현대경제신문 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBVZWxsdHp1U0NlSFF2bnBwRmJRdGhqTEZkU0ZnZ1ltQkFWOVZPek41dGo3R1lyOE51U2hSZnpJbkxmYnBqblRBWHN2enQyOFhZNEVJbGRRd2Y5R0hmYVhjcHJkX3ZQeDDSAWtBVV95cUxNeHRKT3lNY3BBamF3bndUTm5PNWdldWprdTQxS05NbzZFcnZ0TThuR0kyMUxpWHpxTjhwVFZWb05HZ3QyYnNWOGtkYkJ2dzRSbmFxMy1oU3dtM0tTVGo2cElWcV9Tbm50WGhsTQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="lgu+, &#x27;u+원&#x27; 앱 ai 에이전트 중심으로 바꾼다 lgu+가 &#x27;u+원&#x27; 앱을 ai 에이전트 중심으로 개편하여 고객 경험을 혁신할 계획이다. 이는 통신 서비스에서도 ai 에이전트가 고객 접점의 핵심 역할을 수행하게 될 것임을 보여준다. 통신사의 핵심 고객 서비스 앱에 ai 에이전트를 전면 도입하는 사례로, 우리 회사의 모바일 앱 및 디지털 채널에 ai 에이전트를 통합하여 고객 편의성을 높이고 개인화된 서비스를 제공할 기회를 모색해야 한다. ai agent 연합뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>LGU+, &#x27;U+원&#x27; 앱 AI 에이전트 중심으로 바꾼다</h3>
+      <p class="summary">LGU+가 &#x27;U+원&#x27; 앱을 AI 에이전트 중심으로 개편하여 고객 경험을 혁신할 계획이다. 이는 통신 서비스에서도 AI 에이전트가 고객 접점의 핵심 역할을 수행하게 될 것임을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 통신사의 핵심 고객 서비스 앱에 AI 에이전트를 전면 도입하는 사례로, 우리 회사의 모바일 앱 및 디지털 채널에 AI 에이전트를 통합하여 고객 편의성을 높이고 개인화된 서비스를 제공할 기회를 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">연합뉴스 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE9tSlQteEMzVWVWdUVpR1BqOGdEc1NZNEZtSFRhZjNQWVUtTVdnTGd5dUpYUnJHWXphd0dJUjJMejVwNVRWRGwwcWs2WGczZmlIaWNNRWZsWXR6cXPSAWBBVV95cUxPaEJKbnZoTmNHU1FVb1hudkVjdWV2MHF5X0ZWbjkwM3dFTjFZR0ZjR2gycWRwaWhqNlBuSzRPcHEzOTlKZW1keFAyLTNZc3g1VVRacUlvQ2NZdGlqM0tYQnU?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="삼성운용, 메타·팔란티어 담은 ai 에이전트 etf 신규 상장 삼성자산운용이 메타, 팔란티어 등 글로벌 ai 에이전트 관련 기업에 투자하는 etf를 신규 상장했다. 이는 ai 에이전트 산업의 성장 잠재력에 대한 시장의 기대를 반영한다. ai 에이전트 관련 기업에 대한 투자 상품 출시는 해당 산업의 성장성과 시장의 관심을 방증한다. 우리 회사의 ai 기술 도입 및 파트너십 전략 수립 시, 유망 ai 에이전트 기업들을 파악하는 데 참고할 수 있다. ai agent 연합뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>삼성운용, 메타·팔란티어 담은 AI 에이전트 ETF 신규 상장</h3>
+      <p class="summary">삼성자산운용이 메타, 팔란티어 등 글로벌 AI 에이전트 관련 기업에 투자하는 ETF를 신규 상장했다. 이는 AI 에이전트 산업의 성장 잠재력에 대한 시장의 기대를 반영한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 관련 기업에 대한 투자 상품 출시는 해당 산업의 성장성과 시장의 관심을 방증한다. 우리 회사의 AI 기술 도입 및 파트너십 전략 수립 시, 유망 AI 에이전트 기업들을 파악하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">연합뉴스 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE5ZLTBEODNnY0pYZEw5eDVkaV9SbTF2MWNaLXluMWtoQXJPdWdqM2FmSGZ2VGlTRU1aeTZUMU5BekFRWDVLRE1ha0VaMmt2WXRMTDRCWjdCSzl3eEXSAWBBVV95cUxPcGlEaGtaT2pIMEhPcWJSbmdqblBfTW9DMElla2Y5N1B4azg0RXk1VFVtb2M2LVZIb2x0cGhRZ0l4bXdSZFo3ZXhOeFZ3OVlSQTlLTkNkX0dVX29LS2NwdnQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="&quot;ai가 요금 납부·로밍 가입까지&quot;⋯lgu+, &#x27;u+one&#x27; ai 에이전트 확대 lgu+가 &#x27;u+원&#x27; 앱의 ai 에이전트 기능을 확대하여 요금 납부, 로밍 가입 등 다양한 고객 서비스 업무를 처리할 수 있도록 한다. 이는 ai 에이전트의 업무 처리 범위가 점차 넓어지고 있음을 보여준다. ai 에이전트가 단순 상담을 넘어 실제 업무 처리까지 담당하는 구체적인 사례로, 우리 회사의 고객 서비스 및 백오피스 업무에 ai 에이전트를 적용하여 자동화 및 효율성을 높일 방안을 모색해야 한다. ai agent 아이뉴스24">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>&quot;AI가 요금 납부·로밍 가입까지&quot;⋯LGU+, &#x27;U+one&#x27; AI 에이전트 확대</h3>
+      <p class="summary">LGU+가 &#x27;U+원&#x27; 앱의 AI 에이전트 기능을 확대하여 요금 납부, 로밍 가입 등 다양한 고객 서비스 업무를 처리할 수 있도록 한다. 이는 AI 에이전트의 업무 처리 범위가 점차 넓어지고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 단순 상담을 넘어 실제 업무 처리까지 담당하는 구체적인 사례로, 우리 회사의 고객 서비스 및 백오피스 업무에 AI 에이전트를 적용하여 자동화 및 효율성을 높일 방안을 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">아이뉴스24 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiS0FVX3lxTE9JRVRDZEx1YXByMGpPal9wUVhueEVtdTNWQVYwX2ZaMlRDX1pSNWVFWmVieHJmYjhsU2Y1NDAwRFV6ckJsZ1lOQXBvNA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="&#x27;ai 에이전트&#x27; 성장에 주목…삼성운용, 美 투자 etf 상장 삼성자산운용이 ai 에이전트 산업의 성장에 주목하며 미국 ai 에이전트 기업에 투자하는 etf를 상장했다. 이는 ai 에이전트 기술의 미래 가치에 대한 시장의 긍정적인 전망을 반영한다. ai 에이전트 관련 투자 상품 출시는 해당 기술의 시장 성장 잠재력을 보여준다. 우리 회사의 ai 기술 도입 및 투자 전략 수립 시, 시장의 트렌드와 유망 기업들을 파악하는 데 참고할 수 있다. ai agent 파이낸셜뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>&#x27;AI 에이전트&#x27; 성장에 주목…삼성운용, 美 투자 ETF 상장</h3>
+      <p class="summary">삼성자산운용이 AI 에이전트 산업의 성장에 주목하며 미국 AI 에이전트 기업에 투자하는 ETF를 상장했다. 이는 AI 에이전트 기술의 미래 가치에 대한 시장의 긍정적인 전망을 반영한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 관련 투자 상품 출시는 해당 기술의 시장 성장 잠재력을 보여준다. 우리 회사의 AI 기술 도입 및 투자 전략 수립 시, 시장의 트렌드와 유망 기업들을 파악하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">파이낸셜뉴스 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE11VDlyaURqUE5hTkhWQ1djcDBfQjN0QXNTRktMcUUtaE5MTDVjNnhPWVZERkJNUzJPOXdBRnJKeFB6TzdUMEJhYUx5QS1QbDBPWWJJSndUcXN3QQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="메타·팔란티어 등 ai 에이전트 기업에 집중 투자…‘kodex 美ai에이전트액티브’ etf 신규 상장 &#x27;kodex 美ai에이전트액티브&#x27; etf가 신규 상장되며 메타, 팔란티어 등 글로벌 ai 에이전트 기업에 집중 투자한다. 이는 ai 에이전트 기술을 선도하는 기업들에 대한 시장의 관심이 높음을 나타낸다. ai 에이전트 관련 투자 상품 출시는 해당 기술의 시장 성장 잠재력을 보여준다. 우리 회사의 ai 기술 도입 및 투자 전략 수립 시, 시장의 트렌드와 유망 기업들을 파악하는 데 참고할 수 있다. ai agent 헤럴드경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>메타·팔란티어 등 AI 에이전트 기업에 집중 투자…‘KODEX 美AI에이전트액티브’ ETF 신규 상장</h3>
+      <p class="summary">&#x27;KODEX 美AI에이전트액티브&#x27; ETF가 신규 상장되며 메타, 팔란티어 등 글로벌 AI 에이전트 기업에 집중 투자한다. 이는 AI 에이전트 기술을 선도하는 기업들에 대한 시장의 관심이 높음을 나타낸다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 관련 투자 상품 출시는 해당 기술의 시장 성장 잠재력을 보여준다. 우리 회사의 AI 기술 도입 및 투자 전략 수립 시, 시장의 트렌드와 유망 기업들을 파악하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">헤럴드경제 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE53MXFnZTNxLWVjRmhxa3EyYkdEOEZXTno5dGhPVG5HMXg1UVV5eG54N2pCVnMyUENZWFdnSXpoWmp2UzR2REVjaEpMc3g2X2ROVTgtYlZR?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="삼성자산운용, 미국 ai 에이전트 기업 담은 etf 상장 삼성자산운용이 미국 ai 에이전트 기업에 투자하는 etf를 상장하며, ai 에이전트 기술의 성장 가능성에 대한 기대감을 반영했다. ai 에이전트 관련 투자 상품 출시는 해당 기술의 시장 성장 잠재력을 보여준다. 우리 회사의 ai 기술 도입 및 투자 전략 수립 시, 시장의 트렌드와 유망 기업들을 파악하는 데 참고할 수 있다. ai agent 서울타임즈뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>삼성자산운용, 미국 AI 에이전트 기업 담은 ETF 상장</h3>
+      <p class="summary">삼성자산운용이 미국 AI 에이전트 기업에 투자하는 ETF를 상장하며, AI 에이전트 기술의 성장 가능성에 대한 기대감을 반영했다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 관련 투자 상품 출시는 해당 기술의 시장 성장 잠재력을 보여준다. 우리 회사의 AI 기술 도입 및 투자 전략 수립 시, 시장의 트렌드와 유망 기업들을 파악하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">서울타임즈뉴스 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTFBvNkpEWjBQV056UEtjVm50ZWwxdHBxMDMyWUpNMGRDandBMzQyWmJvUVBTdGFYZU5sUEw0dVNrSlk3T3h4Y2c5U1ZEbFZ3dnk0cy1uSVpwMFZOc0M3SmF6bFE1ZWRzQy1iUUd3?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI" data-text="우리은행, 생성형 ai로 금융사기 차단 고도화…11월 신규 시스템 가동 우리은행이 11월부터 생성형 ai 기반의 새로운 시스템을 가동하여 금융사기 차단을 고도화할 예정이다. 이는 생성형 ai가 실제 금융 업무에 적용되어 가시적인 성과를 낼 수 있음을 보여준다. 생성형 ai의 금융사기 차단 적용은 우리 회사의 리스크 관리 및 보안 시스템 강화에 중요한 벤치마킹 사례가 된다. 생성형 ai의 업무 적용 기회 발굴 시, 구체적인 도입 시기와 기대 효과를 참고할 수 있다. ai 인더스트리뉴스">
+      <div class="top">
+        <span class="tag">AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>우리은행, 생성형 AI로 금융사기 차단 고도화…11월 신규 시스템 가동</h3>
+      <p class="summary">우리은행이 11월부터 생성형 AI 기반의 새로운 시스템을 가동하여 금융사기 차단을 고도화할 예정이다. 이는 생성형 AI가 실제 금융 업무에 적용되어 가시적인 성과를 낼 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 생성형 AI의 금융사기 차단 적용은 우리 회사의 리스크 관리 및 보안 시스템 강화에 중요한 벤치마킹 사례가 된다. 생성형 AI의 업무 적용 기회 발굴 시, 구체적인 도입 시기와 기대 효과를 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">인더스트리뉴스 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMickFVX3lxTE5iYXFBYU1xcUlmUFk2TG0xWU8tck5IRXlYblZRRVFFOHRIUkpHXzBuMHI5dUp5NXA4QkZad0VDd1ozcjNLOW45U3JmazFxNWlETGxBUFNhbTNLN3lEZjBZb3JiOVBmN1JYa3FGY3N5MkNLQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="코오롱베니트, ai 도입 넘어 성과로…6단계 ax 실행 전략 제시 코오롱베니트가 ai 도입을 넘어 실질적인 성과를 창출하기 위한 6단계 ax 실행 전략을 제시했다. 이는 ai 전환의 성공적인 안착을 위한 구체적인 방법론의 중요성을 강조한다. ai 도입의 성공적인 성과 창출을 위한 구체적인 ax 실행 전략 제시 사례로, 우리 회사의 ax 로드맵 수립 및 단계별 실행 계획을 고도화하는 데 실질적인 가이드라인을 제공할 수 있다. ax 데일리시큐">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>코오롱베니트, AI 도입 넘어 성과로…6단계 AX 실행 전략 제시</h3>
+      <p class="summary">코오롱베니트가 AI 도입을 넘어 실질적인 성과를 창출하기 위한 6단계 AX 실행 전략을 제시했다. 이는 AI 전환의 성공적인 안착을 위한 구체적인 방법론의 중요성을 강조한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 도입의 성공적인 성과 창출을 위한 구체적인 AX 실행 전략 제시 사례로, 우리 회사의 AX 로드맵 수립 및 단계별 실행 계획을 고도화하는 데 실질적인 가이드라인을 제공할 수 있다.</div>
+      <div class="meta">
+        <span class="src">데일리시큐 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibEFVX3lxTFBpbHlkeEk5SWh1Q3dXMjBDZWZELTBjaVNVNkhwQ3VweXdfVlRIdzJwOHBYN1pUYm9tOUhUZUtnd1VwZGE1MEVheU5FVTd1ZHFLMWpSS1ZfbW5IOVdXVTI0ZzhKQUpSX0Jqa1dQNw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI" data-text="우리은행, 금융사기 대응 고도화…내달 생성형 ai 모니터링 가동 우리은행이 다음 달부터 생성형 ai 기반의 모니터링 시스템을 가동하여 금융사기 대응을 고도화할 예정이다. 이는 생성형 ai가 실제 금융 업무에 적용되어 가시적인 성과를 낼 수 있음을 보여준다. 생성형 ai의 금융사기 차단 적용은 우리 회사의 리스크 관리 및 보안 시스템 강화에 중요한 벤치마킹 사례가 된다. 생성형 ai의 업무 적용 기회 발굴 시, 구체적인 도입 시기와 기대 효과를 참고할 수 있다. ai 더파워">
+      <div class="top">
+        <span class="tag">AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>우리은행, 금융사기 대응 고도화…내달 생성형 AI 모니터링 가동</h3>
+      <p class="summary">우리은행이 다음 달부터 생성형 AI 기반의 모니터링 시스템을 가동하여 금융사기 대응을 고도화할 예정이다. 이는 생성형 AI가 실제 금융 업무에 적용되어 가시적인 성과를 낼 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 생성형 AI의 금융사기 차단 적용은 우리 회사의 리스크 관리 및 보안 시스템 강화에 중요한 벤치마킹 사례가 된다. 생성형 AI의 업무 적용 기회 발굴 시, 구체적인 도입 시기와 기대 효과를 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">더파워 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMifkFVX3lxTE5SVm9PYnBpMEZ2U0hHLXJld2Z6aDRNS1JhTDUyS1B4aWwtVmNmdG5abHpleHRCVUlXal9EMjVOSVRHcjJ5b0MwZWFCQWpGQmhEMGpkS3VDZEV3VFlDZzJkQUw0Uk5lTHo3OEZjS0VVLUh5T2pQdTVNUUdlUjFRZw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="소셜앤비즈·한국ai융합비즈연구원, ai융합비즈포럼 ‘ai agent 마스터 클래스 3기’ ai 에이전트 구축 실습 교육 성료 소셜앤비즈와 한국ai융합비즈연구원이 ai융합비즈포럼을 통해 &#x27;ai agent 마스터 클래스 3기&#x27; 실습 교육을 성공적으로 마쳤다. 이는 ai 에이전트 구축 역량 강화에 대한 사회적 수요가 증가하고 있음을 보여준다. ai 에이전트 도입 및 활용을 위한 내부 인력의 역량 강화 교육 프로그램 기획 시, 외부 교육 기관의 커리큘럼과 운영 방식을 참고할 수 있다. ai agent 파이낸스투데이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>소셜앤비즈·한국AI융합비즈연구원, AI융합비즈포럼 ‘AI Agent 마스터 클래스 3기’ AI 에이전트 구축 실습 교육 성료</h3>
+      <p class="summary">소셜앤비즈와 한국AI융합비즈연구원이 AI융합비즈포럼을 통해 &#x27;AI Agent 마스터 클래스 3기&#x27; 실습 교육을 성공적으로 마쳤다. 이는 AI 에이전트 구축 역량 강화에 대한 사회적 수요가 증가하고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 도입 및 활용을 위한 내부 인력의 역량 강화 교육 프로그램 기획 시, 외부 교육 기관의 커리큘럼과 운영 방식을 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">파이낸스투데이 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5KYXg4Y1dsX2lFMEJsN3ljWVV4MDBXNjRISnVBSGI4ejR1cmZTX2xvWDBMa3I4WF9vRmVudExUWW94UDliakJYc3M5TnFZWUZJd2VZUDU4Y3gwd0FmWmFRWHh4UHJ2UDdNUEdLOA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="코스콤, &#x27;코리아 핀테크 위크 2026&#x27; 참가…토큰증권 플랫폼·금융 ai 공개 코스콤이 &#x27;코리아 핀테크 위크 2026&#x27;에 참가하여 토큰증권 플랫폼과 금융 ai 기술을 공개할 예정이다. 이는 금융 시장의 디지털 전환과 ai 기술 도입 가속화를 보여주는 사례이다. 금융 인프라 기업의 ai 기술 공개는 시장 전반의 ai 도입 수준을 가늠하게 한다. 우리 회사의 금융 ai 도입 전략 수립 시, 시장의 주요 인프라 제공자들의 동향을 파악하고 협력 기회를 모색해야 한다. 금융 ai 한국경제">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>코스콤, &#x27;코리아 핀테크 위크 2026&#x27; 참가…토큰증권 플랫폼·금융 AI 공개</h3>
+      <p class="summary">코스콤이 &#x27;코리아 핀테크 위크 2026&#x27;에 참가하여 토큰증권 플랫폼과 금융 AI 기술을 공개할 예정이다. 이는 금융 시장의 디지털 전환과 AI 기술 도입 가속화를 보여주는 사례이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융 인프라 기업의 AI 기술 공개는 시장 전반의 AI 도입 수준을 가늠하게 한다. 우리 회사의 금융 AI 도입 전략 수립 시, 시장의 주요 인프라 제공자들의 동향을 파악하고 협력 기회를 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">한국경제 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE1BTUktQUZCYnpmYWVPaVhyWlR1RVhOdjBOLTh2SC1SSnd0QXp5N0FYUmtCcUZPTk5TZDdBQTE3SFF4UFRvbkRFenRfU2dfRHVsaGZUY043NlAzdw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="&quot;ai 에이전트 시대 개막&quot;…amd 리사 수, 개방형 랙 청사진 `헬리온` 제시 amd의 리사 수 ceo가 &#x27;ai 에이전트 시대 개막&#x27;을 선언하며 개방형 랙 청사진 &#x27;헬리온&#x27;을 제시했다. 이는 ai 에이전트의 확산에 필요한 하드웨어 및 인프라 기술 발전의 중요성을 강조한다. ai 에이전트의 확산은 단순히 소프트웨어만의 문제가 아니라, 이를 뒷받침할 하드웨어 인프라의 발전이 필수적임을 시사한다. 우리 회사의 ai 인프라 구축 전략 수립 시, 개방형 및 유연한 아키텍처 도입을 고려해야 한다. ai agent 디지털데일리">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>&quot;AI 에이전트 시대 개막&quot;…AMD 리사 수, 개방형 랙 청사진 `헬리온` 제시</h3>
+      <p class="summary">AMD의 리사 수 CEO가 &#x27;AI 에이전트 시대 개막&#x27;을 선언하며 개방형 랙 청사진 &#x27;헬리온&#x27;을 제시했다. 이는 AI 에이전트의 확산에 필요한 하드웨어 및 인프라 기술 발전의 중요성을 강조한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 확산은 단순히 소프트웨어만의 문제가 아니라, 이를 뒷받침할 하드웨어 인프라의 발전이 필수적임을 시사한다. 우리 회사의 AI 인프라 구축 전략 수립 시, 개방형 및 유연한 아키텍처 도입을 고려해야 한다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE9sZ2lpaFpGUlQxM05jU0xyVUZHLU5XUUhpNkxkb3R4WVd5MUF1R2JnbU1oR1NBNENTWEhoNVlNd000aTY2NldXSVFRYkpRX3NpMzMzTTNqTmtaczhtLTBrd1pPbTg?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="알티엠, 산업부 ‘m.ax 전문기업’ 선정...제조 ai 에이전트 사업화 추진 알티엠이 산업부의 &#x27;m.ax 전문기업&#x27;으로 선정되어 제조 ai 에이전트 사업화를 추진한다. 이는 ai 에이전트 기술이 제조 산업의 생산성 향상에도 기여할 수 있음을 보여준다. ai 에이전트가 금융 외 다른 산업 분야(제조업)에서도 혁신을 주도하고 있음을 보여준다. 우리 회사의 업무 자동화 및 효율화 측면에서 ai 에이전트 도입 가능성을 다각도로 검토하는 데 참고할 수 있다. ai agent 더에이아이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>알티엠, 산업부 ‘M.AX 전문기업’ 선정...제조 AI 에이전트 사업화 추진</h3>
+      <p class="summary">알티엠이 산업부의 &#x27;M.AX 전문기업&#x27;으로 선정되어 제조 AI 에이전트 사업화를 추진한다. 이는 AI 에이전트 기술이 제조 산업의 생산성 향상에도 기여할 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 금융 외 다른 산업 분야(제조업)에서도 혁신을 주도하고 있음을 보여준다. 우리 회사의 업무 자동화 및 효율화 측면에서 AI 에이전트 도입 가능성을 다각도로 검토하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">더에이아이 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTFBnUldMajM4STQwRHJsRXF2bHB6WVhWbWd5ck81ZFpwOWIySHgxSC1TSXIxZ095Q0Qwdk9wUnhvNE83WlB2ZUk0VHRkaWswdHBOOUJ2Z2FwenlzLVlnckx3MHZDZUk1T3JsQ1Qw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="인사 통해 살펴본 한화에어로·한화시스템·한화오션 전략...우주·ax·현지화 초점 한화그룹 계열사들의 인사를 통해 우주, ax, 현지화 등 미래 성장 전략을 분석했다. 이는 대기업 그룹 차원에서 ax를 핵심 성장 동력으로 삼고 있음을 시사한다. 대기업 그룹의 ax 전략 추진 사례로, 우리 회사도 전사적인 ax 추진 체계를 강화하고 ai 전환을 위한 조직 및 인력 운영 전략을 수립하는 데 참고할 수 있다. ax 한국금융신문">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>인사 통해 살펴본 한화에어로·한화시스템·한화오션 전략...우주·AX·현지화 초점</h3>
+      <p class="summary">한화그룹 계열사들의 인사를 통해 우주, AX, 현지화 등 미래 성장 전략을 분석했다. 이는 대기업 그룹 차원에서 AX를 핵심 성장 동력으로 삼고 있음을 시사한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 대기업 그룹의 AX 전략 추진 사례로, 우리 회사도 전사적인 AX 추진 체계를 강화하고 AI 전환을 위한 조직 및 인력 운영 전략을 수립하는 데 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">한국금융신문 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMifEFVX3lxTE01X1dNN3YxMEtZc2FjUVNSampSZTNTZGhIa1pNZGFsaXNXdzFXbHZrbjdzalplZEJjakk2ZVhfdnpGUldIRC1hblh3U21PWU9QQmZDWVoyeGtjSVpuT2JidHFRNHRFbmUyZnFmcW53Wmk2VkJVYXZhbWFtVzM?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="amd, ai 에이전트용 서버 랙 공개…cpu·gpu 필요에 따라 조합 amd가 ai 에이전트용 서버 랙을 공개하며, cpu와 gpu를 필요에 따라 유연하게 조합할 수 있는 아키텍처를 제시했다. 이는 ai 에이전트 구동에 최적화된 하드웨어 인프라의 중요성을 강조한다. ai 에이전트의 효율적인 운영을 위한 하드웨어 인프라 구축의 중요성을 보여준다. 우리 회사의 ai 시스템 구축 시, 유연하고 확장 가능한 컴퓨팅 자원 확보 전략을 수립하는 데 참고해야 한다. ai agent 아이뉴스24">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>AMD, AI 에이전트용 서버 랙 공개…CPU·GPU 필요에 따라 조합</h3>
+      <p class="summary">AMD가 AI 에이전트용 서버 랙을 공개하며, CPU와 GPU를 필요에 따라 유연하게 조합할 수 있는 아키텍처를 제시했다. 이는 AI 에이전트 구동에 최적화된 하드웨어 인프라의 중요성을 강조한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 효율적인 운영을 위한 하드웨어 인프라 구축의 중요성을 보여준다. 우리 회사의 AI 시스템 구축 시, 유연하고 확장 가능한 컴퓨팅 자원 확보 전략을 수립하는 데 참고해야 한다.</div>
+      <div class="meta">
+        <span class="src">아이뉴스24 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiS0FVX3lxTFB5bzNqLS1iY2ZFV1BmcHpGXzdfVXdHU0JKZ2FFdWtzeWZuYWY4aUFiWjIxUVI1QU84bGQ1TzlXRHVyTGRYOGdqM29Vdw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="코스콤, 코리아 핀테크 위크서 토큰증권 공동플랫폼·금융 ai 선봬 코스콤이 &#x27;코리아 핀테크 위크&#x27;에서 토큰증권 공동플랫폼과 금융 ai 서비스를 선보인다. 이는 금융 시장의 디지털 전환과 ai 기술 도입 가속화를 보여주는 사례이다. 금융 인프라 기업의 ai 기술 공개는 시장 전반의 ai 도입 수준을 가늠하게 한다. 우리 회사의 금융 ai 도입 전략 수립 시, 시장의 주요 인프라 제공자들의 동향을 파악하고 협력 기회를 모색해야 한다. 금융 ai 중소기업신문">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>코스콤, 코리아 핀테크 위크서 토큰증권 공동플랫폼·금융 AI 선봬</h3>
+      <p class="summary">코스콤이 &#x27;코리아 핀테크 위크&#x27;에서 토큰증권 공동플랫폼과 금융 AI 서비스를 선보인다. 이는 금융 시장의 디지털 전환과 AI 기술 도입 가속화를 보여주는 사례이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융 인프라 기업의 AI 기술 공개는 시장 전반의 AI 도입 수준을 가늠하게 한다. 우리 회사의 금융 AI 도입 전략 수립 시, 시장의 주요 인프라 제공자들의 동향을 파악하고 협력 기회를 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">중소기업신문 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE9VUWVCSzh3Q0xsZ1Bhd1RqSS16SU9BeU1reHY5anhHWHM5ekFFMzZtTFB6RWp0WnNXVG1Da2sxc3VqbW9BWUxXZ2k1S2VmS21VbEpqWkRvMy1xeThYZktCTzlnaXRjaFppVThVMA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="조선업 ai 전환에 1조 4000억 투자…&#x27;조선 m.ax 얼라이언스&#x27; 출범 조선업계가 ai 전환에 1조 4000억 원을 투자하고 &#x27;조선 m.ax 얼라이언스&#x27;를 출범했다. 이는 전통 산업에서도 대규모 ai 전환 투자가 이루어지고 있음을 보여준다. 대규모 자본 투자를 통한 산업 전반의 ax 추진 사례로, 우리 회사도 ai 전환을 위한 투자 규모 및 전략을 수립할 때 타 산업의 사례를 참고하여 장기적인 관점에서 접근해야 한다. ax 한국방송뉴스">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>조선업 AI 전환에 1조 4000억 투자…&#x27;조선 M.AX 얼라이언스&#x27; 출범</h3>
+      <p class="summary">조선업계가 AI 전환에 1조 4000억 원을 투자하고 &#x27;조선 M.AX 얼라이언스&#x27;를 출범했다. 이는 전통 산업에서도 대규모 AI 전환 투자가 이루어지고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 대규모 자본 투자를 통한 산업 전반의 AX 추진 사례로, 우리 회사도 AI 전환을 위한 투자 규모 및 전략을 수립할 때 타 산업의 사례를 참고하여 장기적인 관점에서 접근해야 한다.</div>
+      <div class="meta">
+        <span class="src">한국방송뉴스 · 2026-10-12</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE1SR3VtRC1jdWd3SnZFYVRkdGtwUDFkMmR0STZoYmEzWTYxbjRCQmZFNXpKRHNpejJoOXd1VWE5aVZOcVZSSFRpQjUxTzZtVTFXZi1hbVplRjBOSFFLY1E?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="코스콤, 핀테크 위크서 토큰증권·ai 금융서비스 선보인다 코스콤이 핀테크 위크에서 토큰증권 및 ai 금융 서비스를 선보이며, 금융 시장의 혁신과 디지털 전환을 주도할 계획이다. 금융 인프라 기업의 ai 기술 공개는 시장 전반의 ai 도입 수준을 가늠하게 한다. 우리 회사의 금융 ai 도입 전략 수립 시, 시장의 주요 인프라 제공자들의 동향을 파악하고 협력 기회를 모색해야 한다. 금융 ai 메트로신문">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>코스콤, 핀테크 위크서 토큰증권·AI 금융서비스 선보인다</h3>
+      <p class="summary">코스콤이 핀테크 위크에서 토큰증권 및 AI 금융 서비스를 선보이며, 금융 시장의 혁신과 디지털 전환을 주도할 계획이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융 인프라 기업의 AI 기술 공개는 시장 전반의 AI 도입 수준을 가늠하게 한다. 우리 회사의 금융 AI 도입 전략 수립 시, 시장의 주요 인프라 제공자들의 동향을 파악하고 협력 기회를 모색해야 한다.</div>
+      <div class="meta">
+        <span class="src">메트로신문 · 2026-10-13</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFA2VXJwNW5tbVNpdF9aWFRjc1RGWnBja1BlaDFZeWdBc0pEdzE3d1NvQXlHY3c1MGZkaXlfeWlFdHdIckdEUjZYQUJ2ZDlfelVKME54R2sxRk4wRFFHLXRueA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+</div>
+<div id="noresult">조건에 맞는 기사가 없습니다.</div>
+
+<footer>
+  THE AI · AX BRIEFING · 매일 자동 갱신 · powered by Gemini<br>
+  최종 생성 2026-10-13 11:48
+</footer>
+
+
+<script>
+  let curCat = 'all';
+  function applyFilters(){
+    const q = (document.getElementById('q').value || '').toLowerCase().trim();
+    const filtering = (curCat !== 'all') || (q !== '');
+    const t5 = document.getElementById('top5wrap');
+    if(t5) t5.style.display = filtering ? 'none' : '';
+    let shown = 0;
+    document.querySelectorAll('.card').forEach(function(c){
+      const okCat = curCat === 'all' || c.dataset.category === curCat;
+      const okQ = !q || (c.dataset.text || '').includes(q);
+      let show = okCat && okQ;
+      // 기본 화면에서는 TOP5 기사는 그리드에서 숨겨 중복 방지 (필터 시엔 함께 검색)
+      if(!filtering && c.classList.contains('is-top5')) show = false;
+      c.style.display = show ? '' : 'none';
+      if(show) shown++;
+    });
+    document.getElementById('noresult').style.display = (filtering && shown===0) ? 'block' : 'none';
+  }
+  document.querySelectorAll('.filter-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      curCat = b.dataset.cat;
+      applyFilters();
+    });
+  });
+  document.addEventListener('DOMContentLoaded', applyFilters);
+</script>
+
+</div></body></html>
