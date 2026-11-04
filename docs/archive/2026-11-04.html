@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily AI/AX Briefing — 2026-11-04</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f4f6; --paper:#ffffff; --ink:#17181c; --mut:#6b7280;
+  --line:#e7e8ec; --accent:#4f46e5; --accent-soft:#eef0ff; --star:#e0a80d;
+  --tag:#eef1f6; --tagink:#3f4657;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+  line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 90px}
+
+/* 신문 제호 */
+.masthead{text-align:center;padding:46px 0 20px;border-bottom:3px double var(--ink)}
+.masthead .kicker{font-size:12px;letter-spacing:4px;color:var(--mut);
+  text-transform:uppercase;margin-bottom:13px}
+.masthead h1{font-family:Georgia,"Times New Roman",serif;font-size:46px;font-weight:700;
+  margin:0;letter-spacing:-1px}
+.masthead .date{margin-top:13px;color:#333;font-size:14px;font-family:Georgia,serif;font-style:italic}
+.masthead .date b{font-style:normal;font-weight:600}
+
+/* 툴바 */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
+.tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.toolbar input[type=date],.search{font-family:inherit;font-size:13px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.search{min-width:220px}
+.tools a{font-size:13px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);color:var(--ink)}
+.tools a:hover{border-color:var(--accent);text-decoration:none}
+.tools a.disabled{opacity:.35;pointer-events:none}
+.tools a.latest{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 섹션 라벨 */
+.section-label{display:flex;align-items:center;gap:14px;margin:34px 0 14px;
+  font-size:13px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800}
+.section-label .accent{color:var(--accent)}
+.section-label:after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 총평 */
+.overview{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:14px;padding:20px 24px;margin:24px 0 0}
+.overview h2{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--accent);font-weight:700}
+.overview p{margin:0;color:#2c2c2c;font-size:15.5px}
+
+/* TOP 5 MUST READ */
+.top5{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:6px 26px;
+  box-shadow:0 4px 20px rgba(30,30,70,.05)}
+.t5{display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.t5:last-child{border-bottom:none}
+.t5 .rank{font-family:Georgia,serif;font-size:36px;font-weight:700;line-height:1;
+  color:var(--accent);min-width:50px;text-align:center}
+.t5 .rbody{flex:1;min-width:0}
+.t5 .m5{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.t5 h4{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.4}
+.t5 h4 a{color:var(--ink)}.t5 h4 a:hover{color:var(--accent)}
+.t5 .why5{font-size:13.5px;color:#4a5064;line-height:1.6}
+.t5 .why5 b{color:var(--accent)}
+
+/* 태그 · 별점 */
+.tag{background:var(--tag);color:var(--tagink);font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
+.stars{color:var(--star);font-size:13px;letter-spacing:1px}
+.stars .off{color:#dcd9d0}
+.src{color:var(--mut);font-size:12px}
+
+/* 매거진 그리드 */
+.gridhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.filter-btn{cursor:pointer;font-size:12.5px;padding:6px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--paper);color:var(--tagink);font-family:inherit;transition:.12s}
+.filter-btn:hover{border-color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+  display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
+.card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.card h3{margin:2px 0 10px;font-size:19px;line-height:1.4;font-weight:800;letter-spacing:-.01em}
+.summary{margin:0 0 14px;color:#3a3a3a;font-size:14.5px;flex:1}
+.why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:11px 14px;font-size:13.5px;color:#33385a}
+.why b{color:var(--accent)}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;
+  padding-top:12px;border-top:1px solid var(--line)}
+.readmore{font-size:12.5px;font-weight:700}.readmore:after{content:" \2192"}
+#noresult{display:none;color:var(--mut);text-align:center;padding:40px 0}
+
+footer{margin-top:50px;padding-top:22px;border-top:3px double var(--ink);
+  color:var(--mut);font-size:12px;text-align:center;line-height:1.8}
+
+@media (max-width:760px){
+  .masthead h1{font-size:32px}
+  .grid{grid-template-columns:1fr}
+  .search{min-width:130px;flex:1}
+  .filters{margin-left:0;width:100%}
+  .t5 .rank{font-size:28px;min-width:38px}
+}
+@media print{
+  .toolbar,.filters,.readmore{display:none}
+  .card{break-inside:avoid;box-shadow:none}.top5{box-shadow:none}
+}
+</style>
+</head><body><div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">AX Strategy · Daily Intelligence</div>
+  <h1>The AI · AX Briefing</h1>
+  <div class="date"><b>2026년 11월 4일 수요일</b> · 총 30건 · 중요도순</div>
+</header>
+
+
+    <div class="toolbar">
+      <div class="tools">
+        <input type="date" value="2026-11-04" min="2026-07-01" max="2026-11-04" onchange="goDate(this.value)">
+        <a href="2026-11-03.html">◀ 이전</a><a class="disabled">다음 ▶</a>
+        <a class="latest" href="../index.html">최신</a>
+      </div>
+      <div class="tools">
+        <input type="text" class="search" id="q" placeholder="🔍 키워드 검색..." oninput="applyFilters()">
+      </div>
+    </div>
+    <script>
+      const DATES = ["2026-11-04", "2026-11-03", "2026-11-02", "2026-11-01", "2026-10-31", "2026-10-30", "2026-10-29", "2026-10-28", "2026-10-27", "2026-10-26", "2026-10-25", "2026-10-24", "2026-10-23", "2026-10-22", "2026-10-21", "2026-10-20", "2026-10-19", "2026-10-18", "2026-10-17", "2026-10-16", "2026-10-15", "2026-10-14", "2026-10-13", "2026-10-12", "2026-10-11", "2026-10-10", "2026-10-09", "2026-10-08", "2026-10-07", "2026-10-06", "2026-10-05", "2026-10-04", "2026-10-03", "2026-10-02", "2026-10-01", "2026-09-30", "2026-09-29", "2026-09-28", "2026-09-27", "2026-09-26", "2026-09-25", "2026-09-24", "2026-09-23", "2026-09-22", "2026-09-21", "2026-09-20", "2026-09-19", "2026-09-18", "2026-09-17", "2026-09-16", "2026-09-15", "2026-09-14", "2026-09-13", "2026-09-12", "2026-09-11", "2026-09-10", "2026-09-09", "2026-09-08", "2026-09-07", "2026-09-06", "2026-09-05", "2026-09-04", "2026-09-03", "2026-09-02", "2026-09-01", "2026-08-31", "2026-08-30", "2026-08-29", "2026-08-28", "2026-08-27", "2026-08-26", "2026-08-25", "2026-08-24", "2026-08-23", "2026-08-22", "2026-08-21", "2026-08-20", "2026-08-19", "2026-08-18", "2026-08-17", "2026-08-16", "2026-08-15", "2026-08-14", "2026-08-13", "2026-08-12", "2026-08-11", "2026-08-10", "2026-08-09", "2026-08-08", "2026-08-07", "2026-08-06", "2026-08-05", "2026-08-04", "2026-08-03", "2026-08-02", "2026-08-01", "2026-07-31", "2026-07-30", "2026-07-29", "2026-07-28", "2026-07-27", "2026-07-26", "2026-07-25", "2026-07-24", "2026-07-23", "2026-07-22", "2026-07-21", "2026-07-20", "2026-07-19", "2026-07-18", "2026-07-17", "2026-07-16", "2026-07-15", "2026-07-14", "2026-07-13", "2026-07-12", "2026-07-11", "2026-07-10", "2026-07-09", "2026-07-08", "2026-07-07", "2026-07-06", "2026-07-05", "2026-07-04", "2026-07-03", "2026-07-02", "2026-07-01"];
+      const BASE = "";
+      function goDate(d){
+        if(!d) return;
+        if(DATES.includes(d)){ location.href = BASE + d + ".html"; }
+        else { alert("해당 날짜의 브리핑이 없습니다."); }
+      }
+    </script>
+
+<section class="overview">
+  <h2>오늘의 총평</h2>
+  <p>오늘 AI/AX 동향은 AI 에이전트의 전방위적인 확산과 이에 따른 기업 및 규제 당국의 대응에 집중되었습니다. 특히 비씨카드, 삼성화재 등 금융/보험권 기업들이 AI 에이전트 도입을 통해 업무 혁신과 효율성 증대를 꾀하는 사례가 두드러졌습니다. SKT, 현대제철 등은 사내 경연 및 플랫폼 구축을 통해 직원들의 AI 에이전트 활용 역량을 강화하고 전사적인 AX를 가속화하는 모습을 보였습니다. 한편, 홍콩 금융당국은 AI 에이전트의 신원 및 권한 검증에 나서는 등 규제 움직임이 본격화되었으며, AI 에이전트의 보안 및 안전한 통제에 대한 중요성도 강조되었습니다.</p>
+</section>
+
+<div id="top5wrap">
+  <div class="section-label"><span class="accent">TOP 5</span> · MUST READ</div>
+  <div class="top5">
+        <div class="t5">
+          <div class="rank">01</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">금융신문</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMie0FVX3lxTE5DbjdtRTdVc1UyRC1xS0NFMjZnSi1HaE84OEFtUmNhbkU4MndLR1VDN3NZcUhFNnJQOTlOLS1HT2tIZjR4YW5ZOEZ6aG5UYUo5cGlRc25ib1JYNzc0eWY0MXA0RTZ0WFpCX25MME1Qb2VtZV9sNE1ZRk42SQ?oc=5" target="_blank" rel="noopener">이문화 삼성화재 대표, AI 에이전트 앞세워 디지털 혁신 가속 [보험사 AI 전략]</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 경쟁 보험사의 AI 에이전트 도입 전략은 우리 회사의 AI 도입 로드맵 수립 및 경쟁 우위 확보 방안 모색에 중요한 참고 자료가 된다. 특히 보험 산업 특화 AI 에이전트의 활용 사례를 벤치마킹하여 우리 조직의 업무 적용 기회를 발굴할 수 있다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">02</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">규제·정책</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">뉴스N연합</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiSkFVX3lxTE5DQzJjTUFOcmJJN1EyWV9qd1dMUmtKN1pJUGJwZEFMT0JxTVo2TEFtcXI0Vm1HUmk2eG15VFZQbmhLalk4WmNEQTZn?oc=5" target="_blank" rel="noopener">AI가 금융거래까지 맡는 시대…홍콩 금융당국, &#x27;AI 에이전트 신원·권한&#x27; 검증 나섰다</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트의 금융거래 적용이 가속화됨에 따라 규제 당국의 움직임을 면밀히 모니터링해야 한다. 우리 조직의 AI Agent 도입 시 발생할 수 있는 법적, 윤리적, 보안적 문제에 대한 선제적 대응 전략을 수립하는 데 필수적인 정보이다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">03</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">전자신문</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTFBXenppLVF0VUxrVlZWMVZia3kyOVBEXzBvaGZTNjZCQVNhWG9EYVI1amZnekNUbTZoQTNlM092THZpTXpwMzZMMUdteTUzdw?oc=5" target="_blank" rel="noopener">[기고]AI 에이전트 보안, 모델이 아니라 연결된 권한에서 뚫린다</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트 도입 시 보안은 가장 중요한 고려사항 중 하나이며, 특히 금융/보험 산업에서는 더욱 그렇다. AI Agent의 권한 관리 및 시스템 연동 시 보안 취약점 점검을 강화하여 잠재적 위험을 최소화하는 전략을 수립해야 한다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">04</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">규제·정책</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">인공지능신문</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5saE43ZGI0aC16U3dteEw2RjM0eG1EdU1OaC1NUlNnM0dlQ3pHLUxHalR6cFJlQ0pWa0FYeXJOeW96OWdLbXg5dEdrRkFFcThaY25kRnMxWGw4SlFwOUpYc1EzOVpOTEE?oc=5" target="_blank" rel="noopener">“AI 에이전트도 신원 확인한다”…홍콩 금융당국, 자율 금융거래 감독체계 구축 착수</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · AI 에이전트의 금융거래 적용 시 규제 당국의 신원 확인 및 감독 요구사항은 우리 조직의 AI Agent 개발 및 도입 시 반드시 준수해야 할 사항이다. 관련 규제 동향을 지속적으로 모니터링하고 선제적으로 대응해야 한다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">05</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">더트래커</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiWEFVX3lxTE1ubkNqTFYzRTNQV3RPTVJlbkJ5ZnRTZHZnWU1TQWMzdm5TbTM0OVZtZDFUbm40WjgyNjNQNFZWNzhBa3BvOEF1QndEWDJ1Y0c3eHY0VEdXbUI?oc=5" target="_blank" rel="noopener">비씨카드, 전 직원에 자체 개발 AI 에이전트 제공…연간 10만2000시간 업무 절감</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · 금융권 경쟁사의 AI 에이전트 도입 및 실제 업무 절감 효과는 우리 조직의 AI Agent 도입 타당성을 강화하는 중요한 근거가 된다. 특히 자체 개발을 통한 내재화 전략과 구체적인 성과 지표는 우리 조직의 AI Agent 도입 로드맵 수립에 유용한 벤치마킹 사례이다.</div>
+          </div>
+        </div></div>
+</div>
+
+<div class="section-label gridhead">
+  전체 브리핑
+  <div class="filters"><button class="filter-btn active" data-cat="all">전체 30</button><button class="filter-btn" data-cat="AI Agent">AI Agent 13</button><button class="filter-btn" data-cat="AX">AX 9</button><button class="filter-btn" data-cat="금융 AI">금융 AI 5</button><button class="filter-btn" data-cat="규제·정책">규제·정책 2</button><button class="filter-btn" data-cat="보험 AI">보험 AI 1</button></div>
+</div>
+<div class="grid">
+
+    <article class="card is-top5" data-category="보험 AI" data-text="이문화 삼성화재 대표, ai 에이전트 앞세워 디지털 혁신 가속 [보험사 ai 전략] 삼성화재 이문화 대표가 ai 에이전트를 활용하여 디지털 혁신을 가속화하겠다고 밝혔다. 이는 보험사의 ai 전략의 일환으로, ai 에이전트 도입을 통해 업무 효율성을 높이고 새로운 고객 경험을 제공하려는 움직임이다. 경쟁 보험사의 ai 에이전트 도입 전략은 우리 회사의 ai 도입 로드맵 수립 및 경쟁 우위 확보 방안 모색에 중요한 참고 자료가 된다. 특히 보험 산업 특화 ai 에이전트의 활용 사례를 벤치마킹하여 우리 조직의 업무 적용 기회를 발굴할 수 있다. 보험 ai 금융신문">
+      <div class="top">
+        <span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>이문화 삼성화재 대표, AI 에이전트 앞세워 디지털 혁신 가속 [보험사 AI 전략]</h3>
+      <p class="summary">삼성화재 이문화 대표가 AI 에이전트를 활용하여 디지털 혁신을 가속화하겠다고 밝혔다. 이는 보험사의 AI 전략의 일환으로, AI 에이전트 도입을 통해 업무 효율성을 높이고 새로운 고객 경험을 제공하려는 움직임이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 경쟁 보험사의 AI 에이전트 도입 전략은 우리 회사의 AI 도입 로드맵 수립 및 경쟁 우위 확보 방안 모색에 중요한 참고 자료가 된다. 특히 보험 산업 특화 AI 에이전트의 활용 사례를 벤치마킹하여 우리 조직의 업무 적용 기회를 발굴할 수 있다.</div>
+      <div class="meta">
+        <span class="src">금융신문 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMie0FVX3lxTE5DbjdtRTdVc1UyRC1xS0NFMjZnSi1HaE84OEFtUmNhbkU4MndLR1VDN3NZcUhFNnJQOTlOLS1HT2tIZjR4YW5ZOEZ6aG5UYUo5cGlRc25ib1JYNzc0eWY0MXA0RTZ0WFpCX25MME1Qb2VtZV9sNE1ZRk42SQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="규제·정책" data-text="ai가 금융거래까지 맡는 시대…홍콩 금융당국, &#x27;ai 에이전트 신원·권한&#x27; 검증 나섰다 홍콩 금융당국이 ai 에이전트가 금융거래를 수행하는 시대에 대비하여 &#x27;ai 에이전트의 신원 및 권한&#x27; 검증 방안을 모색하고 있다. 이는 ai 에이전트의 자율적 금융거래에 따른 잠재적 위험을 관리하기 위함이다. ai 에이전트의 금융거래 적용이 가속화됨에 따라 규제 당국의 움직임을 면밀히 모니터링해야 한다. 우리 조직의 ai agent 도입 시 발생할 수 있는 법적, 윤리적, 보안적 문제에 대한 선제적 대응 전략을 수립하는 데 필수적인 정보이다. 규제·정책 뉴스n연합">
+      <div class="top">
+        <span class="tag">규제·정책</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>AI가 금융거래까지 맡는 시대…홍콩 금융당국, &#x27;AI 에이전트 신원·권한&#x27; 검증 나섰다</h3>
+      <p class="summary">홍콩 금융당국이 AI 에이전트가 금융거래를 수행하는 시대에 대비하여 &#x27;AI 에이전트의 신원 및 권한&#x27; 검증 방안을 모색하고 있다. 이는 AI 에이전트의 자율적 금융거래에 따른 잠재적 위험을 관리하기 위함이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 금융거래 적용이 가속화됨에 따라 규제 당국의 움직임을 면밀히 모니터링해야 한다. 우리 조직의 AI Agent 도입 시 발생할 수 있는 법적, 윤리적, 보안적 문제에 대한 선제적 대응 전략을 수립하는 데 필수적인 정보이다.</div>
+      <div class="meta">
+        <span class="src">뉴스N연합 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiSkFVX3lxTE5DQzJjTUFOcmJJN1EyWV9qd1dMUmtKN1pJUGJwZEFMT0JxTVo2TEFtcXI0Vm1HUmk2eG15VFZQbmhLalk4WmNEQTZn?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="[기고]ai 에이전트 보안, 모델이 아니라 연결된 권한에서 뚫린다 ai 에이전트 보안의 핵심은 모델 자체보다는 에이전트가 연결된 시스템의 &#x27;권한&#x27; 관리에서 비롯된다는 기고문이 발표되었다. 이는 ai 에이전트 도입 시 보안 취약점 관리에 대한 새로운 관점을 제시한다. ai 에이전트 도입 시 보안은 가장 중요한 고려사항 중 하나이며, 특히 금융/보험 산업에서는 더욱 그렇다. ai agent의 권한 관리 및 시스템 연동 시 보안 취약점 점검을 강화하여 잠재적 위험을 최소화하는 전략을 수립해야 한다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>[기고]AI 에이전트 보안, 모델이 아니라 연결된 권한에서 뚫린다</h3>
+      <p class="summary">AI 에이전트 보안의 핵심은 모델 자체보다는 에이전트가 연결된 시스템의 &#x27;권한&#x27; 관리에서 비롯된다는 기고문이 발표되었다. 이는 AI 에이전트 도입 시 보안 취약점 관리에 대한 새로운 관점을 제시한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트 도입 시 보안은 가장 중요한 고려사항 중 하나이며, 특히 금융/보험 산업에서는 더욱 그렇다. AI Agent의 권한 관리 및 시스템 연동 시 보안 취약점 점검을 강화하여 잠재적 위험을 최소화하는 전략을 수립해야 한다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTFBXenppLVF0VUxrVlZWMVZia3kyOVBEXzBvaGZTNjZCQVNhWG9EYVI1amZnekNUbTZoQTNlM092THZpTXpwMzZMMUdteTUzdw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="규제·정책" data-text="“ai 에이전트도 신원 확인한다”…홍콩 금융당국, 자율 금융거래 감독체계 구축 착수 홍콩 금융당국이 ai 에이전트의 자율적인 금융거래에 대비하여 신원 확인 및 감독 체계 구축에 착수했다. 이는 ai 에이전트의 책임성과 투명성을 확보하기 위한 선제적 조치이다. ai 에이전트의 금융거래 적용 시 규제 당국의 신원 확인 및 감독 요구사항은 우리 조직의 ai agent 개발 및 도입 시 반드시 준수해야 할 사항이다. 관련 규제 동향을 지속적으로 모니터링하고 선제적으로 대응해야 한다. 규제·정책 인공지능신문">
+      <div class="top">
+        <span class="tag">규제·정책</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>“AI 에이전트도 신원 확인한다”…홍콩 금융당국, 자율 금융거래 감독체계 구축 착수</h3>
+      <p class="summary">홍콩 금융당국이 AI 에이전트의 자율적인 금융거래에 대비하여 신원 확인 및 감독 체계 구축에 착수했다. 이는 AI 에이전트의 책임성과 투명성을 확보하기 위한 선제적 조치이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 금융거래 적용 시 규제 당국의 신원 확인 및 감독 요구사항은 우리 조직의 AI Agent 개발 및 도입 시 반드시 준수해야 할 사항이다. 관련 규제 동향을 지속적으로 모니터링하고 선제적으로 대응해야 한다.</div>
+      <div class="meta">
+        <span class="src">인공지능신문 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5saE43ZGI0aC16U3dteEw2RjM0eG1EdU1OaC1NUlNnM0dlQ3pHLUxHalR6cFJlQ0pWa0FYeXJOeW96OWdLbXg5dEdrRkFFcThaY25kRnMxWGw4SlFwOUpYc1EzOVpOTEE?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="금융 AI" data-text="비씨카드, 전 직원에 자체 개발 ai 에이전트 제공…연간 10만2000시간 업무 절감 비씨카드가 전 직원에게 자체 개발한 ai 에이전트를 제공하여 연간 10만2000시간의 업무 절감 효과를 기대하고 있다. 이는 ai 에이전트가 실제 업무 효율성 향상에 크게 기여할 수 있음을 보여준다. 금융권 경쟁사의 ai 에이전트 도입 및 실제 업무 절감 효과는 우리 조직의 ai agent 도입 타당성을 강화하는 중요한 근거가 된다. 특히 자체 개발을 통한 내재화 전략과 구체적인 성과 지표는 우리 조직의 ai agent 도입 로드맵 수립에 유용한 벤치마킹 사례이다. 금융 ai 더트래커">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>비씨카드, 전 직원에 자체 개발 AI 에이전트 제공…연간 10만2000시간 업무 절감</h3>
+      <p class="summary">비씨카드가 전 직원에게 자체 개발한 AI 에이전트를 제공하여 연간 10만2000시간의 업무 절감 효과를 기대하고 있다. 이는 AI 에이전트가 실제 업무 효율성 향상에 크게 기여할 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융권 경쟁사의 AI 에이전트 도입 및 실제 업무 절감 효과는 우리 조직의 AI Agent 도입 타당성을 강화하는 중요한 근거가 된다. 특히 자체 개발을 통한 내재화 전략과 구체적인 성과 지표는 우리 조직의 AI Agent 도입 로드맵 수립에 유용한 벤치마킹 사례이다.</div>
+      <div class="meta">
+        <span class="src">더트래커 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiWEFVX3lxTE1ubkNqTFYzRTNQV3RPTVJlbkJ5ZnRTZHZnWU1TQWMzdm5TbTM0OVZtZDFUbm40WjgyNjNQNFZWNzhBa3BvOEF1QndEWDJ1Y0c3eHY0VEdXbUI?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="크라우드스트라이크, 통제 벗어난 ai 에이전트 끄는 ‘ai 킬 스위치&#x27; 출시 크라우드스트라이크가 통제 불능 상태의 ai 에이전트를 즉시 중단시킬 수 있는 &#x27;ai 킬 스위치&#x27;를 출시했다. 이는 ai 에이전트의 오작동이나 악용을 방지하기 위한 안전 장치이다. ai 에이전트의 안전한 운영과 통제는 도입에 앞서 반드시 확보되어야 할 요소이다. 특히 금융/보험 분야에서는 오작동 시 심각한 결과를 초래할 수 있으므로, ai agent 도입 시 &#x27;킬 스위치&#x27;와 같은 안전 장치 도입을 필수적으로 고려해야 한다. ai agent 디지털투데이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>크라우드스트라이크, 통제 벗어난 AI 에이전트 끄는 ‘AI 킬 스위치&#x27; 출시</h3>
+      <p class="summary">크라우드스트라이크가 통제 불능 상태의 AI 에이전트를 즉시 중단시킬 수 있는 &#x27;AI 킬 스위치&#x27;를 출시했다. 이는 AI 에이전트의 오작동이나 악용을 방지하기 위한 안전 장치이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 안전한 운영과 통제는 도입에 앞서 반드시 확보되어야 할 요소이다. 특히 금융/보험 분야에서는 오작동 시 심각한 결과를 초래할 수 있으므로, AI Agent 도입 시 &#x27;킬 스위치&#x27;와 같은 안전 장치 도입을 필수적으로 고려해야 한다.</div>
+      <div class="meta">
+        <span class="src">디지털투데이 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMic0FVX3lxTE1NdjRRbFNTQ1lhekpxUW5yaVNvc0MzZm1TWEM1TFZyaUZkSUhPWTdiQmdrU012YVl6OF9adG03SjRHWEt3XzBSaU9RLVg3am9nM2NsUHc0UEF6WWwwUW9CUzZyMWVHeE5EVzRhMFdYMTBPX0U?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="직원마다 한 명씩…비씨카드, 전 직원에 ai 에이전트 깔았다 비씨카드가 전 직원에게 ai 에이전트를 배포하여 업무 생산성 향상과 디지털 전환을 가속화하고 있다. 이는 ai 에이전트가 개인 업무 지원 도구로서 광범위하게 활용될 수 있음을 보여준다. 금융권 경쟁사의 전 직원 대상 ai 에이전트 배포 사례는 우리 조직의 ai agent 도입 전략 수립에 중요한 벤치마킹 포인트다. 직원 1인당 1 ai 에이전트 개념을 도입하여 전사적인 업무 효율성을 극대화하는 방안을 모색할 수 있다. 금융 ai 매일일보">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>직원마다 한 명씩…비씨카드, 전 직원에 AI 에이전트 깔았다</h3>
+      <p class="summary">비씨카드가 전 직원에게 AI 에이전트를 배포하여 업무 생산성 향상과 디지털 전환을 가속화하고 있다. 이는 AI 에이전트가 개인 업무 지원 도구로서 광범위하게 활용될 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융권 경쟁사의 전 직원 대상 AI 에이전트 배포 사례는 우리 조직의 AI Agent 도입 전략 수립에 중요한 벤치마킹 포인트다. 직원 1인당 1 AI 에이전트 개념을 도입하여 전사적인 업무 효율성을 극대화하는 방안을 모색할 수 있다.</div>
+      <div class="meta">
+        <span class="src">매일일보 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE4zNTRodWNEWkFINnFLbVB5TE4tWHhSZmtsMmZGN0tBdHVRSV9GSWZjMm1oc1MwXzFkZndxbU1CTlNFdlo5cFpBZGVRVzhlMEZnUG5TZkZkaGJacmFIWGtFTFBEYlY?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="[미국 특징주] 크라우드스트라이크, ai 에이전트 &#x27;킬 스위치&#x27; 출시…오작동 즉시 차단 크라우드스트라이크가 ai 에이전트의 오작동을 즉시 차단할 수 있는 &#x27;킬 스위치&#x27;를 출시했다. 이는 ai 에이전트의 안전한 운영을 위한 필수적인 기능으로 주목받고 있다. ai 에이전트의 오작동은 금융/보험 서비스에 치명적인 영향을 미칠 수 있으므로, 안전 장치 도입은 필수적이다. 우리 조직의 ai agent 도입 시 &#x27;킬 스위치&#x27;와 같은 통제 기능을 시스템 설계 단계부터 고려하여 리스크를 관리해야 한다. ai agent 뉴스핌">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>[미국 특징주] 크라우드스트라이크, AI 에이전트 &#x27;킬 스위치&#x27; 출시…오작동 즉시 차단</h3>
+      <p class="summary">크라우드스트라이크가 AI 에이전트의 오작동을 즉시 차단할 수 있는 &#x27;킬 스위치&#x27;를 출시했다. 이는 AI 에이전트의 안전한 운영을 위한 필수적인 기능으로 주목받고 있다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 오작동은 금융/보험 서비스에 치명적인 영향을 미칠 수 있으므로, 안전 장치 도입은 필수적이다. 우리 조직의 AI Agent 도입 시 &#x27;킬 스위치&#x27;와 같은 통제 기능을 시스템 설계 단계부터 고려하여 리스크를 관리해야 한다.</div>
+      <div class="meta">
+        <span class="src">뉴스핌 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9JUElJZHB3MXRXNHVnUTNncWpqZTlWTHpZbWl0TzJPMGh6UlNRd2RibkVqcmR2NkMwTWZsaUhjTHRDR1lVeFV3NmoteFdlN0FmWE00cV9fbXdWTU5x?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="비씨카드, 전 직원에 ai 에이전트 제공...업무 혁신 속도 비씨카드가 전 직원에게 ai 에이전트를 제공하며 업무 혁신에 속도를 내고 있다. 이는 ai 에이전트가 기업의 디지털 전환과 생산성 향상에 핵심적인 역할을 할 수 있음을 시사한다. 금융권 경쟁사의 ai 에이전트 전 직원 배포는 우리 조직의 ax 전략 수립에 중요한 참고 자료가 된다. ai agent를 통한 업무 혁신 사례를 분석하여 우리 조직의 도입 로드맵을 구체화하고 예상 효과를 산정하는 데 활용할 수 있다. 금융 ai 포인트데일리">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>비씨카드, 전 직원에 AI 에이전트 제공...업무 혁신 속도</h3>
+      <p class="summary">비씨카드가 전 직원에게 AI 에이전트를 제공하며 업무 혁신에 속도를 내고 있다. 이는 AI 에이전트가 기업의 디지털 전환과 생산성 향상에 핵심적인 역할을 할 수 있음을 시사한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융권 경쟁사의 AI 에이전트 전 직원 배포는 우리 조직의 AX 전략 수립에 중요한 참고 자료가 된다. AI Agent를 통한 업무 혁신 사례를 분석하여 우리 조직의 도입 로드맵을 구체화하고 예상 효과를 산정하는 데 활용할 수 있다.</div>
+      <div class="meta">
+        <span class="src">포인트데일리 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5IbXcwZXBENFM5TXFjMy1GTWVGRFpCUnlSd2pNNnJCOF9ZT196dVFOa3lKc0wxVDNOOVJDRTdHM2dtTFQ4VkUyMF9kME9WV1dDWGdhS0FlWElaVTVDNFNKQ3RjU0lHQ21XWWhvWGtrSEjSAXRBVV95cUxQQ2M5aXJ6OUF5QU0xc1N3eEkxNUI0aGNJN2RteDZhNHBubTZRZ1B3RjkzOEhFYTZ2SVIwM2NsWWQ4SWk2N3FXYVVJelZuSmFWenNpSlZJdVU5MGhNWWpuUjRKYU84QmdZOEY4R2ZnNFZDSXZoaw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="bc카드, ai 에이전트 자체 개발…업무혁신에 속도 bc카드가 ai 에이전트를 자체 개발하여 전 직원에게 제공하고 업무 혁신에 박차를 가하고 있다. 이는 ai 기술 내재화를 통해 업무 효율성을 극대화하려는 전략이다. 금융권 경쟁사의 ai 에이전트 자체 개발 및 전 직원 배포는 우리 조직의 ai agent 도입 전략 수립에 중요한 벤치마킹 포인트다. 특히 자체 개발을 통한 기술 내재화는 장기적인 관점에서 우리 조직의 ax 역량을 강화하는 데 기여할 수 있다. 금융 ai 인더뉴스">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>BC카드, AI 에이전트 자체 개발…업무혁신에 속도</h3>
+      <p class="summary">BC카드가 AI 에이전트를 자체 개발하여 전 직원에게 제공하고 업무 혁신에 박차를 가하고 있다. 이는 AI 기술 내재화를 통해 업무 효율성을 극대화하려는 전략이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융권 경쟁사의 AI 에이전트 자체 개발 및 전 직원 배포는 우리 조직의 AI Agent 도입 전략 수립에 중요한 벤치마킹 포인트다. 특히 자체 개발을 통한 기술 내재화는 장기적인 관점에서 우리 조직의 AX 역량을 강화하는 데 기여할 수 있다.</div>
+      <div class="meta">
+        <span class="src">인더뉴스 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE02SklUaWJwMWkwNW1vMXBKSHVEUW51eVo0UHRYNVJyYUVUeUxUSWh1ZHpHREFHYl91Qk5FUWpWYjZ2cnVxLVg5RnlyXzl5QTlmcWE3TmpybnNSbThVTmFIOW1FVlU?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="비씨카드, 전 직원 ai 에이전트 제공 비씨카드가 전 직원에게 ai 에이전트를 제공하며 업무 생산성 향상과 디지털 전환을 추진하고 있다. 이는 ai 에이전트가 기업의 핵심 업무 도구로 자리매김하고 있음을 보여준다. 금융권 경쟁사의 ai 에이전트 전 직원 배포 사례는 우리 조직의 ai agent 도입 타당성과 시급성을 높이는 중요한 근거가 된다. 경쟁사 사례를 통해 우리 조직에 최적화된 ai agent 도입 및 활용 방안을 구체화할 수 있다. 금융 ai 현대경제신문">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>비씨카드, 전 직원 AI 에이전트 제공</h3>
+      <p class="summary">비씨카드가 전 직원에게 AI 에이전트를 제공하며 업무 생산성 향상과 디지털 전환을 추진하고 있다. 이는 AI 에이전트가 기업의 핵심 업무 도구로 자리매김하고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 금융권 경쟁사의 AI 에이전트 전 직원 배포 사례는 우리 조직의 AI Agent 도입 타당성과 시급성을 높이는 중요한 근거가 된다. 경쟁사 사례를 통해 우리 조직에 최적화된 AI Agent 도입 및 활용 방안을 구체화할 수 있다.</div>
+      <div class="meta">
+        <span class="src">현대경제신문 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTFA5dVQzcWlkZmJZM3FzbXhnZnlDbmRwUGNraWE2QngyMV9QTDVxUlhORTlCYVZfWU1RQmo0cHVfTVJ2ZC1tb3Y0OUVBbUlnWkU3dmRwZ2RWNlMzcVRTWUNZUy1odksxbWV10gFrQVVfeXFMT0tuNVZ3ZkFYWkZqQkpfWlVpeTdocUMtRk9STm1DaVd4TFJvV0l2WkRfaUVKdTF2a0ZxclZORTI1TXctdFhmT3ZCamVqNEhOcWMyejRKclVDX2xBam5BS3NXOS1kN0tDWEh3RTQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="skt, 사내 ai 에이전트 경연 &#x27;ax 스파크&#x27; 파이널…우수작 5팀 skt가 사내 ai 에이전트 경연대회 &#x27;ax 스파크&#x27; 파이널을 개최하고 우수작 5팀을 선정했다. 이는 직원들이 직접 ai 에이전트를 개발하고 활용하는 문화를 확산하여 전사적인 ax(ai transformation)를 가속화하기 위함이다. 사내 ai 에이전트 경연은 직원들의 ai 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 ai agent의 업무 적용 기회를 모색하고 ax 문화를 확산할 수 있다. ax 연합뉴스">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>SKT, 사내 AI 에이전트 경연 &#x27;AX 스파크&#x27; 파이널…우수작 5팀</h3>
+      <p class="summary">SKT가 사내 AI 에이전트 경연대회 &#x27;AX 스파크&#x27; 파이널을 개최하고 우수작 5팀을 선정했다. 이는 직원들이 직접 AI 에이전트를 개발하고 활용하는 문화를 확산하여 전사적인 AX(AI Transformation)를 가속화하기 위함이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 사내 AI 에이전트 경연은 직원들의 AI 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 AI Agent의 업무 적용 기회를 모색하고 AX 문화를 확산할 수 있다.</div>
+      <div class="meta">
+        <span class="src">연합뉴스 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE1GeC1aVTVLT2Fna0Z1ZG5oZGVMVFg5T1dmLWZKaURlRUtoMGV1Zkx0dGRIdmdSdl9qbDBOQjNLaHprWHFtdEJBYmFJX1N2M3FURFJZZGxGbXJ3WGPSAWBBVV95cUxPUjdMZnNRUzg1ODhLb21mVHRzOHk3WXFiTDZ5by16NnJwQmpBZ2cyNUN4YkVESG1ZRW9nZ1dzZy1xNmlycVJLSEc0dWh2WlJUSnNBSlRfTFRuVXFURUJJUWc?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="현대제철, 생성형 ai 플랫폼 ‘steel-x’ 가동…직원이 직접 ai 에이전트 만든다 현대제철이 생성형 ai 플랫폼 &#x27;steel-x&#x27;를 가동하여 직원들이 직접 ai 에이전트를 만들 수 있도록 지원한다. 이를 통해 전사적인 ax 혁신을 가속화하고 업무 효율성을 높일 계획이다. 직원들이 직접 ai 에이전트를 개발할 수 있는 플랫폼 도입은 ai 활용 문화를 확산하고 현업의 니즈에 맞는 솔루션을 빠르게 구축하는 효과적인 전략이다. 우리 조직도 유사한 플랫폼 도입을 통해 ai agent의 업무 적용 기회를 확대하고 ax 역량을 내재화할 수 있다. ax 철강금속신문">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>현대제철, 생성형 AI 플랫폼 ‘Steel-X’ 가동…직원이 직접 AI 에이전트 만든다</h3>
+      <p class="summary">현대제철이 생성형 AI 플랫폼 &#x27;Steel-X&#x27;를 가동하여 직원들이 직접 AI 에이전트를 만들 수 있도록 지원한다. 이를 통해 전사적인 AX 혁신을 가속화하고 업무 효율성을 높일 계획이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 직원들이 직접 AI 에이전트를 개발할 수 있는 플랫폼 도입은 AI 활용 문화를 확산하고 현업의 니즈에 맞는 솔루션을 빠르게 구축하는 효과적인 전략이다. 우리 조직도 유사한 플랫폼 도입을 통해 AI Agent의 업무 적용 기회를 확대하고 AX 역량을 내재화할 수 있다.</div>
+      <div class="meta">
+        <span class="src">철강금속신문 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBzMzRWVjcwaHBxOWF6cGtxREtnMVBVSnItc2FTUmRIbnFveEs2cW5JWm5ELWJjVnp5S2FBRXVvNkRMRllpX2pOWEVDay00eWJvZ0kyS2hFSXNsTnV0YUNXbDFlbzNmZ1pHd1E?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="현대제철, 전사 ax 혁신 속도…생성형 ai 통합 플랫폼 오픈 현대제철이 전사적인 ax(ai transformation) 혁신을 가속화하기 위해 생성형 ai 통합 플랫폼을 오픈했다. 이는 전 직원의 ai 활용을 지원하고 업무 프로세스 전반에 ai를 적용하려는 전략의 일환이다. 대기업의 전사적 ax 혁신 및 생성형 ai 통합 플랫폼 도입 사례는 우리 조직의 ax 전략 수립에 중요한 벤치마킹 포인트다. 특히 플랫폼을 통한 전 직원 ai 활용 지원은 ai 도입 효과를 극대화하는 방안으로 고려할 수 있다. ax 전자신문">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>현대제철, 전사 AX 혁신 속도…생성형 AI 통합 플랫폼 오픈</h3>
+      <p class="summary">현대제철이 전사적인 AX(AI Transformation) 혁신을 가속화하기 위해 생성형 AI 통합 플랫폼을 오픈했다. 이는 전 직원의 AI 활용을 지원하고 업무 프로세스 전반에 AI를 적용하려는 전략의 일환이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 대기업의 전사적 AX 혁신 및 생성형 AI 통합 플랫폼 도입 사례는 우리 조직의 AX 전략 수립에 중요한 벤치마킹 포인트다. 특히 플랫폼을 통한 전 직원 AI 활용 지원은 AI 도입 효과를 극대화하는 방안으로 고려할 수 있다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE45Tk82ZkhNb194dG5pQ2RVYVozWTY3ODdEamFINVJiVUxtN3dJazNPd0ZqaENzRDlkREoyczdlZGlJLXJkOEVKOWVMZGtzQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="sk텔레콤, 사내 ai 에이전트 경연 &#x27;ax 스파크&#x27; 개최…전사 확산 추진 sk텔레콤이 사내 ai 에이전트 경연대회 &#x27;ax 스파크&#x27;를 개최하여 ai 에이전트의 전사적 확산을 추진하고 있다. 이는 직원들의 ai 활용 능력 향상과 업무 혁신을 목표로 한다. 대기업의 성공적인 사내 ai 에이전트 경연 사례는 우리 조직의 ax 문화 확산 및 ai agent 도입 전략 수립에 좋은 벤치마킹 대상이 된다. 직원 참여를 통한 ai 활용 아이디어 발굴 및 내재화 방안을 모색할 수 있다. ax 라이센스뉴스">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>SK텔레콤, 사내 AI 에이전트 경연 &#x27;AX 스파크&#x27; 개최…전사 확산 추진</h3>
+      <p class="summary">SK텔레콤이 사내 AI 에이전트 경연대회 &#x27;AX 스파크&#x27;를 개최하여 AI 에이전트의 전사적 확산을 추진하고 있다. 이는 직원들의 AI 활용 능력 향상과 업무 혁신을 목표로 한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 대기업의 성공적인 사내 AI 에이전트 경연 사례는 우리 조직의 AX 문화 확산 및 AI Agent 도입 전략 수립에 좋은 벤치마킹 대상이 된다. 직원 참여를 통한 AI 활용 아이디어 발굴 및 내재화 방안을 모색할 수 있다.</div>
+      <div class="meta">
+        <span class="src">라이센스뉴스 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTE9vem5kak1hc0dhR0dMdEJqSTBtMWg3NlJvUFhnbm5lbHMxLWhsTngtbkY2eUlLNXd1Yng5OVhGQ3ZxbGlacTFFNXV3VDZDTTZLX1RZcG1NWURYc1dWdWFSMS05TDlLNHhaODBz?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="오픈ai, uae 석유·정부·투자 업무에 ai 에이전트 도입…4건 협약 오픈ai가 uae의 석유, 정부, 투자 등 다양한 분야 업무에 ai 에이전트를 도입하기 위한 4건의 협약을 체결했다. 이는 ai 에이전트가 산업 전반에 걸쳐 광범위하게 활용될 수 있음을 보여준다. 선도적인 ai 기업인 오픈ai의 ai 에이전트 도입 사례는 ai agent의 기술적 성숙도와 실제 업무 적용 가능성을 시사한다. 우리 조직의 ai agent 도입 시 다양한 산업 분야의 성공 사례를 참고하여 적용 범위를 확장하는 데 활용할 수 있다. ai agent ai타임스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>오픈AI, UAE 석유·정부·투자 업무에 AI 에이전트 도입…4건 협약</h3>
+      <p class="summary">오픈AI가 UAE의 석유, 정부, 투자 등 다양한 분야 업무에 AI 에이전트를 도입하기 위한 4건의 협약을 체결했다. 이는 AI 에이전트가 산업 전반에 걸쳐 광범위하게 활용될 수 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 선도적인 AI 기업인 오픈AI의 AI 에이전트 도입 사례는 AI Agent의 기술적 성숙도와 실제 업무 적용 가능성을 시사한다. 우리 조직의 AI Agent 도입 시 다양한 산업 분야의 성공 사례를 참고하여 적용 범위를 확장하는 데 활용할 수 있다.</div>
+      <div class="meta">
+        <span class="src">AI타임스 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiakFVX3lxTE1aSmJJcE53Nmswck5yTzFxZzVFZF9lTnhpUWFCSUV6RkVlcWNHRXo5aDJGR3c2VFN0Sjh5bld3VG1oc082dTVGeThqZU9TZ2NJVi0wSDdldXd2d0ZERTA4UDNTQ3FkNnlCZnc?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="skt, ‘ax 스파크’ 개최…사내 ai 에이전트 우수작 시상 skt가 사내 ai 에이전트 경연대회 &#x27;ax 스파크&#x27;를 개최하고 우수작을 시상했다. 이는 직원들의 ai 활용 역량을 높이고 ai 에이전트 기반의 업무 혁신을 장려하기 위한 노력이다. 사내 ai 에이전트 경연은 직원들의 ai 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 ai agent의 업무 적용 기회를 모색하고 ax 문화를 확산할 수 있다. ax 아이티데일리">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>SKT, ‘AX 스파크’ 개최…사내 AI 에이전트 우수작 시상</h3>
+      <p class="summary">SKT가 사내 AI 에이전트 경연대회 &#x27;AX 스파크&#x27;를 개최하고 우수작을 시상했다. 이는 직원들의 AI 활용 역량을 높이고 AI 에이전트 기반의 업무 혁신을 장려하기 위한 노력이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 사내 AI 에이전트 경연은 직원들의 AI 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 AI Agent의 업무 적용 기회를 모색하고 AX 문화를 확산할 수 있다.</div>
+      <div class="meta">
+        <span class="src">아이티데일리 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTFBrOUNFLWRMUTJlQ0hhdFpVeUEyaDRIUzZYWkRhWDQzX1Y5T09MdlRmZkh1akZtZEV3anR4czZLeWJYSTc1akFSSlpoQnlRcXRKbDBmbGlkbjV5U1FGZ1NpVVZvQkNxY1Nl?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="누가 더 일 잘하나...skt 직원이 만든 ai 에이전트 맞대결 skt가 사내 ai 에이전트 경연을 통해 직원들이 직접 개발한 ai 에이전트들의 성능을 겨루는 자리를 마련했다. 이는 직원들의 ai 활용 역량을 높이고 혁신적인 아이디어를 발굴하기 위함이다. 사내 ai 에이전트 경연은 직원들의 ai 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 ai agent의 업무 적용 기회를 모색하고 ax 문화를 확산할 수 있다. ax 지디넷코리아">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>누가 더 일 잘하나...SKT 직원이 만든 AI 에이전트 맞대결</h3>
+      <p class="summary">SKT가 사내 AI 에이전트 경연을 통해 직원들이 직접 개발한 AI 에이전트들의 성능을 겨루는 자리를 마련했다. 이는 직원들의 AI 활용 역량을 높이고 혁신적인 아이디어를 발굴하기 위함이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 사내 AI 에이전트 경연은 직원들의 AI 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 AI Agent의 업무 적용 기회를 모색하고 AX 문화를 확산할 수 있다.</div>
+      <div class="meta">
+        <span class="src">지디넷코리아 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE1RRmFhU3hRR21FcW5aR25iSXJGTWZFLU5Mc2JJTGdoV295VERoNU1xb0hMYXh0UThnWnBkSGQweUNOOXN5LTNLbFB2Vmpoblh3WmdWZEt3?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="skt 사내 ai 에이전트 `왕중왕` 가렸다…173건 중 5개 팀 수상 skt가 사내 ai 에이전트 경연대회 &#x27;ax 스파크&#x27;를 통해 173건의 출품작 중 우수작 5개 팀을 선정했다. 이는 직원들의 ai 활용 역량을 높이고 ai 에이전트 기반의 업무 혁신을 장려하기 위한 노력이다. 사내 ai 에이전트 경연은 직원들의 ai 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 ai agent의 업무 적용 기회를 모색하고 ax 문화를 확산할 수 있다. ax 디지털데일리">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>SKT 사내 AI 에이전트 `왕중왕` 가렸다…173건 중 5개 팀 수상</h3>
+      <p class="summary">SKT가 사내 AI 에이전트 경연대회 &#x27;AX 스파크&#x27;를 통해 173건의 출품작 중 우수작 5개 팀을 선정했다. 이는 직원들의 AI 활용 역량을 높이고 AI 에이전트 기반의 업무 혁신을 장려하기 위한 노력이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 사내 AI 에이전트 경연은 직원들의 AI 활용 역량을 강화하고 혁신적인 아이디어를 발굴하는 효과적인 방법이다. 우리 조직도 유사한 프로그램을 통해 AI Agent의 업무 적용 기회를 모색하고 AX 문화를 확산할 수 있다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE9JcnJQTHRSQkhFV3RTVVQ3RldXWDJUR2RmazIxTlRwU0RBZ0oxdmI2ZFNhZGpfVWVlaFRncGEzdnJBV2FkdFFBb2syTG4tc2Nqd25yLTAwRUg4TU1qRThYN3Ayb2I?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="&quot;업무 맥락 이해하는 ai 에이전트&quot;⋯스노우플레이크, 기업용 에이전트 기능 고도화 스노우플레이크가 업무 맥락을 이해하는 기업용 ai 에이전트 기능을 고도화했다. 이는 ai 에이전트가 단순 작업 자동화를 넘어 복잡한 의사결정 지원 및 상황 인지 능력을 갖추고 있음을 보여준다. ai 에이전트의 &#x27;업무 맥락 이해&#x27; 능력은 금융/보험 분야에서 고객 상담, 계약 심사 등 복잡한 상황 판단이 필요한 업무에 적용될 때 그 가치가 크다. 우리 조직의 ai agent 도입 시 이러한 고도화된 기능을 요구사항에 반영하여 실제 업무 효율을 극대화할 수 있다. ai agent 아이뉴스24">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>&quot;업무 맥락 이해하는 AI 에이전트&quot;⋯스노우플레이크, 기업용 에이전트 기능 고도화</h3>
+      <p class="summary">스노우플레이크가 업무 맥락을 이해하는 기업용 AI 에이전트 기능을 고도화했다. 이는 AI 에이전트가 단순 작업 자동화를 넘어 복잡한 의사결정 지원 및 상황 인지 능력을 갖추고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 &#x27;업무 맥락 이해&#x27; 능력은 금융/보험 분야에서 고객 상담, 계약 심사 등 복잡한 상황 판단이 필요한 업무에 적용될 때 그 가치가 크다. 우리 조직의 AI Agent 도입 시 이러한 고도화된 기능을 요구사항에 반영하여 실제 업무 효율을 극대화할 수 있다.</div>
+      <div class="meta">
+        <span class="src">아이뉴스24 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTEFVX3lxTE9hOVNlbzVVUUpPNkR0YXl0VnFMamwyRXBXeTl0NFdwcjV3ay0wQ1lwMm5YTkdYVVE0TG1rTHdjcFZyZ29OMEJsRU1qZVk?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="일레븐랩스, 모델 선택하면 대화 ai 에이전트 구현 &#x27;리얼타임&#x27; 출시 일레븐랩스가 사용자가 모델을 선택하여 대화형 ai 에이전트를 구현할 수 있는 &#x27;리얼타임&#x27;을 출시했다. 이 솔루션은 코드 작성 없이 쉽게 ai 에이전트를 구축하고 활용할 수 있도록 지원한다. 노코드/로우코드 기반의 ai 에이전트 구축 솔루션은 비전문가도 ai를 업무에 쉽게 적용할 수 있게 하여 ai 도입 장벽을 낮춘다. 우리 조직의 ai agent 도입 시 기술적 난이도를 줄이고 신속한 파일럿 프로젝트 추진에 활용 가능성을 검토할 수 있다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>일레븐랩스, 모델 선택하면 대화 AI 에이전트 구현 &#x27;리얼타임&#x27; 출시</h3>
+      <p class="summary">일레븐랩스가 사용자가 모델을 선택하여 대화형 AI 에이전트를 구현할 수 있는 &#x27;리얼타임&#x27;을 출시했다. 이 솔루션은 코드 작성 없이 쉽게 AI 에이전트를 구축하고 활용할 수 있도록 지원한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 노코드/로우코드 기반의 AI 에이전트 구축 솔루션은 비전문가도 AI를 업무에 쉽게 적용할 수 있게 하여 AI 도입 장벽을 낮춘다. 우리 조직의 AI Agent 도입 시 기술적 난이도를 줄이고 신속한 파일럿 프로젝트 추진에 활용 가능성을 검토할 수 있다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9YaHFfUGVzZ0lBOV9VZUM1SGdyNDVjckJhS25vUURlcnlJdW1PNXZlQVk0ZmgxdlVNUktTRjNYNm1pVHUxaEQwd3lJOGxvdw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="전차·전투기 정비 판단도 ai가…정부, 군수 ai 에이전트 개발 정부가 전차, 전투기 등 군수품 정비 판단에 ai를 활용하는 ai 에이전트를 개발한다. 이는 국방 분야의 효율성을 높이고 정비 인력의 부담을 줄이는 데 기여할 것으로 기대된다. ai 에이전트가 복잡하고 전문적인 판단 영역에까지 적용되는 사례로, 다양한 산업 분야에서 ai 에이전트의 활용 가능성을 보여준다. 우리 조직도 보험금 심사, 언더라이팅 등 전문성이 요구되는 영역에 ai agent 적용을 검토할 때 참고할 수 있다. ai agent 연합뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>전차·전투기 정비 판단도 AI가…정부, 군수 AI 에이전트 개발</h3>
+      <p class="summary">정부가 전차, 전투기 등 군수품 정비 판단에 AI를 활용하는 AI 에이전트를 개발한다. 이는 국방 분야의 효율성을 높이고 정비 인력의 부담을 줄이는 데 기여할 것으로 기대된다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 복잡하고 전문적인 판단 영역에까지 적용되는 사례로, 다양한 산업 분야에서 AI 에이전트의 활용 가능성을 보여준다. 우리 조직도 보험금 심사, 언더라이팅 등 전문성이 요구되는 영역에 AI Agent 적용을 검토할 때 참고할 수 있다.</div>
+      <div class="meta">
+        <span class="src">연합뉴스 · 2026-11-04</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiW0FVX3lxTFBndEc1Y05JRXZSOFZ0X3FfZW5YVjRnV2RzM3dFSnR3WndFOHdzLVc1bHVpbW5STDF6SDFXcm54a1dhZ2NPSHRtRzBaNWpqWGtOX3JLQXQxUTFoclHSAWBBVV95cUxPc2VkWlJHSUFYbHZSQlNFbHNweWt1U3lSZXRkN1dOR0VQdGpmZ3U4YUFjWTQ3NTlLc21YOGlBOE5FcmVwV1h1OEtSVjFLOHJyYzFoUGM1ZHdhanUzX2M3bm8?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="이승민 어라이즈 총괄 “ai 에이전트, 행동까지 추적해야” [월간ax 10월호] 이승민 어라이즈 총괄은 ai 에이전트가 단순한 정보 처리뿐 아니라 사용자의 &#x27;행동&#x27;까지 추적하고 이해해야 한다고 강조했다. 이는 ai 에이전트의 고도화된 기능과 활용 범위를 넓히는 데 중요한 관점이다. ai 에이전트의 발전 방향과 핵심 역량에 대한 전문가 의견은 우리 조직의 ai agent 도입 시 요구사항 정의 및 솔루션 평가에 중요한 기준이 된다. 특히 사용자 행동 추적은 개인화된 금융/보험 서비스 제공에 필수적인 요소가 될 수 있다. ai agent it조선">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>이승민 어라이즈 총괄 “AI 에이전트, 행동까지 추적해야” [월간AX 10월호]</h3>
+      <p class="summary">이승민 어라이즈 총괄은 AI 에이전트가 단순한 정보 처리뿐 아니라 사용자의 &#x27;행동&#x27;까지 추적하고 이해해야 한다고 강조했다. 이는 AI 에이전트의 고도화된 기능과 활용 범위를 넓히는 데 중요한 관점이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 발전 방향과 핵심 역량에 대한 전문가 의견은 우리 조직의 AI Agent 도입 시 요구사항 정의 및 솔루션 평가에 중요한 기준이 된다. 특히 사용자 행동 추적은 개인화된 금융/보험 서비스 제공에 필수적인 요소가 될 수 있다.</div>
+      <div class="meta">
+        <span class="src">IT조선 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE9QZXVlbm9iSDMyX3gxWW1nekJKalBvLWd3NExDTGxTM2h6d1BRYTZQQUFJRzBxZ1JqdXZETGN3WjRncTN1WklkSC1OWXNOMWs3Y2ZzaE9rYWI1dXMwdm9aWDJLc3RCUFBpMkFJcnhXQ3TSAXRBVV95cUxOb2d1UFg1aW9SOW15cklkMzFvUWI5QjdfVF90akJHVmFqVVlLY05vT1o2eUkza0F4ZllzY1dLN0EyTGFYcjMxTUZwcTFZV3BMZ2haSDZqT3VMYmpCekYtSUVYVDA2dkJONk1NSTIxWjc1LUhuSA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="스노우플레이크, 기업용 ai 에이전트 공개…&quot;업무흐름 자동화&quot; 스노우플레이크가 기업용 ai 에이전트를 공개하며 업무 흐름 자동화를 강조했다. 이 에이전트는 기업의 데이터와 연동하여 복잡한 업무를 자동화하고 효율성을 높이는 데 초점을 맞추고 있다. 기업용 ai 에이전트 솔루션의 등장은 업무 자동화 및 생산성 향상에 대한 시장의 니즈를 반영한다. 우리 조직도 이러한 솔루션을 검토하여 반복적이고 정형화된 업무를 자동화하고 직원들이 고부가가치 업무에 집중할 수 있도록 지원하는 방안을 모색할 수 있다. ai agent 연합뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>스노우플레이크, 기업용 AI 에이전트 공개…&quot;업무흐름 자동화&quot;</h3>
+      <p class="summary">스노우플레이크가 기업용 AI 에이전트를 공개하며 업무 흐름 자동화를 강조했다. 이 에이전트는 기업의 데이터와 연동하여 복잡한 업무를 자동화하고 효율성을 높이는 데 초점을 맞추고 있다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 기업용 AI 에이전트 솔루션의 등장은 업무 자동화 및 생산성 향상에 대한 시장의 니즈를 반영한다. 우리 조직도 이러한 솔루션을 검토하여 반복적이고 정형화된 업무를 자동화하고 직원들이 고부가가치 업무에 집중할 수 있도록 지원하는 방안을 모색할 수 있다.</div>
+      <div class="meta">
+        <span class="src">연합뉴스 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE8xSElKb3FDWXR4bTFUZjY3al9kdm9GZHlBYjEzLUgyRHRkS2hJc3h4alZGME83emxGRDlJellGRXFNQW9DbmNKZUJEem84Wm5NMnJieDdBdnAxSm_SAWBBVV95cUxONC1qRjZ1UVh5S0tFQnl4RWNqOXMzblZ6eXRIX1dvQWRWRkhmUm9RZkFuZDdoWVdzNnRiY20tMC1GTGxSXzFfRkZKSGFMczhPLVRUTm1nbjk4QU5KSzUzdm4?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="코드 작성 없이 사용하는 음성 ai 에이전트, 정식 출시 코드 작성 없이 사용할 수 있는 음성 ai 에이전트가 정식 출시되었다. 이 솔루션은 비전문가도 음성 기반 ai 에이전트를 쉽게 구축하고 다양한 업무에 활용할 수 있도록 돕는다. 노코드/로우코드 기반의 음성 ai 에이전트 솔루션은 고객 서비스, 내부 업무 지원 등 다양한 분야에서 ai agent 도입을 가속화할 수 있다. 우리 조직의 고객 접점 및 내부 커뮤니케이션 효율화 방안으로 활용 가능성을 검토할 수 있다. ai agent unite.ai">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>코드 작성 없이 사용하는 음성 AI 에이전트, 정식 출시</h3>
+      <p class="summary">코드 작성 없이 사용할 수 있는 음성 AI 에이전트가 정식 출시되었다. 이 솔루션은 비전문가도 음성 기반 AI 에이전트를 쉽게 구축하고 다양한 업무에 활용할 수 있도록 돕는다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 노코드/로우코드 기반의 음성 AI 에이전트 솔루션은 고객 서비스, 내부 업무 지원 등 다양한 분야에서 AI Agent 도입을 가속화할 수 있다. 우리 조직의 고객 접점 및 내부 커뮤니케이션 효율화 방안으로 활용 가능성을 검토할 수 있다.</div>
+      <div class="meta">
+        <span class="src">Unite.AI · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxNeTI1Q0xFQVJQUFRGUTB1dWZLd3BpVlBjbzREN05KalM2bUxNMDF0QTVkR1BJOWlKUlZvdzVMc2lxOXdZTnByYkk1TnpOeWVkUmlxeGYwUkJMd0UwS3dheC00RU5VRzMwZnNzWEp5RzFab09oYzI4LWpGWF9xSUlaNVBFQzNNTkIt?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="&quot;세일즈는 거들 뿐&quot;…위버스브레인 ai 에이전트, 다음 행보는 [일문일답] 위버스브레인의 ai 에이전트가 단순 세일즈 지원을 넘어 다양한 업무 영역으로 확장될 계획임을 밝혔다. 이는 ai 에이전트의 활용 범위가 점차 넓어지고 있음을 시사한다. ai 에이전트가 단순 보조 역할을 넘어 핵심 업무 영역으로 확장되는 추세는 우리 조직의 ai agent 도입 전략 수립에 중요한 시사점을 제공한다. 초기에는 보조적인 역할로 시작하더라도 장기적으로는 핵심 업무 자동화 및 의사결정 지원으로 확장하는 로드맵을 고려할 수 있다. ai agent 디지털데일리">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>&quot;세일즈는 거들 뿐&quot;…위버스브레인 AI 에이전트, 다음 행보는 [일문일답]</h3>
+      <p class="summary">위버스브레인의 AI 에이전트가 단순 세일즈 지원을 넘어 다양한 업무 영역으로 확장될 계획임을 밝혔다. 이는 AI 에이전트의 활용 범위가 점차 넓어지고 있음을 시사한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 단순 보조 역할을 넘어 핵심 업무 영역으로 확장되는 추세는 우리 조직의 AI Agent 도입 전략 수립에 중요한 시사점을 제공한다. 초기에는 보조적인 역할로 시작하더라도 장기적으로는 핵심 업무 자동화 및 의사결정 지원으로 확장하는 로드맵을 고려할 수 있다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE9rakJ2aWdiNWNuYl9WUVUxVEoxS0hVOG9lUExGY3RoOG4yNXptYUc4Wmp4bzlhY3BxT19QbFNHbF9JMlZ1ZVQ2N3U2RXlQb0tTRGZjYVhMck96cWtuT3ptNE11aVo?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="`스피킹맥스` 운영사는 왜 `ai 에이전트`를 선보일까 [현장] 영어 학습 서비스 &#x27;스피킹맥스&#x27; 운영사가 ai 에이전트 사업에 진출하며 새로운 비즈니스 기회를 모색하고 있다. 이는 기존 사업 역량을 ai 에이전트 기술과 결합하여 시너지를 창출하려는 전략이다. 다양한 산업 분야의 기업들이 ai 에이전트를 통해 신규 사업을 발굴하고 기존 사업을 혁신하는 사례는 우리 조직의 ai agent 활용 전략 수립에 영감을 줄 수 있다. 기존 금융/보험 서비스에 ai agent를 결합하여 새로운 가치를 창출하는 방안을 모색할 수 있다. ai agent 디지털데일리">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>`스피킹맥스` 운영사는 왜 `AI 에이전트`를 선보일까 [현장]</h3>
+      <p class="summary">영어 학습 서비스 &#x27;스피킹맥스&#x27; 운영사가 AI 에이전트 사업에 진출하며 새로운 비즈니스 기회를 모색하고 있다. 이는 기존 사업 역량을 AI 에이전트 기술과 결합하여 시너지를 창출하려는 전략이다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · 다양한 산업 분야의 기업들이 AI 에이전트를 통해 신규 사업을 발굴하고 기존 사업을 혁신하는 사례는 우리 조직의 AI Agent 활용 전략 수립에 영감을 줄 수 있다. 기존 금융/보험 서비스에 AI Agent를 결합하여 새로운 가치를 창출하는 방안을 모색할 수 있다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE9jNHJDeno3cExkaE1NUW5XM2hfX2dldWpRS2drVkY1VzNTVGhrMktnRks4Y052N1JHbThvZ2Q5dnNYcl9MSjUzV245X3BJY2tackphTWc3RTNFRFZRVDdBWjJFejE?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="pagerduty, 사고 관리 ai 에이전트 paige 출시 pagerduty가 사고 관리를 위한 ai 에이전트 &#x27;paige&#x27;를 출시했다. 이 에이전트는 it 시스템의 장애 발생 시 신속하게 문제를 감지하고 해결을 지원하여 운영 효율성을 높인다. ai 에이전트가 특정 전문 영역인 사고 관리 분야에 특화되어 출시되는 사례는 우리 조직의 ai agent 도입 시 특정 업무 프로세스에 최적화된 에이전트 개발 가능성을 시사한다. it 운영 및 시스템 관리 효율화 방안으로 ai agent 도입을 고려할 수 있다. ai agent investing.com 한국어">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★<span class="off">★★</span></span>
+      </div>
+      <h3>PagerDuty, 사고 관리 AI 에이전트 Paige 출시</h3>
+      <p class="summary">PagerDuty가 사고 관리를 위한 AI 에이전트 &#x27;Paige&#x27;를 출시했다. 이 에이전트는 IT 시스템의 장애 발생 시 신속하게 문제를 감지하고 해결을 지원하여 운영 효율성을 높인다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트가 특정 전문 영역인 사고 관리 분야에 특화되어 출시되는 사례는 우리 조직의 AI Agent 도입 시 특정 업무 프로세스에 최적화된 에이전트 개발 가능성을 시사한다. IT 운영 및 시스템 관리 효율화 방안으로 AI Agent 도입을 고려할 수 있다.</div>
+      <div class="meta">
+        <span class="src">Investing.com 한국어 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE1TVmU4TGRXTlNUcnhSMy1RaWoya09JVkQ4QXVLcnZtODVTb3lzVUlsR0U4TjNDYWpaOXk2TjFhRl9Md251Y0dTYjlOWEpXOVFfbmdkNDVRb2JjV0tLZVBlZlRPUU5qNXZIQm80amJVb20?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="충북 ax 포럼, ai 에이전트 업무혁신 조명 충북 ax 포럼에서 ai 에이전트를 통한 업무 혁신 방안이 조명되었다. 이는 지역 사회 및 기업들이 ai 에이전트의 잠재력을 인식하고 업무 효율성 향상에 관심을 기울이고 있음을 보여준다. ai 에이전트의 업무 혁신 잠재력에 대한 사회적 관심과 논의는 우리 조직의 ai agent 도입 필요성을 뒷받침한다. 다양한 산업 분야의 업무 혁신 사례를 통해 우리 조직에 적용 가능한 아이디어를 얻을 수 있다. ax 충청도민일보">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★<span class="off">★★★</span></span>
+      </div>
+      <h3>충북 AX 포럼, AI 에이전트 업무혁신 조명</h3>
+      <p class="summary">충북 AX 포럼에서 AI 에이전트를 통한 업무 혁신 방안이 조명되었다. 이는 지역 사회 및 기업들이 AI 에이전트의 잠재력을 인식하고 업무 효율성 향상에 관심을 기울이고 있음을 보여준다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 업무 혁신 잠재력에 대한 사회적 관심과 논의는 우리 조직의 AI Agent 도입 필요성을 뒷받침한다. 다양한 산업 분야의 업무 혁신 사례를 통해 우리 조직에 적용 가능한 아이디어를 얻을 수 있다.</div>
+      <div class="meta">
+        <span class="src">충청도민일보 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5MNnhtaFRSSU81dldDRnlMSFJxdGNvRzgtY2NDSzBXaG9qRjVWRmxYWWl0eFZwM2kwTWM2YWsxdmxEV0xDdkwwUnV1YzhrRnpFS2RZbUcxNmViRS1FUVVYRkgxYmhUa2FVLWJzcQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="ai 에이전트가 바꾸는 일상과 업무… 충북(청주) ax 혁신 포럼 성료 충북(청주) ax 혁신 포럼이 성공적으로 개최되어 ai 에이전트가 일상과 업무를 어떻게 변화시킬지에 대한 논의가 이루어졌다. 이는 ai 에이전트의 사회적 관심과 도입 확산 추세를 반영한다. ai 에이전트의 업무 혁신 잠재력에 대한 사회적 관심과 논의는 우리 조직의 ai agent 도입 필요성을 뒷받침한다. 다양한 산업 분야의 업무 혁신 사례를 통해 우리 조직에 적용 가능한 아이디어를 얻을 수 있다. ax 청주일보">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★<span class="off">★★★</span></span>
+      </div>
+      <h3>AI 에이전트가 바꾸는 일상과 업무… 충북(청주) AX 혁신 포럼 성료</h3>
+      <p class="summary">충북(청주) AX 혁신 포럼이 성공적으로 개최되어 AI 에이전트가 일상과 업무를 어떻게 변화시킬지에 대한 논의가 이루어졌다. 이는 AI 에이전트의 사회적 관심과 도입 확산 추세를 반영한다.</p>
+      <div class="why"><b>AX전략팀 관점</b> · AI 에이전트의 업무 혁신 잠재력에 대한 사회적 관심과 논의는 우리 조직의 AI Agent 도입 필요성을 뒷받침한다. 다양한 산업 분야의 업무 혁신 사례를 통해 우리 조직에 적용 가능한 아이디어를 얻을 수 있다.</div>
+      <div class="meta">
+        <span class="src">청주일보 · 2026-11-03</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTFBORk1Ocmx3ckxxNk14NktrT1F5b053cUpTalBBSmlSRWtNTUtiekMwSm1kODlSa0daRklvOXUtVGNERTZrTWFnT0FQaHczTGJrWWtuMjZxRWFRbkVpTThEQmd4UHNXb0V1cGgw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+</div>
+<div id="noresult">조건에 맞는 기사가 없습니다.</div>
+
+<footer>
+  THE AI · AX BRIEFING · 매일 자동 갱신 · powered by Gemini<br>
+  최종 생성 2026-11-04 10:49
+</footer>
+
+
+<script>
+  let curCat = 'all';
+  function applyFilters(){
+    const q = (document.getElementById('q').value || '').toLowerCase().trim();
+    const filtering = (curCat !== 'all') || (q !== '');
+    const t5 = document.getElementById('top5wrap');
+    if(t5) t5.style.display = filtering ? 'none' : '';
+    let shown = 0;
+    document.querySelectorAll('.card').forEach(function(c){
+      const okCat = curCat === 'all' || c.dataset.category === curCat;
+      const okQ = !q || (c.dataset.text || '').includes(q);
+      let show = okCat && okQ;
+      // 기본 화면에서는 TOP5 기사는 그리드에서 숨겨 중복 방지 (필터 시엔 함께 검색)
+      if(!filtering && c.classList.contains('is-top5')) show = false;
+      c.style.display = show ? '' : 'none';
+      if(show) shown++;
+    });
+    document.getElementById('noresult').style.display = (filtering && shown===0) ? 'block' : 'none';
+  }
+  document.querySelectorAll('.filter-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      curCat = b.dataset.cat;
+      applyFilters();
+    });
+  });
+  document.addEventListener('DOMContentLoaded', applyFilters);
+</script>
+
+</div></body></html>
