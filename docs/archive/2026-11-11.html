@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily AI/AX Briefing — 2026-11-11</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f4f6; --paper:#ffffff; --ink:#17181c; --mut:#6b7280;
+  --line:#e7e8ec; --accent:#4f46e5; --accent-soft:#eef0ff; --star:#e0a80d;
+  --tag:#eef1f6; --tagink:#3f4657;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+  line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 90px}
+
+/* 신문 제호 */
+.masthead{text-align:center;padding:46px 0 20px;border-bottom:3px double var(--ink)}
+.masthead .kicker{font-size:12px;letter-spacing:4px;color:var(--mut);
+  text-transform:uppercase;margin-bottom:13px}
+.masthead h1{font-family:Georgia,"Times New Roman",serif;font-size:46px;font-weight:700;
+  margin:0;letter-spacing:-1px}
+.masthead .date{margin-top:13px;color:#333;font-size:14px;font-family:Georgia,serif;font-style:italic}
+.masthead .date b{font-style:normal;font-weight:600}
+
+/* 툴바 */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
+.tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.toolbar input[type=date],.search{font-family:inherit;font-size:13px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.search{min-width:220px}
+.tools a{font-size:13px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);color:var(--ink)}
+.tools a:hover{border-color:var(--accent);text-decoration:none}
+.tools a.disabled{opacity:.35;pointer-events:none}
+.tools a.latest{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 섹션 라벨 */
+.section-label{display:flex;align-items:center;gap:14px;margin:34px 0 14px;
+  font-size:13px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800}
+.section-label .accent{color:var(--accent)}
+.section-label:after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 총평 */
+.overview{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:14px;padding:20px 24px;margin:24px 0 0}
+.overview h2{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--accent);font-weight:700}
+.overview p{margin:0;color:#2c2c2c;font-size:15.5px}
+
+/* TOP 5 MUST READ */
+.top5{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:6px 26px;
+  box-shadow:0 4px 20px rgba(30,30,70,.05)}
+.t5{display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.t5:last-child{border-bottom:none}
+.t5 .rank{font-family:Georgia,serif;font-size:36px;font-weight:700;line-height:1;
+  color:var(--accent);min-width:50px;text-align:center}
+.t5 .rbody{flex:1;min-width:0}
+.t5 .m5{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.t5 h4{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.4}
+.t5 h4 a{color:var(--ink)}.t5 h4 a:hover{color:var(--accent)}
+.t5 .why5{font-size:13.5px;color:#4a5064;line-height:1.6}
+.t5 .why5 b{color:var(--accent)}
+
+/* 태그 · 별점 */
+.tag{background:var(--tag);color:var(--tagink);font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
+.stars{color:var(--star);font-size:13px;letter-spacing:1px}
+.stars .off{color:#dcd9d0}
+.src{color:var(--mut);font-size:12px}
+
+/* 매거진 그리드 */
+.gridhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.filter-btn{cursor:pointer;font-size:12.5px;padding:6px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--paper);color:var(--tagink);font-family:inherit;transition:.12s}
+.filter-btn:hover{border-color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+  display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
+.card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.card h3{margin:2px 0 10px;font-size:19px;line-height:1.4;font-weight:800;letter-spacing:-.01em}
+.summary{margin:0 0 14px;color:#3a3a3a;font-size:14.5px;flex:1}
+.why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:11px 14px;font-size:13.5px;color:#33385a}
+.why b{color:var(--accent)}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;
+  padding-top:12px;border-top:1px solid var(--line)}
+.readmore{font-size:12.5px;font-weight:700}.readmore:after{content:" \2192"}
+#noresult{display:none;color:var(--mut);text-align:center;padding:40px 0}
+
+footer{margin-top:50px;padding-top:22px;border-top:3px double var(--ink);
+  color:var(--mut);font-size:12px;text-align:center;line-height:1.8}
+
+@media (max-width:760px){
+  .masthead h1{font-size:32px}
+  .grid{grid-template-columns:1fr}
+  .search{min-width:130px;flex:1}
+  .filters{margin-left:0;width:100%}
+  .t5 .rank{font-size:28px;min-width:38px}
+}
+@media print{
+  .toolbar,.filters,.readmore{display:none}
+  .card{break-inside:avoid;box-shadow:none}.top5{box-shadow:none}
+}
+</style>
+</head><body><div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">AX Strategy · Daily Intelligence</div>
+  <h1>The AI · AX Briefing</h1>
+  <div class="date"><b>2026년 11월 11일 수요일</b> · 총 30건 · 중요도순</div>
+</header>
+
+
+    <div class="toolbar">
+      <div class="tools">
+        <input type="date" value="2026-11-11" min="2026-07-01" max="2026-11-11" onchange="goDate(this.value)">
+        <a href="2026-11-10.html">◀ 이전</a><a class="disabled">다음 ▶</a>
+        <a class="latest" href="../index.html">최신</a>
+      </div>
+      <div class="tools">
+        <input type="text" class="search" id="q" placeholder="🔍 키워드 검색..." oninput="applyFilters()">
+      </div>
+    </div>
+    <script>
+      const DATES = ["2026-11-11", "2026-11-10", "2026-11-09", "2026-11-08", "2026-11-07", "2026-11-06", "2026-11-05", "2026-11-04", "2026-11-03", "2026-11-02", "2026-11-01", "2026-10-31", "2026-10-30", "2026-10-29", "2026-10-28", "2026-10-27", "2026-10-26", "2026-10-25", "2026-10-24", "2026-10-23", "2026-10-22", "2026-10-21", "2026-10-20", "2026-10-19", "2026-10-18", "2026-10-17", "2026-10-16", "2026-10-15", "2026-10-14", "2026-10-13", "2026-10-12", "2026-10-11", "2026-10-10", "2026-10-09", "2026-10-08", "2026-10-07", "2026-10-06", "2026-10-05", "2026-10-04", "2026-10-03", "2026-10-02", "2026-10-01", "2026-09-30", "2026-09-29", "2026-09-28", "2026-09-27", "2026-09-26", "2026-09-25", "2026-09-24", "2026-09-23", "2026-09-22", "2026-09-21", "2026-09-20", "2026-09-19", "2026-09-18", "2026-09-17", "2026-09-16", "2026-09-15", "2026-09-14", "2026-09-13", "2026-09-12", "2026-09-11", "2026-09-10", "2026-09-09", "2026-09-08", "2026-09-07", "2026-09-06", "2026-09-05", "2026-09-04", "2026-09-03", "2026-09-02", "2026-09-01", "2026-08-31", "2026-08-30", "2026-08-29", "2026-08-28", "2026-08-27", "2026-08-26", "2026-08-25", "2026-08-24", "2026-08-23", "2026-08-22", "2026-08-21", "2026-08-20", "2026-08-19", "2026-08-18", "2026-08-17", "2026-08-16", "2026-08-15", "2026-08-14", "2026-08-13", "2026-08-12", "2026-08-11", "2026-08-10", "2026-08-09", "2026-08-08", "2026-08-07", "2026-08-06", "2026-08-05", "2026-08-04", "2026-08-03", "2026-08-02", "2026-08-01", "2026-07-31", "2026-07-30", "2026-07-29", "2026-07-28", "2026-07-27", "2026-07-26", "2026-07-25", "2026-07-24", "2026-07-23", "2026-07-22", "2026-07-21", "2026-07-20", "2026-07-19", "2026-07-18", "2026-07-17", "2026-07-16", "2026-07-15", "2026-07-14", "2026-07-13", "2026-07-12", "2026-07-11", "2026-07-10", "2026-07-09", "2026-07-08", "2026-07-07", "2026-07-06", "2026-07-05", "2026-07-04", "2026-07-03", "2026-07-02", "2026-07-01"];
+      const BASE = "";
+      function goDate(d){
+        if(!d) return;
+        if(DATES.includes(d)){ location.href = BASE + d + ".html"; }
+        else { alert("해당 날짜의 브리핑이 없습니다."); }
+      }
+    </script>
+
+<section class="overview">
+  <h2>오늘의 총평</h2>
+  <p>자동 요약이 실행되지 않아 수집·정렬 결과만 표시합니다. ANTHROPIC_API_KEY를 설정하면 Claude가 각 기사 요약과 AX전략팀 관점 분석을 생성합니다.</p>
+</section>
+
+<div id="top5wrap">
+  <div class="section-label"><span class="accent">TOP 5</span> · MUST READ</div>
+  <div class="top5">
+        <div class="t5">
+          <div class="rank">01</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">디지털투데이</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTFBpSXdISDVpcy1wSmZpU2pvaFdId1g0WHdqVkx4Z0JaOFlIcEt4VnRLWmVvRnpocVdTVVl1eGJ3YVlmSk5RZDVwd3VheVNGajQyOVR6MkxrdG1uMG5mYm5qMmFDZm1kNS1pX0NHRVpWcTZvTWc?oc=5" target="_blank" rel="noopener">PFCT, 금융 특화 &#x27;AI 에이전트 빌더&#x27; 개발…고려저축은행에 첫 적용</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">02</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">매일일보</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiZEFVX3lxTFBSMjJ4TE9fOUxBdjdpOGJDVjV4cE5yN2JnbmlqUGZKZWFVNGo4YkVCMTlnMzNXTGEwUW9NYlFnakw1REtJQUZWZU1aS3ZBTmxHVDRJVWV4d1ZOaTREV0ZlZ2JPQnA?oc=5" target="_blank" rel="noopener">여신 전략도 &#x27;AI가 척척&#x27;…고려저축은행, 업계 첫 &#x27;AI 에이전트 빌더&#x27; 깔았다</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">03</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">전자신문</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9KWE9VV2pTdmtKWW5JMV9hcnFIcnNuZjBpZk1rMGFXcWVzcWdHa2ZuTERGSFpaN1BPQlhweUY2bl9VWGdTM3VYbjFnUFRLQQ?oc=5" target="_blank" rel="noopener">[시스코 라이브2026] 기업 AI 에이전트 도입 장벽은 &#x27;신뢰&#x27;…네트워크·보안 통합 강조</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">04</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+              <span class="src">디지털데일리</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE1DSjBSRWxYdm5VNkc2ZEgwRlhwN1QwRG5MUU9lRGt1a3hQN3NDbHFaVE9maXR6UnBBZjRiSzNRdVVORDd0OXA0dzhhQmlmUmlSQTVGVzhsUkJLcjFhUmVVUVIweF8?oc=5" target="_blank" rel="noopener">바이브컴퍼니, 우리카드 AI 지식관리 수주… AI 에이전트로 확장</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">05</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+              <span class="src">매일경제</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE04WWNYX3c5NXBhZTNzMjJQUDBHMWZ3dFVaQ0lYQ2VyV2p4SE5VQ0llZkxibDBCVUt2OEVMVUJvcjhjUnhMVTdoUE9CcGtrQQ?oc=5" target="_blank" rel="noopener">내 AI 에이전트가 PC 속 포토샵 직접 조작...어도비, 전문가 앱 개방 첫선 [어도비 맥스 2026]</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div></div>
+</div>
+
+<div class="section-label gridhead">
+  전체 브리핑
+  <div class="filters"><button class="filter-btn active" data-cat="all">전체 30</button><button class="filter-btn" data-cat="AI Agent">AI Agent 25</button><button class="filter-btn" data-cat="AX">AX 4</button><button class="filter-btn" data-cat="금융 AI">금융 AI 1</button></div>
+</div>
+<div class="grid">
+
+    <article class="card is-top5" data-category="AI Agent" data-text="pfct, 금융 특화 &#x27;ai 에이전트 빌더&#x27; 개발…고려저축은행에 첫 적용 pfct, 금융 특화 &#x27;ai 에이전트 빌더&#x27; 개발…고려저축은행에 첫 적용 디지털투데이 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 디지털투데이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>PFCT, 금융 특화 &#x27;AI 에이전트 빌더&#x27; 개발…고려저축은행에 첫 적용</h3>
+      <p class="summary">PFCT, 금융 특화 &#x27;AI 에이전트 빌더&#x27; 개발…고려저축은행에 첫 적용 디지털투데이</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">디지털투데이 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMic0FVX3lxTFBpSXdISDVpcy1wSmZpU2pvaFdId1g0WHdqVkx4Z0JaOFlIcEt4VnRLWmVvRnpocVdTVVl1eGJ3YVlmSk5RZDVwd3VheVNGajQyOVR6MkxrdG1uMG5mYm5qMmFDZm1kNS1pX0NHRVpWcTZvTWc?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="여신 전략도 &#x27;ai가 척척&#x27;…고려저축은행, 업계 첫 &#x27;ai 에이전트 빌더&#x27; 깔았다 여신 전략도 &#x27;ai가 척척&#x27;…고려저축은행, 업계 첫 &#x27;ai 에이전트 빌더&#x27; 깔았다 매일일보 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 매일일보">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>여신 전략도 &#x27;AI가 척척&#x27;…고려저축은행, 업계 첫 &#x27;AI 에이전트 빌더&#x27; 깔았다</h3>
+      <p class="summary">여신 전략도 &#x27;AI가 척척&#x27;…고려저축은행, 업계 첫 &#x27;AI 에이전트 빌더&#x27; 깔았다 매일일보</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">매일일보 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTFBSMjJ4TE9fOUxBdjdpOGJDVjV4cE5yN2JnbmlqUGZKZWFVNGo4YkVCMTlnMzNXTGEwUW9NYlFnakw1REtJQUZWZU1aS3ZBTmxHVDRJVWV4d1ZOaTREV0ZlZ2JPQnA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="[시스코 라이브2026] 기업 ai 에이전트 도입 장벽은 &#x27;신뢰&#x27;…네트워크·보안 통합 강조 [시스코 라이브2026] 기업 ai 에이전트 도입 장벽은 &#x27;신뢰&#x27;…네트워크·보안 통합 강조 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>[시스코 라이브2026] 기업 AI 에이전트 도입 장벽은 &#x27;신뢰&#x27;…네트워크·보안 통합 강조</h3>
+      <p class="summary">[시스코 라이브2026] 기업 AI 에이전트 도입 장벽은 &#x27;신뢰&#x27;…네트워크·보안 통합 강조 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9KWE9VV2pTdmtKWW5JMV9hcnFIcnNuZjBpZk1rMGFXcWVzcWdHa2ZuTERGSFpaN1BPQlhweUY2bl9VWGdTM3VYbjFnUFRLQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="바이브컴퍼니, 우리카드 ai 지식관리 수주… ai 에이전트로 확장 바이브컴퍼니, 우리카드 ai 지식관리 수주… ai 에이전트로 확장 디지털데일리 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 디지털데일리">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>바이브컴퍼니, 우리카드 AI 지식관리 수주… AI 에이전트로 확장</h3>
+      <p class="summary">바이브컴퍼니, 우리카드 AI 지식관리 수주… AI 에이전트로 확장 디지털데일리</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE1DSjBSRWxYdm5VNkc2ZEgwRlhwN1QwRG5MUU9lRGt1a3hQN3NDbHFaVE9maXR6UnBBZjRiSzNRdVVORDd0OXA0dzhhQmlmUmlSQTVGVzhsUkJLcjFhUmVVUVIweF8?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="내 ai 에이전트가 pc 속 포토샵 직접 조작...어도비, 전문가 앱 개방 첫선 [어도비 맥스 2026] 내 ai 에이전트가 pc 속 포토샵 직접 조작...어도비, 전문가 앱 개방 첫선 [어도비 맥스 2026] 매일경제 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 매일경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>내 AI 에이전트가 PC 속 포토샵 직접 조작...어도비, 전문가 앱 개방 첫선 [어도비 맥스 2026]</h3>
+      <p class="summary">내 AI 에이전트가 PC 속 포토샵 직접 조작...어도비, 전문가 앱 개방 첫선 [어도비 맥스 2026] 매일경제</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">매일경제 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE04WWNYX3c5NXBhZTNzMjJQUDBHMWZ3dFVaQ0lYQ2VyV2p4SE5VQ0llZkxibDBCVUt2OEVMVUJvcjhjUnhMVTdoUE9CcGtrQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="신한투자증권, &#x27;2027 금융시장 포럼&#x27; 개최...ai·산업별 투자전략 제시 신한투자증권, &#x27;2027 금융시장 포럼&#x27; 개최...ai·산업별 투자전략 제시 디지털투데이 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. 금융 ai 디지털투데이">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>신한투자증권, &#x27;2027 금융시장 포럼&#x27; 개최...AI·산업별 투자전략 제시</h3>
+      <p class="summary">신한투자증권, &#x27;2027 금융시장 포럼&#x27; 개최...AI·산업별 투자전략 제시 디지털투데이</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">디지털투데이 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMic0FVX3lxTE5SY1JfT2xlUmhqVm1OQVd2VXZ0Q05yaW81TmRIYlNlbEktSm45a055U25aRnp0MGs3RnNMZWlHNlZRWm9PS2hLZ3ZiYXBydEdiZ0tvd0xEa3U3V2JoWmtGRnIycDVlZGtHNktOVVdBVUhOcmM?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="[ai memo] 오픈ai 에이전트 700개 허깅페이스 침입, 오픈웨이트 시대 규제는 &#x27;실행 권한&#x27; 통제로 [ai memo] 오픈ai 에이전트 700개 허깅페이스 침입, 오픈웨이트 시대 규제는 &#x27;실행 권한&#x27; 통제로 the economy korea (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent the economy korea">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>[AI MEMO] 오픈AI 에이전트 700개 허깅페이스 침입, 오픈웨이트 시대 규제는 &#x27;실행 권한&#x27; 통제로</h3>
+      <p class="summary">[AI MEMO] 오픈AI 에이전트 700개 허깅페이스 침입, 오픈웨이트 시대 규제는 &#x27;실행 권한&#x27; 통제로 The Economy Korea</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">The Economy Korea · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE9ob0lvTjh2bGlmWE1VMldDeXJxQkl1NW5XVTRENU9iTDBxY3k5NUdtTkxLX1c5RzlIUWFsTW5DUGs5anU0RGE2RG5vcmpDNXJFZm5oWHhESll6UTl2QUE?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="달파, ai 에이전트 다음은 &#x27;슈퍼 인텔리전스&#x27;… 온톨로지·자가개선 루프로 기업 ai 고도화 달파, ai 에이전트 다음은 &#x27;슈퍼 인텔리전스&#x27;… 온톨로지·자가개선 루프로 기업 ai 고도화 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>달파, AI 에이전트 다음은 &#x27;슈퍼 인텔리전스&#x27;… 온톨로지·자가개선 루프로 기업 AI 고도화</h3>
+      <p class="summary">달파, AI 에이전트 다음은 &#x27;슈퍼 인텔리전스&#x27;… 온톨로지·자가개선 루프로 기업 AI 고도화 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTFBQWDBfTGJ0U00tSGRwS0g2UEpoSkVUR1BYNXhUbWxzZjBKeWprZTczbzRDM0VjS1hzeUtkNWNDd2VmNTAwNmsyYkdCQmVsdw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="[시스코 라이브2026] 앤트로픽 손잡은 시스코…ai 에이전트 보안 고도화 [시스코 라이브2026] 앤트로픽 손잡은 시스코…ai 에이전트 보안 고도화 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>[시스코 라이브2026] 앤트로픽 손잡은 시스코…AI 에이전트 보안 고도화</h3>
+      <p class="summary">[시스코 라이브2026] 앤트로픽 손잡은 시스코…AI 에이전트 보안 고도화 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE5Bek5HMUZDTVFfcVlvUEp3enFzNmhTMEs0U0VqSEhMSDBGSlRDT0ExYVF4U1lDcU04VTZFUVhRUFltcVd2TTFRTXo5ejRhdw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="어도비 시스템즈, genstudio 콘텐츠 플랫폼에 ai 에이전트 도입 어도비 시스템즈, genstudio 콘텐츠 플랫폼에 ai 에이전트 도입 investing.com 한국어 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent investing.com 한국어">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>어도비 시스템즈, GenStudio 콘텐츠 플랫폼에 AI 에이전트 도입</h3>
+      <p class="summary">어도비 시스템즈, GenStudio 콘텐츠 플랫폼에 AI 에이전트 도입 Investing.com 한국어</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">Investing.com 한국어 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5fQkpzZzY0QjhYWW1sX05GSVhYMVlscWtFT3pURXE2WGRqNVpWWkhaRkxwTU1zNEpSaGpRT3BfVjNRRFdNQVllRF9IUl95SmFSRU5WbXlFS2RkSlhKcnpmU3g0d0ZIUFFERHdNdDdYaGg?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="ai 에이전트가 정부 시스템 무단 침입…호주, ai 사고 신고 의무화·독립 규제기관 신설 추진 ai 에이전트가 정부 시스템 무단 침입…호주, ai 사고 신고 의무화·독립 규제기관 신설 추진 인공지능신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 인공지능신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>AI 에이전트가 정부 시스템 무단 침입…호주, AI 사고 신고 의무화·독립 규제기관 신설 추진</h3>
+      <p class="summary">AI 에이전트가 정부 시스템 무단 침입…호주, AI 사고 신고 의무화·독립 규제기관 신설 추진 인공지능신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">인공지능신문 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBfQnkzVGQyNGRiZWt0THJrbTl0WDF3c2xKX0VfUHIyd1ZKcWxvYk00Uk5tNlU0UVdQSWxRaWpyazhaSGdBRzdUQzZMVzl2dVdVWjZiOElTMC0yeVZEWmhtXzcyYU01VXM?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="ai 에이전트 시대 본격화…앤트로픽 손잡은 시스코, 네트워크·보안 사업 재편 속도 ai 에이전트 시대 본격화…앤트로픽 손잡은 시스코, 네트워크·보안 사업 재편 속도 지디넷코리아 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 지디넷코리아">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>AI 에이전트 시대 본격화…앤트로픽 손잡은 시스코, 네트워크·보안 사업 재편 속도</h3>
+      <p class="summary">AI 에이전트 시대 본격화…앤트로픽 손잡은 시스코, 네트워크·보안 사업 재편 속도 지디넷코리아</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">지디넷코리아 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE52TUtjLTNqbC1wZm0xSi1ENzI3ay0xTk1STXk2dGxaMFh5XzgyblZkWHlNTmFjNXAwVU1VOGlqTTZZTnhzc1NJaEYwZTlnV2NaVkxPVkxR?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="센드버드, 쇼핑·예약·고객 지원 통합 ai 에이전트 출시 센드버드, 쇼핑·예약·고객 지원 통합 ai 에이전트 출시 이데일리 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 이데일리">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>센드버드, 쇼핑·예약·고객 지원 통합 AI 에이전트 출시</h3>
+      <p class="summary">센드버드, 쇼핑·예약·고객 지원 통합 AI 에이전트 출시 이데일리</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">이데일리 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMigAFBVV95cUxNcmtxMkhHWDZlVDE2UENhSVo3Y1Q5dW1GR3BLSVZUM0Y3VGFqaHh3VUctNVNjVU1aOTlVZnB1WERFMEVrSjZBd1hHSzNJVHM2Q0lEUng5Z2FMUmdWMGxXb0szZmFWcVNUc2NZanFiUWtKUjJNbDZzc09vVDNQUDNaNQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="ai 에이전트 공격 미리 막는다…시스코, 클로드 미토스 도입 ai 에이전트 공격 미리 막는다…시스코, 클로드 미토스 도입 베타뉴스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 베타뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>AI 에이전트 공격 미리 막는다…시스코, 클로드 미토스 도입</h3>
+      <p class="summary">AI 에이전트 공격 미리 막는다…시스코, 클로드 미토스 도입 베타뉴스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">베타뉴스 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE52NUlkVWlXaHlNWTFOZDJNSi0zcWpqVVF2c3M3M1pDZHhwaWJuSjlncWRpd01SWnZtbkVWRmt5R2d4SGZuYjR5UDF3dEYza3NqZWZLaEkxTGZVU0hEOVUtUzlNdFQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="commvault, 기업 시스템용 ai 에이전트 복구 도구 출시 commvault, 기업 시스템용 ai 에이전트 복구 도구 출시 investing.com 한국어 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent investing.com 한국어">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>Commvault, 기업 시스템용 AI 에이전트 복구 도구 출시</h3>
+      <p class="summary">Commvault, 기업 시스템용 AI 에이전트 복구 도구 출시 Investing.com 한국어</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">Investing.com 한국어 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE14ZDNCaUtqTjB5QmFRX1FBbHhzdmN6aHExS1Q5cjgzbUMteGhXSUlpaE01cGpDaEZIUG8xek1McDhwUkcwX3o4dmhwQTJqMTVqcEM4eFRDNzFjd0g3UWFxSG5qOW9jYW5zUHJ4NS15bnQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="현대제철, ai로 원료 배합·판매 전략 최적화…ax 우수사례 5건 선정 현대제철, ai로 원료 배합·판매 전략 최적화…ax 우수사례 5건 선정 디지털데일리 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ax 디지털데일리">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>현대제철, AI로 원료 배합·판매 전략 최적화…AX 우수사례 5건 선정</h3>
+      <p class="summary">현대제철, AI로 원료 배합·판매 전략 최적화…AX 우수사례 5건 선정 디지털데일리</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE5vNHRzNERwZkRYREpadk8tMDN2OXZ1dDRJbzF1dkNzOXNKdG1yMEZCNkRQS254VlNOejQ0TjFrT0JheTdKdTF1Mzh6cjlvT2JzTncxek5veEtZYmYtOC02OWc3U3o?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="고려저축은행, 여신 관리에 ai 자동화 도입..업계 최초 &#x27;에이전트 빌더&#x27; 적용 고려저축은행, 여신 관리에 ai 자동화 도입..업계 최초 &#x27;에이전트 빌더&#x27; 적용 한국정경신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 한국정경신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>고려저축은행, 여신 관리에 AI 자동화 도입..업계 최초 &#x27;에이전트 빌더&#x27; 적용</h3>
+      <p class="summary">고려저축은행, 여신 관리에 AI 자동화 도입..업계 최초 &#x27;에이전트 빌더&#x27; 적용 한국정경신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">한국정경신문 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTFBxaTE4NWhIMEtYZGhxMWdDTTVVWGRqYWRBVElVa1JmRHdYR1llMzdBN3ZCUEhGandET0EyeE9UenpnT0RreHdxSWc3U3JYamR6N0E?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="단국대 ai융합연구원, &#x27;2026 ai·ax 전망 컨퍼런스&#x27; 성료…국가 ai 전환 전략 모색 단국대 ai융합연구원, &#x27;2026 ai·ax 전망 컨퍼런스&#x27; 성료…국가 ai 전환 전략 모색 비욘드포스트 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ax 비욘드포스트">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>단국대 AI융합연구원, &#x27;2026 AI·AX 전망 컨퍼런스&#x27; 성료…국가 AI 전환 전략 모색</h3>
+      <p class="summary">단국대 AI융합연구원, &#x27;2026 AI·AX 전망 컨퍼런스&#x27; 성료…국가 AI 전환 전략 모색 비욘드포스트</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">비욘드포스트 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMie0FVX3lxTE5meDM5ZkFydVlSR1dVMjhBLU00MnAxSUVQWlRZbzRGajIxMVU1NXh3T0UwaG5SUzZRbHd5SEFpdWtUeGVIdzdvbXJaWW9lNV9vX2lDWFgzRW1FMTVmZUt4bDlNa25QR3R5ZndJa0FlRXlkUng3TzdrT1ppTQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="&quot;ai 에이전트가 돈값 할까&quot;…시스코, 스플렁크로 기업 ai 비용 잡는다 &quot;ai 에이전트가 돈값 할까&quot;…시스코, 스플렁크로 기업 ai 비용 잡는다 지디넷코리아 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 지디넷코리아">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>&quot;AI 에이전트가 돈값 할까&quot;…시스코, 스플렁크로 기업 AI 비용 잡는다</h3>
+      <p class="summary">&quot;AI 에이전트가 돈값 할까&quot;…시스코, 스플렁크로 기업 AI 비용 잡는다 지디넷코리아</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">지디넷코리아 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE00XzNQQ1lwRGRDaHZUdHV6Z2ZOczVZRVA3TUNBWkZwQ2FRdlNwQU9yODBXdk5WQXpSbGVHclNOUXFEbThzUWhwUUpPQU55Vk9BSjVlSHB3?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="시스코, 앤트로픽 ‘클로드 미토스’ 도입…ai 에이전트 보안 검증 강화 시스코, 앤트로픽 ‘클로드 미토스’ 도입…ai 에이전트 보안 검증 강화 chosunbiz (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent chosunbiz">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>시스코, 앤트로픽 ‘클로드 미토스’ 도입…AI 에이전트 보안 검증 강화</h3>
+      <p class="summary">시스코, 앤트로픽 ‘클로드 미토스’ 도입…AI 에이전트 보안 검증 강화 Chosunbiz</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">Chosunbiz · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiggFBVV95cUxOb25OcmtBM1YzMV9ReHpBWVlsSGFXQ2pmaFBPSzBvaUpvbmxqZ3E2Wi1RQzNyQW16c2hRbndpanl1dEwtc2dEaDZmRFNYTjVjYzNoSER2b3BRZEk0dEI0Wk9TX184cTBtS0Q2OEQyZXVxZFJQTHZ0NnRtLXkzd3BnbXpB0gGWAUFVX3lxTE16TzI5WkZZRnMta0ljWjA2OWlxbld1UngwZVl2U3ZScDdBeFhuRWNUd29yTEpkME9taVY3WUNRT3lRR0xFQjJkM253bm5ZRFIwVkNKcGVyNU1zSlRoOEJpT0NMWlBsSzV2SUQtUjFYX0NhXzBoNC1VSXN6T2dMU3FkbkRsQkxPc0MxS1hvUFhPQkR0WnJEQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="펍매틱 3분기 매출 17% 증가…ai 에이전트 캠페인 120건 넘어 펍매틱 3분기 매출 17% 증가…ai 에이전트 캠페인 120건 넘어 ai 매터스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent ai 매터스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>펍매틱 3분기 매출 17% 증가…AI 에이전트 캠페인 120건 넘어</h3>
+      <p class="summary">펍매틱 3분기 매출 17% 증가…AI 에이전트 캠페인 120건 넘어 AI 매터스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">AI 매터스 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE1IY1pVemJKSG1tRW5SbmNEcnFzdHYyX1VyQ3NWNFNWTXVPakR6Slhhakh6U0ZFY19abDVEY1BBNE5CbHFUc1l3bk1NQ0prOGRVVEVFNw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="한동대와 포항 시민이 함께 ai 에이전트로 &#x27;글로컬 문제&#x27; 해법 설계해 한동대와 포항 시민이 함께 ai 에이전트로 &#x27;글로컬 문제&#x27; 해법 설계해 파이낸스투데이 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 파이낸스투데이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>한동대와 포항 시민이 함께 AI 에이전트로 &#x27;글로컬 문제&#x27; 해법 설계해</h3>
+      <p class="summary">한동대와 포항 시민이 함께 AI 에이전트로 &#x27;글로컬 문제&#x27; 해법 설계해 파이낸스투데이</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">파이낸스투데이 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibEFVX3lxTFBJaXBycGRwMFg2VjNoa1B3c1dFTmFhOVhIdzFJV1VLczVsdVJEWDhuM0xHNWExSy0tbnlJbWtCcWxfVUhkMHZWRnhQNktSQTVUM0xYNGhPWmNlX2hPbGc5dVVHZklkNkY0enhIUQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="당진 제조업 ai 전환에 60억 투입…호서대, 산업단지 ax 혁신 본격화 당진 제조업 ai 전환에 60억 투입…호서대, 산업단지 ax 혁신 본격화 충청시사신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ax 충청시사신문">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>당진 제조업 AI 전환에 60억 투입…호서대, 산업단지 AX 혁신 본격화</h3>
+      <p class="summary">당진 제조업 AI 전환에 60억 투입…호서대, 산업단지 AX 혁신 본격화 충청시사신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">충청시사신문 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTE9zVm9zOXhlRjVkb1gtVEtDR0RIZTYzS1NYT3d5bF9XdmRTLTZGbHRhd215dUNZS1VPOVpiQVZmMzJGNDlmSGJ2YUlLblBqNi1CQ3JTaklKblplWHhubkdVT2lXVmlpb1FuVm1R?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="ai 에이전트 확산, 직장 업무 처리 방식 바꾼다 ai 에이전트 확산, 직장 업무 처리 방식 바꾼다 공감신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 공감신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>AI 에이전트 확산, 직장 업무 처리 방식 바꾼다</h3>
+      <p class="summary">AI 에이전트 확산, 직장 업무 처리 방식 바꾼다 공감신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">공감신문 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE5NNXplSWFNcXFNTmdXd1g4ZC03ZDNPNDk1OGF3ajhFUGdPWEZKeWhWcU52anFjcTFlaWtMV1JLU3VUZXk0dkhQN0E2Z05UaWwxRXNiNUU5QnBVOWJBeGNLTHlQY04wcXlP?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="hbm 설계도 ai 에이전트로 자동화…개발시간·성능 &#x27;두마리 토끼&#x27; 노린다 hbm 설계도 ai 에이전트로 자동화…개발시간·성능 &#x27;두마리 토끼&#x27; 노린다 아시아경제 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 아시아경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>HBM 설계도 AI 에이전트로 자동화…개발시간·성능 &#x27;두마리 토끼&#x27; 노린다</h3>
+      <p class="summary">HBM 설계도 AI 에이전트로 자동화…개발시간·성능 &#x27;두마리 토끼&#x27; 노린다 아시아경제</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">아시아경제 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFA5TExRbTNQd0kwR1o3Mk11TVZqbzB6a2JWVW9ST1kxQVBNaE1GWXAxakw1bjYxN2lUbVE3RnpVYzI1c0JUd2xyTkhWWFZJc0loY3R2aDVtWUExTzJ0NWRwXw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="산업 현장 ai 전환 성공사례 한자리에…서울 ai 허브, ax 성과 확산 나선다 산업 현장 ai 전환 성공사례 한자리에…서울 ai 허브, ax 성과 확산 나선다 테크월드 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ax 테크월드">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>산업 현장 AI 전환 성공사례 한자리에…서울 AI 허브, AX 성과 확산 나선다</h3>
+      <p class="summary">산업 현장 AI 전환 성공사례 한자리에…서울 AI 허브, AX 성과 확산 나선다 테크월드</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">테크월드 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTFBxNDA0bE5rQzJVRkYwWTdGc0VvUjBXWTJTaW02YnRLRXdtUTdpMkt6WHU3LXBuaWNpblcycVJzRVNsSzBBRVNnUkFuMzJTek1lV0R2eGs3bUlVdDA0TkFXUWtmbTNvMUFX?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="유아이패스, ai 에이전트가 앱 탐색하는 ‘테스트 클라우드’ 기능 공개 유아이패스, ai 에이전트가 앱 탐색하는 ‘테스트 클라우드’ 기능 공개 ai 매터스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent ai 매터스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>유아이패스, AI 에이전트가 앱 탐색하는 ‘테스트 클라우드’ 기능 공개</h3>
+      <p class="summary">유아이패스, AI 에이전트가 앱 탐색하는 ‘테스트 클라우드’ 기능 공개 AI 매터스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">AI 매터스 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE9QRmRPNjFOU0drZkszT3oxWVlIdF9RdElYQ1BQR056RzhScDhJLWJYV3I0SldWb2x3Yk40Skg0c0ZPUWhRcFVPdzVtWHkycjE4emJlWQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="스카이폴 ai, 인수한 온라인 사업 3곳 ai 에이전트로 운영 스카이폴 ai, 인수한 온라인 사업 3곳 ai 에이전트로 운영 ai 매터스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent ai 매터스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>스카이폴 AI, 인수한 온라인 사업 3곳 AI 에이전트로 운영</h3>
+      <p class="summary">스카이폴 AI, 인수한 온라인 사업 3곳 AI 에이전트로 운영 AI 매터스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">AI 매터스 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE9OYklfZXIzSXRDV3J1b0xMU3FVb05VMUVNQWZJTk1pem03YXpkdUdKUXlJU09ydnJiQ0V1UGFZWnBOOUlJbTdmbE9wUjJjVVFTWnZyTw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="오픈ai, 챗gpt에 기업 공식 프로필과 ‘비즈니스 에이전트’ 도입 오픈ai, 챗gpt에 기업 공식 프로필과 ‘비즈니스 에이전트’ 도입 ai 매터스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent ai 매터스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>오픈AI, 챗GPT에 기업 공식 프로필과 ‘비즈니스 에이전트’ 도입</h3>
+      <p class="summary">오픈AI, 챗GPT에 기업 공식 프로필과 ‘비즈니스 에이전트’ 도입 AI 매터스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">AI 매터스 · 2026-11-11</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE11WWUteUxLU1RPeEhuRVlRUkFjRHQ1SlNVa3BqeWI1dkgwWF9qWnRRM19yVGxQcTZEYklMckZwLXBhVF9nOTZFQXltN2NuV0h6UFYyQg?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="[싱귤래리티헙] ai 에이전트들이 생물학 실험실을 운영했다. ​​사람들은 쓰레기를 버리러 잠깐 들렀다. 자율 주행 연구실은 과학자들이 결과를 분석하고, 가설을 다듬고, 아이디어를 구상하는 데 집중할 수 있도록 해줄 수 있다. [싱귤래리티헙] ai 에이전트들이 생물학 실험실을 운영했다. ​​사람들은 쓰레기를 버리러 잠깐 들렀다. 자율 주행 연구실은 과학자들이 결과를 분석하고, 가설을 다듬고, 아이디어를 구상하는 데 집중할 수 있도록 해줄 수 있다. ai넷 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent ai넷">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>[싱귤래리티헙] AI 에이전트들이 생물학 실험실을 운영했다. ​​사람들은 쓰레기를 버리러 잠깐 들렀다. 자율 주행 연구실은 과학자들이 결과를 분석하고, 가설을 다듬고, 아이디어를 구상하는 데 집중할 수 있도록 해줄 수 있다.</h3>
+      <p class="summary">[싱귤래리티헙] AI 에이전트들이 생물학 실험실을 운영했다. ​​사람들은 쓰레기를 버리러 잠깐 들렀다. 자율 주행 연구실은 과학자들이 결과를 분석하고, 가설을 다듬고, 아이디어를 구상하는 데 집중할 수 있도록 해줄 수 있다. AI넷</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">AI넷 · 2026-11-10</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiQEFVX3lxTE9WaTk4YlBOUW1aYmtMVVRXc2s3a0x6djZzRXo0NXN2N2d3dmJkOFRUR2daUl92MS1HWDQzNTNOSUQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+</div>
+<div id="noresult">조건에 맞는 기사가 없습니다.</div>
+
+<footer>
+  THE AI · AX BRIEFING · 매일 자동 갱신 · powered by Gemini<br>
+  최종 생성 2026-11-11 10:39
+</footer>
+
+
+<script>
+  let curCat = 'all';
+  function applyFilters(){
+    const q = (document.getElementById('q').value || '').toLowerCase().trim();
+    const filtering = (curCat !== 'all') || (q !== '');
+    const t5 = document.getElementById('top5wrap');
+    if(t5) t5.style.display = filtering ? 'none' : '';
+    let shown = 0;
+    document.querySelectorAll('.card').forEach(function(c){
+      const okCat = curCat === 'all' || c.dataset.category === curCat;
+      const okQ = !q || (c.dataset.text || '').includes(q);
+      let show = okCat && okQ;
+      // 기본 화면에서는 TOP5 기사는 그리드에서 숨겨 중복 방지 (필터 시엔 함께 검색)
+      if(!filtering && c.classList.contains('is-top5')) show = false;
+      c.style.display = show ? '' : 'none';
+      if(show) shown++;
+    });
+    document.getElementById('noresult').style.display = (filtering && shown===0) ? 'block' : 'none';
+  }
+  document.querySelectorAll('.filter-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      curCat = b.dataset.cat;
+      applyFilters();
+    });
+  });
+  document.addEventListener('DOMContentLoaded', applyFilters);
+</script>
+
+</div></body></html>
