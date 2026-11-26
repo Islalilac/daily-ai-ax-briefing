@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily AI/AX Briefing — 2026-11-26</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f4f6; --paper:#ffffff; --ink:#17181c; --mut:#6b7280;
+  --line:#e7e8ec; --accent:#4f46e5; --accent-soft:#eef0ff; --star:#e0a80d;
+  --tag:#eef1f6; --tagink:#3f4657;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+  line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 90px}
+
+/* 신문 제호 */
+.masthead{text-align:center;padding:46px 0 20px;border-bottom:3px double var(--ink)}
+.masthead .kicker{font-size:12px;letter-spacing:4px;color:var(--mut);
+  text-transform:uppercase;margin-bottom:13px}
+.masthead h1{font-family:Georgia,"Times New Roman",serif;font-size:46px;font-weight:700;
+  margin:0;letter-spacing:-1px}
+.masthead .date{margin-top:13px;color:#333;font-size:14px;font-family:Georgia,serif;font-style:italic}
+.masthead .date b{font-style:normal;font-weight:600}
+
+/* 툴바 */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
+.tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.toolbar input[type=date],.search{font-family:inherit;font-size:13px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.search{min-width:220px}
+.tools a{font-size:13px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);color:var(--ink)}
+.tools a:hover{border-color:var(--accent);text-decoration:none}
+.tools a.disabled{opacity:.35;pointer-events:none}
+.tools a.latest{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 섹션 라벨 */
+.section-label{display:flex;align-items:center;gap:14px;margin:34px 0 14px;
+  font-size:13px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800}
+.section-label .accent{color:var(--accent)}
+.section-label:after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 총평 */
+.overview{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:14px;padding:20px 24px;margin:24px 0 0}
+.overview h2{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--accent);font-weight:700}
+.overview p{margin:0;color:#2c2c2c;font-size:15.5px}
+
+/* TOP 5 MUST READ */
+.top5{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:6px 26px;
+  box-shadow:0 4px 20px rgba(30,30,70,.05)}
+.t5{display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.t5:last-child{border-bottom:none}
+.t5 .rank{font-family:Georgia,serif;font-size:36px;font-weight:700;line-height:1;
+  color:var(--accent);min-width:50px;text-align:center}
+.t5 .rbody{flex:1;min-width:0}
+.t5 .m5{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.t5 h4{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.4}
+.t5 h4 a{color:var(--ink)}.t5 h4 a:hover{color:var(--accent)}
+.t5 .why5{font-size:13.5px;color:#4a5064;line-height:1.6}
+.t5 .why5 b{color:var(--accent)}
+
+/* 태그 · 별점 */
+.tag{background:var(--tag);color:var(--tagink);font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
+.stars{color:var(--star);font-size:13px;letter-spacing:1px}
+.stars .off{color:#dcd9d0}
+.src{color:var(--mut);font-size:12px}
+
+/* 매거진 그리드 */
+.gridhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.filter-btn{cursor:pointer;font-size:12.5px;padding:6px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--paper);color:var(--tagink);font-family:inherit;transition:.12s}
+.filter-btn:hover{border-color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+  display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{box-shadow:0 8px 26px rgba(30,30,70,.09);border-color:#d6d9f0}
+.card .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.card h3{margin:2px 0 10px;font-size:19px;line-height:1.4;font-weight:800;letter-spacing:-.01em}
+.summary{margin:0 0 14px;color:#3a3a3a;font-size:14.5px;flex:1}
+.why{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:11px 14px;font-size:13.5px;color:#33385a}
+.why b{color:var(--accent)}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;
+  padding-top:12px;border-top:1px solid var(--line)}
+.readmore{font-size:12.5px;font-weight:700}.readmore:after{content:" \2192"}
+#noresult{display:none;color:var(--mut);text-align:center;padding:40px 0}
+
+footer{margin-top:50px;padding-top:22px;border-top:3px double var(--ink);
+  color:var(--mut);font-size:12px;text-align:center;line-height:1.8}
+
+@media (max-width:760px){
+  .masthead h1{font-size:32px}
+  .grid{grid-template-columns:1fr}
+  .search{min-width:130px;flex:1}
+  .filters{margin-left:0;width:100%}
+  .t5 .rank{font-size:28px;min-width:38px}
+}
+@media print{
+  .toolbar,.filters,.readmore{display:none}
+  .card{break-inside:avoid;box-shadow:none}.top5{box-shadow:none}
+}
+</style>
+</head><body><div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">AX Strategy · Daily Intelligence</div>
+  <h1>The AI · AX Briefing</h1>
+  <div class="date"><b>2026년 11월 26일 목요일</b> · 총 30건 · 중요도순</div>
+</header>
+
+
+    <div class="toolbar">
+      <div class="tools">
+        <input type="date" value="2026-11-26" min="2026-07-01" max="2026-11-26" onchange="goDate(this.value)">
+        <a href="2026-11-25.html">◀ 이전</a><a class="disabled">다음 ▶</a>
+        <a class="latest" href="../index.html">최신</a>
+      </div>
+      <div class="tools">
+        <input type="text" class="search" id="q" placeholder="🔍 키워드 검색..." oninput="applyFilters()">
+      </div>
+    </div>
+    <script>
+      const DATES = ["2026-11-26", "2026-11-25", "2026-11-24", "2026-11-23", "2026-11-22", "2026-11-21", "2026-11-20", "2026-11-19", "2026-11-18", "2026-11-17", "2026-11-16", "2026-11-15", "2026-11-14", "2026-11-13", "2026-11-12", "2026-11-11", "2026-11-10", "2026-11-09", "2026-11-08", "2026-11-07", "2026-11-06", "2026-11-05", "2026-11-04", "2026-11-03", "2026-11-02", "2026-11-01", "2026-10-31", "2026-10-30", "2026-10-29", "2026-10-28", "2026-10-27", "2026-10-26", "2026-10-25", "2026-10-24", "2026-10-23", "2026-10-22", "2026-10-21", "2026-10-20", "2026-10-19", "2026-10-18", "2026-10-17", "2026-10-16", "2026-10-15", "2026-10-14", "2026-10-13", "2026-10-12", "2026-10-11", "2026-10-10", "2026-10-09", "2026-10-08", "2026-10-07", "2026-10-06", "2026-10-05", "2026-10-04", "2026-10-03", "2026-10-02", "2026-10-01", "2026-09-30", "2026-09-29", "2026-09-28", "2026-09-27", "2026-09-26", "2026-09-25", "2026-09-24", "2026-09-23", "2026-09-22", "2026-09-21", "2026-09-20", "2026-09-19", "2026-09-18", "2026-09-17", "2026-09-16", "2026-09-15", "2026-09-14", "2026-09-13", "2026-09-12", "2026-09-11", "2026-09-10", "2026-09-09", "2026-09-08", "2026-09-07", "2026-09-06", "2026-09-05", "2026-09-04", "2026-09-03", "2026-09-02", "2026-09-01", "2026-08-31", "2026-08-30", "2026-08-29", "2026-08-28", "2026-08-27", "2026-08-26", "2026-08-25", "2026-08-24", "2026-08-23", "2026-08-22", "2026-08-21", "2026-08-20", "2026-08-19", "2026-08-18", "2026-08-17", "2026-08-16", "2026-08-15", "2026-08-14", "2026-08-13", "2026-08-12", "2026-08-11", "2026-08-10", "2026-08-09", "2026-08-08", "2026-08-07", "2026-08-06", "2026-08-05", "2026-08-04", "2026-08-03", "2026-08-02", "2026-08-01", "2026-07-31", "2026-07-30", "2026-07-29", "2026-07-28", "2026-07-27", "2026-07-26", "2026-07-25", "2026-07-24", "2026-07-23", "2026-07-22", "2026-07-21", "2026-07-20", "2026-07-19", "2026-07-18", "2026-07-17", "2026-07-16", "2026-07-15", "2026-07-14", "2026-07-13", "2026-07-12", "2026-07-11", "2026-07-10", "2026-07-09", "2026-07-08", "2026-07-07", "2026-07-06", "2026-07-05", "2026-07-04", "2026-07-03", "2026-07-02", "2026-07-01"];
+      const BASE = "";
+      function goDate(d){
+        if(!d) return;
+        if(DATES.includes(d)){ location.href = BASE + d + ".html"; }
+        else { alert("해당 날짜의 브리핑이 없습니다."); }
+      }
+    </script>
+
+<section class="overview">
+  <h2>오늘의 총평</h2>
+  <p>자동 요약이 실행되지 않아 수집·정렬 결과만 표시합니다. ANTHROPIC_API_KEY를 설정하면 Claude가 각 기사 요약과 AX전략팀 관점 분석을 생성합니다.</p>
+</section>
+
+<div id="top5wrap">
+  <div class="section-label"><span class="accent">TOP 5</span> · MUST READ</div>
+  <div class="top5">
+        <div class="t5">
+          <div class="rank">01</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">테크월드</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE9nb2w3UmEwVG9GYTNXSEdCNXc3bGJqREg1cjFmQ1RNTDZxdlNmVkdkTm5TbHFVV0pYTFdlVWoybl95ZnJhTzBHVjQ1YlJWYXVoRGJsMlhHdmVEZ3Rta2hCQjJGMXV2Z19r?oc=5" target="_blank" rel="noopener">[코리아 핀테크 위크 2026] 금융권, AI 에이전트 활용 &#x27;내부&#x27; 중심으로…소비자 대상 서비스 &#x27;신중&#x27;</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">02</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">한국경제</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE5CdDVZS1ZzckpHT0ZNdVlqLXUwTUEyalZ3THNTeDR0R3VSQndjNC1RM1FOUWhYN3NSLVVUcEs5RzdNOVNWT2J3djEwUE9ZdUxFRHV1OUx1dURxZw?oc=5" target="_blank" rel="noopener">안랩블록체인컴퍼니, AI 에이전트 기반 스테이블코인 결제 인프라’로 한경 핀테크 대상 테크 최우수상</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">03</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">NAVERCorp.</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMickFVX3lxTE5VMFdCWjk3QzhXYUNSLU9PWEZpUVcyekZZM3lhZjdJZzZDVUR0azBvMm9UWjNaMTdFZTVERW9MUFR3aWk2TXltV3JDZmM0blpQTGVGdWctRHAzbmRkY0RqNm9GbEdfbkwzSTZVQVRqSUwtZw?oc=5" target="_blank" rel="noopener">네이버클라우드, 한수원과 원전 AX 협력 확대…생성형 AI 이어 AI 에이전트로</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">04</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">디지털데일리</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE5lSXlxdGZVRWlMYTJlblRpbFZLSXdwMTRPYnFEUDRyRWE3R1BWYkcwTlVyX2hEN0liaXJ5S3lpWU5JQkgwS3Nxa0x2RDA2cVpueGkxaDZKSWtQY1JhelNQMVdKRm8?oc=5" target="_blank" rel="noopener">“AI 에이전트도 자동차처럼 등록·보험 의무화해야”</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div>
+        <div class="t5">
+          <div class="rank">05</div>
+          <div class="rbody">
+            <div class="m5"><span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+              <span class="src">전자신문</span></div>
+            <h4><a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTFBMd1ZZQ2t3RzBGWFAzNW5SZHhueFBzU1NzbUpZZGhDODhnakpkcDdGTFhGYV9pcGwxelJnU28yQXhYem1SRjVQbm5TaFBiUQ?oc=5" target="_blank" rel="noopener">넷츠, AI 에이전트까지 계정·권한 관리 확대…통합 보안 전략 제시</a></h4>
+            <div class="why5"><b>왜 읽어야 하나</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+          </div>
+        </div></div>
+</div>
+
+<div class="section-label gridhead">
+  전체 브리핑
+  <div class="filters"><button class="filter-btn active" data-cat="all">전체 30</button><button class="filter-btn" data-cat="AI Agent">AI Agent 24</button><button class="filter-btn" data-cat="AI">AI 2</button><button class="filter-btn" data-cat="보험 AI">보험 AI 2</button><button class="filter-btn" data-cat="금융 AI">금융 AI 1</button><button class="filter-btn" data-cat="AX">AX 1</button></div>
+</div>
+<div class="grid">
+
+    <article class="card is-top5" data-category="AI Agent" data-text="[코리아 핀테크 위크 2026] 금융권, ai 에이전트 활용 &#x27;내부&#x27; 중심으로…소비자 대상 서비스 &#x27;신중&#x27; [코리아 핀테크 위크 2026] 금융권, ai 에이전트 활용 &#x27;내부&#x27; 중심으로…소비자 대상 서비스 &#x27;신중&#x27; 테크월드 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 테크월드">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>[코리아 핀테크 위크 2026] 금융권, AI 에이전트 활용 &#x27;내부&#x27; 중심으로…소비자 대상 서비스 &#x27;신중&#x27;</h3>
+      <p class="summary">[코리아 핀테크 위크 2026] 금융권, AI 에이전트 활용 &#x27;내부&#x27; 중심으로…소비자 대상 서비스 &#x27;신중&#x27; 테크월드</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">테크월드 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE9nb2w3UmEwVG9GYTNXSEdCNXc3bGJqREg1cjFmQ1RNTDZxdlNmVkdkTm5TbHFVV0pYTFdlVWoybl95ZnJhTzBHVjQ1YlJWYXVoRGJsMlhHdmVEZ3Rta2hCQjJGMXV2Z19r?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="안랩블록체인컴퍼니, ai 에이전트 기반 스테이블코인 결제 인프라’로 한경 핀테크 대상 테크 최우수상 안랩블록체인컴퍼니, ai 에이전트 기반 스테이블코인 결제 인프라’로 한경 핀테크 대상 테크 최우수상 한국경제 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 한국경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>안랩블록체인컴퍼니, AI 에이전트 기반 스테이블코인 결제 인프라’로 한경 핀테크 대상 테크 최우수상</h3>
+      <p class="summary">안랩블록체인컴퍼니, AI 에이전트 기반 스테이블코인 결제 인프라’로 한경 핀테크 대상 테크 최우수상 한국경제</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">한국경제 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE5CdDVZS1ZzckpHT0ZNdVlqLXUwTUEyalZ3THNTeDR0R3VSQndjNC1RM1FOUWhYN3NSLVVUcEs5RzdNOVNWT2J3djEwUE9ZdUxFRHV1OUx1dURxZw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI" data-text="네이버클라우드, 한수원과 원전 ax 협력 확대…생성형 ai 이어 ai 에이전트로 네이버클라우드, 한수원과 원전 ax 협력 확대…생성형 ai 이어 ai 에이전트로 navercorp. (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai navercorp.">
+      <div class="top">
+        <span class="tag">AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>네이버클라우드, 한수원과 원전 AX 협력 확대…생성형 AI 이어 AI 에이전트로</h3>
+      <p class="summary">네이버클라우드, 한수원과 원전 AX 협력 확대…생성형 AI 이어 AI 에이전트로 NAVERCorp.</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">NAVERCorp. · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMickFVX3lxTE5VMFdCWjk3QzhXYUNSLU9PWEZpUVcyekZZM3lhZjdJZzZDVUR0azBvMm9UWjNaMTdFZTVERW9MUFR3aWk2TXltV3JDZmM0blpQTGVGdWctRHAzbmRkY0RqNm9GbEdfbkwzSTZVQVRqSUwtZw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="보험 AI" data-text="“ai 에이전트도 자동차처럼 등록·보험 의무화해야” “ai 에이전트도 자동차처럼 등록·보험 의무화해야” 디지털데일리 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. 보험 ai 디지털데일리">
+      <div class="top">
+        <span class="tag">보험 AI</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>“AI 에이전트도 자동차처럼 등록·보험 의무화해야”</h3>
+      <p class="summary">“AI 에이전트도 자동차처럼 등록·보험 의무화해야” 디지털데일리</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">디지털데일리 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE5lSXlxdGZVRWlMYTJlblRpbFZLSXdwMTRPYnFEUDRyRWE3R1BWYkcwTlVyX2hEN0liaXJ5S3lpWU5JQkgwS3Nxa0x2RDA2cVpueGkxaDZKSWtQY1JhelNQMVdKRm8?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card is-top5" data-category="AI Agent" data-text="넷츠, ai 에이전트까지 계정·권한 관리 확대…통합 보안 전략 제시 넷츠, ai 에이전트까지 계정·권한 관리 확대…통합 보안 전략 제시 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★★<span class="off"></span></span>
+      </div>
+      <h3>넷츠, AI 에이전트까지 계정·권한 관리 확대…통합 보안 전략 제시</h3>
+      <p class="summary">넷츠, AI 에이전트까지 계정·권한 관리 확대…통합 보안 전략 제시 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTFBMd1ZZQ2t3RzBGWFAzNW5SZHhueFBzU1NzbUpZZGhDODhnakpkcDdGTFhGYV9pcGwxelJnU28yQXhYem1SRjVQbm5TaFBiUQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="kb금융, 계열사 ai 에이전트 활용 확산…금융 업무 자동화 속도 kb금융, 계열사 ai 에이전트 활용 확산…금융 업무 자동화 속도 더트래커 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 더트래커">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>KB금융, 계열사 AI 에이전트 활용 확산…금융 업무 자동화 속도</h3>
+      <p class="summary">KB금융, 계열사 AI 에이전트 활용 확산…금융 업무 자동화 속도 더트래커</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">더트래커 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiWEFVX3lxTE1xU2NlVjF6ZHlHNWNOdXpuaVdLNlJ5WWlWVVRQVnZsSlI3VnNhSW1EdnZwUTNBdlg2NnJ6N3d2LXItRFdrN1BsRUZsSDdnRlhOT19tWW9oOWc?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="kb금융, ai 에이전트로 금융 업무 혁신 가속…전 계열사 ai 기술·개발 노하우 공유 kb금융, ai 에이전트로 금융 업무 혁신 가속…전 계열사 ai 기술·개발 노하우 공유 인공지능신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 인공지능신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>KB금융, AI 에이전트로 금융 업무 혁신 가속…전 계열사 AI 기술·개발 노하우 공유</h3>
+      <p class="summary">KB금융, AI 에이전트로 금융 업무 혁신 가속…전 계열사 AI 기술·개발 노하우 공유 인공지능신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">인공지능신문 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1kR2JWS3JaTElWZjlwS0M2cVJ6T3owUG16VWVERzVGM2hZNE9OUDVRaE94NHVldXFDN2NOYmZEVEpEb0JjallxTG82SE40cFItd2VtV1QxU18zdHhYS0F5bGJEY2w1TW8?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="kb금융, 제8회 kb테크포럼 개최…ai 에이전트 금융 업무 적용 사례 공유 kb금융, 제8회 kb테크포럼 개최…ai 에이전트 금융 업무 적용 사례 공유 이지경제 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 이지경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>KB금융, 제8회 KB테크포럼 개최…AI 에이전트 금융 업무 적용 사례 공유</h3>
+      <p class="summary">KB금융, 제8회 KB테크포럼 개최…AI 에이전트 금융 업무 적용 사례 공유 이지경제</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">이지경제 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMibkFVX3lxTE1fNVNFcVFVUXNRakcyNlRaanQ0U1VzVmF0WEt6aVE2LWJ1ZXpNR0pfSmw5S1pTenEzZmlyVEhUZXc1WUJCSFdkQlZsb2FDMVc4ang0UnlMRFRQS0d3b0pwNWVmOHBaQ3o3Rmd0MWtR?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="kb금융, ‘ai 에이전트’로 금융 혁신 속도… ‘제8회 kb테크포럼’ 성료 kb금융, ‘ai 에이전트’로 금융 혁신 속도… ‘제8회 kb테크포럼’ 성료 비즈중앙 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 비즈중앙">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>KB금융, ‘AI 에이전트’로 금융 혁신 속도… ‘제8회 KB테크포럼’ 성료</h3>
+      <p class="summary">KB금융, ‘AI 에이전트’로 금융 혁신 속도… ‘제8회 KB테크포럼’ 성료 비즈중앙</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">비즈중앙 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5tNHM3cG5EX2xCbE5wSGgxTG1YMnpHVGR5UHpxTlpGTWJlS1I2c2s0OW1qRnBRSUZQT1NfejVVeWMzZkdNQTkyMUVUNy1RZk9wMWstLUdxcE03MXE3WW9aLXotRXBkTWd5Sk5uWWNWZnI?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="“ai 에이전트부터 실전 코드까지 한자리에”… kb금융그룹, 기술 포럼서 미래 금융 청사진 그려 “ai 에이전트부터 실전 코드까지 한자리에”… kb금융그룹, 기술 포럼서 미래 금융 청사진 그려 스마트경제 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 스마트경제">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>“AI 에이전트부터 실전 코드까지 한자리에”… KB금융그룹, 기술 포럼서 미래 금융 청사진 그려</h3>
+      <p class="summary">“AI 에이전트부터 실전 코드까지 한자리에”… KB금융그룹, 기술 포럼서 미래 금융 청사진 그려 스마트경제</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">스마트경제 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5KODZBSkhQMDl0Zlc1Y2dueHZaOGRyTzdrRjkxT0pzdm5Sa2c4WDVSMklpREZTWVVtMmJRTU1OdmVNU0FHSjE4cHRsOFdNbVZKNTlBVGgyalZjdWZKb0dhaS02UWpHaFdpWkRSOTlVLVU?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="연구·논문작성 모든 과정 스스로...etri, 日보다 앞선 ai 에이전트 개발 연구·논문작성 모든 과정 스스로...etri, 日보다 앞선 ai 에이전트 개발 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>연구·논문작성 모든 과정 스스로...ETRI, 日보다 앞선 AI 에이전트 개발</h3>
+      <p class="summary">연구·논문작성 모든 과정 스스로...ETRI, 日보다 앞선 AI 에이전트 개발 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE5Ec2k4Z3dnVTlZN1JFeEFJNkNlejFQRi1Qdk9jSHk5TnJiZi1tbWNLSVBqWUg3ZEFPVUJXM2Z2eTlGckpZc0tRSDFRQ1BHUQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="인천국제공항공사ㆍsita, ai 에이전트 기반 상황관리 가능성 확인 인천국제공항공사ㆍsita, ai 에이전트 기반 상황관리 가능성 확인 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>인천국제공항공사ㆍSITA, AI 에이전트 기반 상황관리 가능성 확인</h3>
+      <p class="summary">인천국제공항공사ㆍSITA, AI 에이전트 기반 상황관리 가능성 확인 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE1Nb3c4NVloS0VmbTBOdHlHU2xhM2pXSjZrX2ZzU1JhejRlU2pSSE9FWEs4X21hSTVJUEliYVdXMGNsOVJYY2Zrel9DOHdodw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="ai 에이전트 활용 사이버 공격 확산…이탈리아·스위스 피해 확인 ai 에이전트 활용 사이버 공격 확산…이탈리아·스위스 피해 확인 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>AI 에이전트 활용 사이버 공격 확산…이탈리아·스위스 피해 확인</h3>
+      <p class="summary">AI 에이전트 활용 사이버 공격 확산…이탈리아·스위스 피해 확인 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE5vbnFYQzV5YnowemR5b3ZPdm1KR2laUkg2LU82SjFlZHplNEh6SG5XNU84MWI4THpCcUlsNE5qVFlib3FVcFlEU2lFSC1WQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI" data-text="kt, ‘2026 대한민국 정부혁신박람회’ 참가... “5g 정부망부터 ai 에이전트까지 공공 ax 선보인다” kt, ‘2026 대한민국 정부혁신박람회’ 참가... “5g 정부망부터 ai 에이전트까지 공공 ax 선보인다” 올포칩 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai 올포칩">
+      <div class="top">
+        <span class="tag">AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>KT, ‘2026 대한민국 정부혁신박람회’ 참가... “5G 정부망부터 AI 에이전트까지 공공 AX 선보인다”</h3>
+      <p class="summary">KT, ‘2026 대한민국 정부혁신박람회’ 참가... “5G 정부망부터 AI 에이전트까지 공공 AX 선보인다” 올포칩</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">올포칩 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZkFVX3lxTE5GNkpQUVlWUGxYODVGRU5VeEZ6OXhFbjI1cElqQ094UEhSSHpJNUN4cWh4b1pHXzF6bk5HVXd0b09wbE9Ealg0TTdiNHZZR1NXeHFvb2UzR1BGZmtubW45NDlRR3FiUQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="보험 AI" data-text="ai 에이전트 사고 66%는 오픈 안 한 오픈 ai … 투자때 주목해야 할 보상처리 방식 ai 에이전트 사고 66%는 오픈 안 한 오픈 ai … 투자때 주목해야 할 보상처리 방식 매일경제 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. 보험 ai 매일경제">
+      <div class="top">
+        <span class="tag">보험 AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>AI 에이전트 사고 66%는 오픈 안 한 오픈 AI … 투자때 주목해야 할 보상처리 방식</h3>
+      <p class="summary">AI 에이전트 사고 66%는 오픈 안 한 오픈 AI … 투자때 주목해야 할 보상처리 방식 매일경제</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">매일경제 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE5BLVU1RjZZRzRTaExUZHFWVnB3V09Zc2Jhb2E2S0NwWlo0Sll5UUhZWmpERVFDNEhoM3RMZ2xVNm52OXdEakY5M2ppWldOUQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="dsrv, 코리아 핀테크 위크서 ai 에이전트 결제 인프라 비전 제시 dsrv, 코리아 핀테크 위크서 ai 에이전트 결제 인프라 비전 제시 이투데이 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 이투데이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>DSRV, 코리아 핀테크 위크서 AI 에이전트 결제 인프라 비전 제시</h3>
+      <p class="summary">DSRV, 코리아 핀테크 위크서 AI 에이전트 결제 인프라 비전 제시 이투데이</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">이투데이 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE5ack1kYTU2WFI3b1F3Qi0xc0RCcUNQVG1NTms2bTlQVUZuOHZycm9ETWRhd3JsWnpLTVhBRzYwdUFVc0JQU0NsVzJWcE81WDB1bkw5cA?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="금융 AI" data-text="sh수협은행, ai 통합 플랫폼 ‘airo’ 선봬…“금융 ai 전환과 업무 혁신 추진” sh수협은행, ai 통합 플랫폼 ‘airo’ 선봬…“금융 ai 전환과 업무 혁신 추진” 비즈월드 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. 금융 ai 비즈월드">
+      <div class="top">
+        <span class="tag">금융 AI</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>Sh수협은행, AI 통합 플랫폼 ‘AIRO’ 선봬…“금융 AI 전환과 업무 혁신 추진”</h3>
+      <p class="summary">Sh수협은행, AI 통합 플랫폼 ‘AIRO’ 선봬…“금융 AI 전환과 업무 혁신 추진” 비즈월드</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">비즈월드 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiakFVX3lxTFAxckpWdTBMcXc5TlpnY2NqcHEyOUNRaFp5LWNtVkIxUnFuVmJTTFJCd3JaNFQtcHoyOWtOQUFiVFFtUC1wR182WmNkZ2VLX2JjVklZRGF6WWFiWS1PNGN5NlhwdndVZVJ1N2c?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="rsa, ai 에이전트 신원 보안 플랫폼 ‘rsa agent id’ 국내 출시 rsa, ai 에이전트 신원 보안 플랫폼 ‘rsa agent id’ 국내 출시 중앙일보 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 중앙일보">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>RSA, AI 에이전트 신원 보안 플랫폼 ‘RSA Agent ID’ 국내 출시</h3>
+      <p class="summary">RSA, AI 에이전트 신원 보안 플랫폼 ‘RSA Agent ID’ 국내 출시 중앙일보</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">중앙일보 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE9ZX18xcnJ3OVk4bGpJZlNRamE0UXM0a3NTWExSYTAtOHRVemIzdHZDeG5pNFJGV0VnekthZXo4NWtxYmdxQXBiN0VYZFVCVko3UE8tNXNn?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="당근, ai 에이전트 앞세워 네이버 카페에 도전장 당근, ai 에이전트 앞세워 네이버 카페에 도전장 매일경제 마켓 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 매일경제 마켓">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>당근, AI 에이전트 앞세워 네이버 카페에 도전장</h3>
+      <p class="summary">당근, AI 에이전트 앞세워 네이버 카페에 도전장 매일경제 마켓</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">매일경제 마켓 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE5FVzhyVWZWLW5PVG80aFN2TDRrV0FhUUIyc2NsWmxteWc0clVEcXB5RXBoSDYtZ1JzTDJ4NDdZUkJRSHFhQzBSY3dLYV9zazQ1Q0E?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="뱅크샐러드, ‘핀테크 위크 2026’ 참가···인생 문제 해결하는 ai 에이전트 비전 소개 뱅크샐러드, ‘핀테크 위크 2026’ 참가···인생 문제 해결하는 ai 에이전트 비전 소개 스포츠경향 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 스포츠경향">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>뱅크샐러드, ‘핀테크 위크 2026’ 참가···인생 문제 해결하는 AI 에이전트 비전 소개</h3>
+      <p class="summary">뱅크샐러드, ‘핀테크 위크 2026’ 참가···인생 문제 해결하는 AI 에이전트 비전 소개 스포츠경향</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">스포츠경향 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE9XdUZQR0tjSWQ4ZGN1bmI0YTFDcDhjODhIQ0dzdUN0OUZ6a3ZUZ0dZcFhFSENhMVhYOFVoOWQtSFBOaDl1M1lTLTJQeHhQZ09fSkhuN09vdHZJRGhKalHSAWNBVV95cUxNOS1xM21tOHN1UlI4b2hiYTExWVFyaFNOWWZlZ05mbXFWSnhCbXVqNmNmXzhmVGY0eFhjNWVaVldSdGpydzlwTHp2LVpCd2p0RGpYVER1d2JVeDRsQ2l3aDFISUk?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="워크데이, ‘사나’ 홈 전면 도입...ai 에이전트가 hr·it 업무 직접 처리 워크데이, ‘사나’ 홈 전면 도입...ai 에이전트가 hr·it 업무 직접 처리 더에이아이 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 더에이아이">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>워크데이, ‘사나’ 홈 전면 도입...AI 에이전트가 HR·IT 업무 직접 처리</h3>
+      <p class="summary">워크데이, ‘사나’ 홈 전면 도입...AI 에이전트가 HR·IT 업무 직접 처리 더에이아이</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">더에이아이 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTE1iRmxOeklKemxzUWpjeUlZbUJBXzBkd01XbENNdjRaeTd6ZUhkWUxNQnZ6dF9YVEJ0Sm9zMGVURi01Wmd3UFlXbEhkQWhNOVR0RFFuMGl3N1loMnpBUHl5WWhQLUtwSm1pbzFZ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="당근, ai 에이전트 도입해 네이버 텃밭 ‘온라인 카페’에 도전장 당근, ai 에이전트 도입해 네이버 텃밭 ‘온라인 카페’에 도전장 조선일보 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 조선일보">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>당근, AI 에이전트 도입해 네이버 텃밭 ‘온라인 카페’에 도전장</h3>
+      <p class="summary">당근, AI 에이전트 도입해 네이버 텃밭 ‘온라인 카페’에 도전장 조선일보</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">조선일보 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxPbThnX241ZDViV016VldSckdobER2VUhwQmdVS2llLTRFSUFUMnM1d2xCcUlXZldRQTBWVkhZVVhFb1o5YkhFNjhWeGQ3NUtxTU40S3Q2eW83bHdnNlJIRWlOTjhiemQ2eDJtdVoyYWdSMTdFc0xmemg0aVlkWWN0WVM1WQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="[제4회 글로벌 acx 초월대상] 더존비즈온, &#x27;one ai&#x27; 다중 ai 에이전트·지식그래프 기술로 기업 업무 혁신 [제4회 글로벌 acx 초월대상] 더존비즈온, &#x27;one ai&#x27; 다중 ai 에이전트·지식그래프 기술로 기업 업무 혁신 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>[제4회 글로벌 ACX 초월대상] 더존비즈온, &#x27;ONE AI&#x27; 다중 AI 에이전트·지식그래프 기술로 기업 업무 혁신</h3>
+      <p class="summary">[제4회 글로벌 ACX 초월대상] 더존비즈온, &#x27;ONE AI&#x27; 다중 AI 에이전트·지식그래프 기술로 기업 업무 혁신 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9pWVhkckpFTkhjdE9fTmt1Mkl0Q0p4RnpWbDJ3NHdiczROTm5EUExzWGlPMlpOZDN5eW5scHZIVGRCVExWWTdyV2pCT0VWZw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="워크데이, 업무 홈에 ai 에이전트 ‘사나’ 도입…업무 완료까지 지원 워크데이, 업무 홈에 ai 에이전트 ‘사나’ 도입…업무 완료까지 지원 위런치 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 위런치">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>워크데이, 업무 홈에 AI 에이전트 ‘사나’ 도입…업무 완료까지 지원</h3>
+      <p class="summary">워크데이, 업무 홈에 AI 에이전트 ‘사나’ 도입…업무 완료까지 지원 위런치</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">위런치 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTFAyZkFBUDZGLU16LW5xUXJoZVJJMlpqVjVjUW9IUVRsNkpZXzVWQ3d5S3k4RzFGWmh0ZUstSGRMT3pzTVhNZnJ2bm5CVHZXcVdWeGQ5TVFjRDVFNFlVcGRsYm1SSkc?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="lg엔솔, 폴란드 공장 ai 에이전트 도입…2028년 제조 효율 50%↑ 목표 lg엔솔, 폴란드 공장 ai 에이전트 도입…2028년 제조 효율 50%↑ 목표 더구루 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 더구루">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>LG엔솔, 폴란드 공장 AI 에이전트 도입…2028년 제조 효율 50%↑ 목표</h3>
+      <p class="summary">LG엔솔, 폴란드 공장 AI 에이전트 도입…2028년 제조 효율 50%↑ 목표 더구루</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">더구루 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiZkFVX3lxTFBTcTRidEo2d1BwMHpmQWV0MVRiYkJUaUttZE4zVWtacEUzVmFOLTV3R2pZQUdxUXoxZlgyOENsMU5VZXlsUDg5dXEwX3Rxel9vNEtoeHZPYUg5TjZ0V0dJVW0zTVdVZw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="rsa, ai 에이전트 관리 통합 플랫폼 ‘rsa 에이전트 id’ 출시 rsa, ai 에이전트 관리 통합 플랫폼 ‘rsa 에이전트 id’ 출시 it조선 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent it조선">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>RSA, AI 에이전트 관리 통합 플랫폼 ‘RSA 에이전트 ID’ 출시</h3>
+      <p class="summary">RSA, AI 에이전트 관리 통합 플랫폼 ‘RSA 에이전트 ID’ 출시 IT조선</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">IT조선 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE9INEpub1BtY25TUkhBZUgwemxrR3FCU0RGSjJBRjM4b2s0V0phSXdRNGZGOURkSDlaMC1GLUVCeVVVZ3JWUmFuaUpzV0xCR1JYdHIyZU1BSVdYT09FTkZWdlhiakNZdVpvS0NEUFVfeXrSAXRBVV95cUxOeWQ0Z3VYcl81eElMek1lNG1VcUR4eF9wSXV0S3ZGYmd3VmxteTVZWWlaNjZRX1k4UGczcEZ3NE9ZUXdGYkQ3LUVDTzZTd25IdmkwOTNhNkUxbklsaUxWSFZOVFVxb1AtUmo3WDdJS2dkeDRxZQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AX" data-text="마린웍스, 해운·선박 ai 전환 본격화…선박 성능해석·ai 에이전트 공개 마린웍스, 해운·선박 ai 전환 본격화…선박 성능해석·ai 에이전트 공개 해사신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ax 해사신문">
+      <div class="top">
+        <span class="tag">AX</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>마린웍스, 해운·선박 AI 전환 본격화…선박 성능해석·AI 에이전트 공개</h3>
+      <p class="summary">마린웍스, 해운·선박 AI 전환 본격화…선박 성능해석·AI 에이전트 공개 해사신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">해사신문 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMia0FVX3lxTE9rVjVrdW1MRXR6cmo4RFZTbHN4YUhSWDhmSUM1YzJiSGtFenRZbkZ0T3l3WVhQVndZaElGd0RleDk5QzAwWFFjd1h2dkZ3eW5HTktfaHlXRXd5cERjcmhkSHhOZkhYSFNrU1Zv?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="옴니키, 광고 소재 생성, 집행, 수정 자동화 ai 에이전트 출시 옴니키, 광고 소재 생성, 집행, 수정 자동화 ai 에이전트 출시 ai 매터스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent ai 매터스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>옴니키, 광고 소재 생성, 집행, 수정 자동화 AI 에이전트 출시</h3>
+      <p class="summary">옴니키, 광고 소재 생성, 집행, 수정 자동화 AI 에이전트 출시 AI 매터스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">AI 매터스 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTFBxeUxaNVJZSGd3U1RtVnZnMHY0VU1kZVhJTmdIa2N4OVVxMnJQb2RfckJrWnp4SlRzTW9FV08zVzhKSGpLaWszQkZ2dlp0QW1uUVhSNQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="인젠트, 레거시 시스템 연계 기반 기업 ai 전환 전략 제시 인젠트, 레거시 시스템 연계 기반 기업 ai 전환 전략 제시 전자신문 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 전자신문">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>인젠트, 레거시 시스템 연계 기반 기업 AI 전환 전략 제시</h3>
+      <p class="summary">인젠트, 레거시 시스템 연계 기반 기업 AI 전환 전략 제시 전자신문</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">전자신문 · 2026-11-26</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE9kRUZlYkJyVjdqMlpZaWNlWmtoMVBWdHRkSXJWdlg1N29SSGFzTm0tYWU0MkF4U0MwdlZtU093MWVkZEhiTDI0N29XWjlZQQ?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+
+    <article class="card" data-category="AI Agent" data-text="[현장] ai 에이전트가 결제까지 맡는다…비자·신한카드·삼성카드, 미래 결제 인프라 논의 [현장] ai 에이전트가 결제까지 맡는다…비자·신한카드·삼성카드, 미래 결제 인프라 논의 더밸류뉴스 (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. anthropic_api_key 설정 시 ax전략팀 관점 분석이 생성됩니다. ai agent 더밸류뉴스">
+      <div class="top">
+        <span class="tag">AI Agent</span><span class="stars">★★★★<span class="off">★</span></span>
+      </div>
+      <h3>[현장] AI 에이전트가 결제까지 맡는다…비자·신한카드·삼성카드, 미래 결제 인프라 논의</h3>
+      <p class="summary">[현장] AI 에이전트가 결제까지 맡는다…비자·신한카드·삼성카드, 미래 결제 인프라 논의 더밸류뉴스</p>
+      <div class="why"><b>AX전략팀 관점</b> · (자동 분석 미실행) 제목·출처 기준 관련 기사입니다. ANTHROPIC_API_KEY 설정 시 AX전략팀 관점 분석이 생성됩니다.</div>
+      <div class="meta">
+        <span class="src">더밸류뉴스 · 2026-11-25</span>
+        <a class="readmore" href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE9aeHlLMTQxRUtCOWhpLVJOSVBWOG50dnN5dmQtQmFZVmFqMi01aXdObjBxV2ZDZ2EtWk9vYWV1Q1VqX2FjbnUyVUliT3RQLXpjVWhhYw?oc=5" target="_blank" rel="noopener">원문</a>
+      </div>
+    </article>
+</div>
+<div id="noresult">조건에 맞는 기사가 없습니다.</div>
+
+<footer>
+  THE AI · AX BRIEFING · 매일 자동 갱신 · powered by Gemini<br>
+  최종 생성 2026-11-26 12:54
+</footer>
+
+
+<script>
+  let curCat = 'all';
+  function applyFilters(){
+    const q = (document.getElementById('q').value || '').toLowerCase().trim();
+    const filtering = (curCat !== 'all') || (q !== '');
+    const t5 = document.getElementById('top5wrap');
+    if(t5) t5.style.display = filtering ? 'none' : '';
+    let shown = 0;
+    document.querySelectorAll('.card').forEach(function(c){
+      const okCat = curCat === 'all' || c.dataset.category === curCat;
+      const okQ = !q || (c.dataset.text || '').includes(q);
+      let show = okCat && okQ;
+      // 기본 화면에서는 TOP5 기사는 그리드에서 숨겨 중복 방지 (필터 시엔 함께 검색)
+      if(!filtering && c.classList.contains('is-top5')) show = false;
+      c.style.display = show ? '' : 'none';
+      if(show) shown++;
+    });
+    document.getElementById('noresult').style.display = (filtering && shown===0) ? 'block' : 'none';
+  }
+  document.querySelectorAll('.filter-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      curCat = b.dataset.cat;
+      applyFilters();
+    });
+  });
+  document.addEventListener('DOMContentLoaded', applyFilters);
+</script>
+
+</div></body></html>
